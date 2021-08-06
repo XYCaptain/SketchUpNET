@@ -1,5 +1,9 @@
-// Copyright 2016 Trimble Navigation Ltd. All Rights Reserved.
+// Copyright 2016 Trimble Inc. All Rights Reserved.
 
+/**
+ * @file
+ * @brief Interfaces for SUDimensionStyleRef.
+ */
 #ifndef SKETCHUP_MODEL_DIMENSION_STYLE_H_
 #define SKETCHUP_MODEL_DIMENSION_STYLE_H_
 
@@ -81,8 +85,7 @@ SU_RESULT SUDimensionStyleGetArrowSize(SUDimensionStyleRef style, size_t* size);
 - \ref SU_ERROR_INVALID_INPUT if style is not a valid object
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if color is NULL
 */
-SU_RESULT SUDimensionStyleGetColor(SUDimensionStyleRef style,
-    SUColor* color);
+SU_RESULT SUDimensionStyleGetColor(SUDimensionStyleRef style, SUColor* color);
 
 /**
 @brief Retrieves the text color specified by the dimension style.
@@ -95,8 +98,7 @@ SU_RESULT SUDimensionStyleGetColor(SUDimensionStyleRef style,
 - \ref SU_ERROR_INVALID_INPUT if style is not a valid object
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if color is NULL
 */
-SU_RESULT SUDimensionStyleGetTextColor(SUDimensionStyleRef style,
-    SUColor* color);
+SU_RESULT SUDimensionStyleGetTextColor(SUDimensionStyleRef style, SUColor* color);
 
 /**
 @brief Retrieves the dimension style's extension line offset. The offset
@@ -111,8 +113,7 @@ SU_RESULT SUDimensionStyleGetTextColor(SUDimensionStyleRef style,
 - \ref SU_ERROR_INVALID_INPUT if style is not a valid object
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if offset is NULL
 */
-SU_RESULT SUDimensionStyleGetExtensionLineOffset(SUDimensionStyleRef style,
-    size_t* offset);
+SU_RESULT SUDimensionStyleGetExtensionLineOffset(SUDimensionStyleRef style, size_t* offset);
 
 /**
 @brief Retrieves the dimension style's extension line overshoot. The overshoot
@@ -127,8 +128,7 @@ SU_RESULT SUDimensionStyleGetExtensionLineOffset(SUDimensionStyleRef style,
 - \ref SU_ERROR_INVALID_INPUT if style is not a valid object
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if overshoot is NULL
 */
-SU_RESULT SUDimensionStyleGetExtensionLineOvershoot(SUDimensionStyleRef style,
-    size_t* overshoot);
+SU_RESULT SUDimensionStyleGetExtensionLineOvershoot(SUDimensionStyleRef style, size_t* overshoot);
 
 /**
 @brief Retrieves the line weight specified by the dimension style.
@@ -141,8 +141,7 @@ SU_RESULT SUDimensionStyleGetExtensionLineOvershoot(SUDimensionStyleRef style,
 - \ref SU_ERROR_INVALID_INPUT if style is not a valid object
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if weight is NULL
 */
-SU_RESULT SUDimensionStyleGetLineWeight(SUDimensionStyleRef style,
-    size_t* weight);
+SU_RESULT SUDimensionStyleGetLineWeight(SUDimensionStyleRef style, size_t* weight);
 
 /**
 @brief Retrieves whether the dimension style specifies non-associative
@@ -188,8 +187,7 @@ SU_RESULT SUDimensionStyleGetHighlightNonAssociativeDimensionsColor(
 - \ref SU_ERROR_INVALID_INPUT if style is not a valid object
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if show is NULL
 */
-SU_RESULT SUDimensionStyleGetShowRadialPrefix(SUDimensionStyleRef style,
-    bool* show);
+SU_RESULT SUDimensionStyleGetShowRadialPrefix(SUDimensionStyleRef style, bool* show);
 
 /**
 @brief Retrieves whether the dimension style specifies that out of plane
@@ -204,8 +202,7 @@ SU_RESULT SUDimensionStyleGetShowRadialPrefix(SUDimensionStyleRef style,
 - \ref SU_ERROR_INVALID_INPUT if style is not a valid object
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if hide is NULL
 */
-SU_RESULT SUDimensionStyleGetHideOutOfPlane(SUDimensionStyleRef style,
-    bool* hide);
+SU_RESULT SUDimensionStyleGetHideOutOfPlane(SUDimensionStyleRef style, bool* hide);
 
 /**
 @brief Retrieves the dimension style's parameter specifying out of plane
@@ -219,8 +216,7 @@ SU_RESULT SUDimensionStyleGetHideOutOfPlane(SUDimensionStyleRef style,
 - \ref SU_ERROR_INVALID_INPUT if style is not a valid object
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if tolerance is NULL
 */
-SU_RESULT SUDimensionStyleGetHideOutOfPlaneValue(SUDimensionStyleRef style,
-    double* tolerance);
+SU_RESULT SUDimensionStyleGetHideOutOfPlaneValue(SUDimensionStyleRef style, double* tolerance);
 
 /**
 @brief Retrieves whether the dimension style specifies that small dimensions be
@@ -248,8 +244,7 @@ SU_RESULT SUDimensionStyleGetHideSmall(SUDimensionStyleRef style, bool* hide);
 - \ref SU_ERROR_INVALID_INPUT if style is not a valid object
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if tolerance is NULL
 */
-SU_RESULT SUDimensionStyleGetHideSmallValue(SUDimensionStyleRef style,
-    double* tolerance);
+SU_RESULT SUDimensionStyleGetHideSmallValue(SUDimensionStyleRef style, double* tolerance);
 
 #ifdef __cplusplus
 }  // extern "C"

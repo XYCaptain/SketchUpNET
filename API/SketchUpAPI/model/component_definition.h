@@ -1,4 +1,9 @@
-// Copyright 2013 Trimble Navigation Ltd. All Rights Reserved.
+// Copyright 2013-2020 Trimble Inc. All Rights Reserved.
+
+/**
+ * @file
+ * @brief Interfaces for SUComponentDefinitionRef.
+ */
 #ifndef SKETCHUP_MODEL_COMPONENT_DEFINITION_H_
 #define SKETCHUP_MODEL_COMPONENT_DEFINITION_H_
 
@@ -12,10 +17,10 @@
 #pragma pack(push, 8)
 
 #if defined(__APPLE__)
-// This is added to remove the missing declarations warning on the mac
-// for an enum defined inside a structure. [SUSnapToBehavior]
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wmissing-declarations"
+  // This is added to remove the missing declarations warning on the mac
+  // for an enum defined inside a structure. [SUSnapToBehavior]
+  #pragma GCC diagnostic push
+  #pragma GCC diagnostic ignored "-Wmissing-declarations"
 #endif
 
 #ifdef __cplusplus
@@ -24,20 +29,20 @@ extern "C" {
 
 /**
 @struct SUComponentDefinitionRef
+@extends SUEntityRef
 @brief  References a component definition.
 */
 
 /**
 @struct SUComponentBehavior
-@brief  Describes how the component behaves in the SketchUp rendering scene.
+@brief  Describes how the component behaves in a SketchUp model, e.g. how it glues to surfaces.
 */
 struct SUComponentBehavior {
   /**
   @enum SUSnapToBehavior
-  @brief Describes how the component instance is placed when it is first
-         instantiated in the rendering scene. For example a window component
-         instance should snap to a vertical plane when instantiated in the
-         rendering scene.
+  @brief Describes how the component instance can be placed when a user adds
+         it to a model. For example a window component instance should snap
+         to a vertical plane.
   */
   enum SUSnapToBehavior {
     SUSnapToBehavior_None = 0,
@@ -46,29 +51,41 @@ struct SUComponentBehavior {
     SUSnapToBehavior_Vertical,
     SUSnapToBehavior_Sloped
   };
+
+  /**
+  How the component should snap to the surface where it's placed.
+  */
   enum SUSnapToBehavior component_snap;
-  bool component_cuts_opening; ///< Whether the component creates an opening
-                               ///< when placed on a surface, e.g. a window
-                               ///< frame component.
-  bool component_always_face_camera; ///< Whether the component behaves like a
-                                     ///< billboard, where the component always
-                                     ///< presents a 2D surface perpendicular
-                                     ///< to the direction of camera.
-  bool component_shadows_face_sun; ///< Whether the component always casts a
-                                   ///< shadow as if it were facing the
-                                   ///< direction of the sun.
-  size_t component_no_scale_mask; ///< Bitmask where set bits indicate which
-                                  ///< scale tool handles are hidden on a given
-                                  ///< component:
-                                  ///< Bit0: disable scale along X axis,
-                                  ///< Bit1: disable scale along Y axis,
-                                  ///< Bit2: disable scale along Z axis,
-                                  ///< Bit3: disable scale in X + Z plane,
-                                  ///< Bit4: disable scale in Y + Z plane,
-                                  ///< Bit5: disable scale in X + Y plane,
-                                  ///< Bit6: disable scale uniform (XYZ)
-                                  ///< Prior to SketchUp 2018, API 6.0 this
-                                  ///< variable existed but was never used.
+
+  /**
+  Whether the component creates an opening when placed on a surface, e.g. a window frame component.
+  */
+  bool component_cuts_opening;
+
+  /**
+  Whether the component visually revolves around its Z axes to have its X-Z plane face the camera.
+  */
+  bool component_always_face_camera;
+
+  /**
+  Whether the component always casts a shadow as if it were facing the direction of the sun.
+  */
+  bool component_shadows_face_sun;
+
+  /**
+  Bitmask where set bits indicate which scale tool handles are hidden on a given component:
+
+  - Bit0: disable scale along X axis,
+  - Bit1: disable scale along Y axis,
+  - Bit2: disable scale along Z axis,
+  - Bit3: disable scale in X-Z plane,
+  - Bit4: disable scale in Y-Z plane,
+  - Bit5: disable scale in X-Y plane,
+  - Bit6: disable scale uniform (XYZ)
+
+  Prior to SketchUp 2018, API 6.0 this field existed but was never used.
+  */
+  size_t component_no_scale_mask;
 };
 
 /**
@@ -76,8 +93,8 @@ struct SUComponentBehavior {
 @brief Indicates the type of the component.
 */
 enum SUComponentType {
-  SUComponentType_Normal,  //< Regular component definition
-  SUComponentType_Group    //< Group definition
+  SUComponentType_Normal,  ///< Regular component definition
+  SUComponentType_Group    ///< Group definition
 };
 
 /**
@@ -89,8 +106,7 @@ enum SUComponentType {
 - The converted \ref SUEntityRef if comp_def is a valid component
 - If not, the returned reference will be invalid
 */
-SU_EXPORT SUEntityRef SUComponentDefinitionToEntity(
-    SUComponentDefinitionRef comp_def);
+SU_EXPORT SUEntityRef SUComponentDefinitionToEntity(SUComponentDefinitionRef comp_def);
 
 /**
 @brief Converts from an \ref SUEntityRef to an \ref SUComponentDefinitionRef.
@@ -102,8 +118,7 @@ SU_EXPORT SUEntityRef SUComponentDefinitionToEntity(
 - The converted \ref SUComponentDefinitionRef if the downcast operation succeeds
 - If not, the returned reference will be invalid
 */
-SU_EXPORT SUComponentDefinitionRef SUComponentDefinitionFromEntity(
-    SUEntityRef entity);
+SU_EXPORT SUComponentDefinitionRef SUComponentDefinitionFromEntity(SUEntityRef entity);
 
 /**
 @brief Converts from an \ref SUComponentDefinitionRef to an \ref
@@ -114,8 +129,8 @@ SU_EXPORT SUComponentDefinitionRef SUComponentDefinitionFromEntity(
 - The converted \ref SUEntityRef if comp_def is a valid component
 - If not, the returned reference will be invalid
 */
-SU_EXPORT SUDrawingElementRef SUComponentDefinitionToDrawingElement(
-    SUComponentDefinitionRef comp_def);
+SU_EXPORT SUDrawingElementRef
+SUComponentDefinitionToDrawingElement(SUComponentDefinitionRef comp_def);
 
 /**
 @brief Converts from an \ref SUDrawingElementRef to an \ref
@@ -127,16 +142,16 @@ SU_EXPORT SUDrawingElementRef SUComponentDefinitionToDrawingElement(
 - The converted \ref SUComponentDefinitionRef if the downcast operation succeeds
 - If not, the returned reference will be invalid
 */
-SU_EXPORT SUComponentDefinitionRef SUComponentDefinitionFromDrawingElement(
-    SUDrawingElementRef drawing_elem);
+SU_EXPORT SUComponentDefinitionRef
+SUComponentDefinitionFromDrawingElement(SUDrawingElementRef drawing_elem);
 
 /**
 @brief Creates a new component definition. The created definition must be
-       released with \ref SUComponentDefinitionRelease, or attached to either a
-       parent component or parent model. Add the new component definition to
-       model using \ref SUModelAddComponentDefinitions before making any
+       released with SUComponentDefinitionRelease(), or attached to either
+       a parent component or parent model. Add the new component definition to
+       model using SUModelAddComponentDefinitions() before making any
        modifications to it. Once the component definition is owned by a model,
-       use \ref SUModelRemoveComponentDefinitions to remove it.
+       use SUModelRemoveComponentDefinitions() to remove it.
 @param[out] comp_def The component object created.
 @related SUComponentDefinitionRef
 @return
@@ -148,7 +163,7 @@ SU_RESULT SUComponentDefinitionCreate(SUComponentDefinitionRef* comp_def);
 /**
 @brief Releases a component definition object and its associated resources. If
        the provided definition was contained by a model, use
-       \ref SUModelRemoveComponentDefinitions to remove the definition and all
+       SUModelRemoveComponentDefinitions() to remove the definition and all
        instances.
 @param[in] comp_def The component definition object.
 @related SUComponentDefinitionRef
@@ -171,8 +186,7 @@ SU_RESULT SUComponentDefinitionRelease(SUComponentDefinitionRef* comp_def);
 - \ref SU_ERROR_INVALID_OUTPUT if name does not point to a valid \ref
   SUStringRef object
 */
-SU_RESULT SUComponentDefinitionGetName(SUComponentDefinitionRef comp_def,
-                                       SUStringRef* name);
+SU_RESULT SUComponentDefinitionGetName(SUComponentDefinitionRef comp_def, SUStringRef* name);
 
 /**
 @brief Sets the name of a component definition.
@@ -185,13 +199,17 @@ SU_RESULT SUComponentDefinitionGetName(SUComponentDefinitionRef comp_def,
 - \ref SU_ERROR_INVALID_INPUT if comp_def is invalid
 - \ref SU_ERROR_NULL_POINTER_INPUT if name is NULL
 */
-SU_RESULT SUComponentDefinitionSetName(SUComponentDefinitionRef comp_def,
-                                       const char* name);
+SU_RESULT SUComponentDefinitionSetName(SUComponentDefinitionRef comp_def, const char* name);
 
 /**
 @brief Retrieves the globally unique identifier (guid) string of a component
        definition.
+
 @since SketchUp 2015, API 3.0
+
+@see SUModelGetGuid
+@see SUSkpReadGuid
+
 @param[in]  comp_def The component definition object.
 @param[out] guid_ref The guid retrieved.
 @related SUComponentDefinitionRef
@@ -202,8 +220,7 @@ SU_RESULT SUComponentDefinitionSetName(SUComponentDefinitionRef comp_def,
 - \ref SU_ERROR_INVALID_OUTPUT if guid does not point to a valid \ref
   SUStringRef object
 */
-SU_RESULT SUComponentDefinitionGetGuid(SUComponentDefinitionRef comp_def,
-                                       SUStringRef* guid_ref);
+SU_RESULT SUComponentDefinitionGetGuid(SUComponentDefinitionRef comp_def, SUStringRef* guid_ref);
 
 /**
 @brief Retrieves the entities of the component definition.
@@ -216,8 +233,7 @@ SU_RESULT SUComponentDefinitionGetGuid(SUComponentDefinitionRef comp_def,
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if entities is NULL
 */
 SU_RESULT SUComponentDefinitionGetEntities(
-    SUComponentDefinitionRef comp_def,
-    SUEntitiesRef* entities);
+    SUComponentDefinitionRef comp_def, SUEntitiesRef* entities);
 
 /**
 @brief Retrieves the description of the component definition.
@@ -231,9 +247,7 @@ SU_RESULT SUComponentDefinitionGetEntities(
 - \ref SU_ERROR_INVALID_OUTPUT if desc does not point to a valid \ref
   SUStringRef object
 */
-SU_RESULT SUComponentDefinitionGetDescription(
-    SUComponentDefinitionRef comp_def,
-    SUStringRef* desc);
+SU_RESULT SUComponentDefinitionGetDescription(SUComponentDefinitionRef comp_def, SUStringRef* desc);
 
 /**
 @brief Sets the description of the component definition.
@@ -245,31 +259,31 @@ SU_RESULT SUComponentDefinitionGetDescription(
 - \ref SU_ERROR_INVALID_INPUT if comp_def is invalid
 - \ref SU_ERROR_NULL_POINTER_INPUT if desc is NULL
 */
-SU_RESULT SUComponentDefinitionSetDescription(
-    SUComponentDefinitionRef comp_def,
-    const char* desc);
+SU_RESULT SUComponentDefinitionSetDescription(SUComponentDefinitionRef comp_def, const char* desc);
 
 /**
 @brief Create an instance of a component definition.
-@warning *** Breaking Change: The behavior of this method was changed in
+
+@warning Breaking Change: The behavior of this method was changed in
          SketchUp 2018, API 6.0. In previous releases there was a
          recommendation to not release an instance created with this method if
-         it was associated with a parent using \ref SUEntitiesAddInstance. The 
-         limitation was removed by generalizing \ref SUComponentInstanceRelease
+         it was associated with a parent using SUEntitiesAddInstance(). The
+         limitation was removed by generalizing SUComponentInstanceRelease()
          to correctly release instances whether or not they are contained in a
          parent component.
+
+@related SUComponentDefinitionRef
 @param[in]  comp_def The component definition object.
 @param[out] instance The instance created.
-return
+@return
 - \ref SU_ERROR_NONE on success
 - \ref SU_ERROR_INVALID_INPUT if comp_def is invalid
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if instance is NULL
-- \ref SU_ERROR_GENERIC if comp_def is not the definition of a type that can be
-  instantiated
+- \ref SU_ERROR_GENERIC if comp_def is not the definition of a type that can
+  be instantiated
 */
 SU_RESULT SUComponentDefinitionCreateInstance(
-    SUComponentDefinitionRef comp_def,
-    SUComponentInstanceRef* instance);
+    SUComponentDefinitionRef comp_def, SUComponentInstanceRef* instance);
 
 /**
 @brief Retrieves the total number of instances of the provided definition.
@@ -305,8 +319,7 @@ SU_RESULT SUComponentDefinitionGetNumUsedInstances(
 - \ref SU_ERROR_INVALID_INPUT if comp_def is invalid
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if count is NULL
 */
-SU_RESULT SUComponentDefinitionGetNumInstances(
-    SUComponentDefinitionRef comp_def, size_t* count);
+SU_RESULT SUComponentDefinitionGetNumInstances(SUComponentDefinitionRef comp_def, size_t* count);
 
 /**
 @brief Retrieves the instances of the definition.
@@ -321,8 +334,9 @@ SU_RESULT SUComponentDefinitionGetNumInstances(
 - \ref SU_ERROR_INVALID_INPUT if comp_def is invalid
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if instances or count is NULL
 */
-SU_RESULT SUComponentDefinitionGetInstances(SUComponentDefinitionRef comp_def,
-    size_t len, SUComponentInstanceRef instances[], size_t* count);
+SU_RESULT SUComponentDefinitionGetInstances(
+    SUComponentDefinitionRef comp_def, size_t len, SUComponentInstanceRef instances[],
+    size_t* count);
 
 /**
 @brief Retrieves the behavior of a component definition.
@@ -334,8 +348,7 @@ SU_RESULT SUComponentDefinitionGetInstances(SUComponentDefinitionRef comp_def,
 - \ref SU_ERROR_INVALID_INPUT if comp_def is invalid
 */
 SU_RESULT SUComponentDefinitionGetBehavior(
-    SUComponentDefinitionRef comp_def,
-    struct SUComponentBehavior* behavior);
+    SUComponentDefinitionRef comp_def, struct SUComponentBehavior* behavior);
 
 /**
 @brief Sets the component behavior of a component definition.
@@ -348,8 +361,7 @@ SU_RESULT SUComponentDefinitionGetBehavior(
 - \ref SU_ERROR_NULL_POINTER_INPUT if behavior is NULL
 */
 SU_RESULT SUComponentDefinitionSetBehavior(
-    SUComponentDefinitionRef comp_def,
-    const struct SUComponentBehavior* behavior);
+    SUComponentDefinitionRef comp_def, const struct SUComponentBehavior* behavior);
 
 /**
 @brief Applies a schema type from a schema to a component definition.
@@ -364,9 +376,7 @@ SU_RESULT SUComponentDefinitionSetBehavior(
 - \ref SU_ERROR_INVALID_INPUT if schema_type_ref is not a valid object
 */
 SU_RESULT SUComponentDefinitionApplySchemaType(
-    SUComponentDefinitionRef comp_def,
-    SUSchemaRef schema_ref,
-    SUSchemaTypeRef schema_type_ref);
+    SUComponentDefinitionRef comp_def, SUSchemaRef schema_ref, SUSchemaTypeRef schema_type_ref);
 
 /**
 @brief Retrieves a flag indicating whether the component definition was created
@@ -381,8 +391,7 @@ SU_RESULT SUComponentDefinitionApplySchemaType(
 - \ref SU_ERROR_INVALID_INPUT if comp_def is invalid
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if is_internal is NULL
 */
-SU_RESULT SUComponentDefinitionIsInternal(SUComponentDefinitionRef comp_def,
-    bool* is_internal);
+SU_RESULT SUComponentDefinitionIsInternal(SUComponentDefinitionRef comp_def, bool* is_internal);
 
 /**
 @brief Retrieves the path where the component definition was loaded from.
@@ -397,8 +406,7 @@ SU_RESULT SUComponentDefinitionIsInternal(SUComponentDefinitionRef comp_def,
 - \ref SU_ERROR_INVALID_OUTPUT if path does not point to a valid \ref
   SUStringRef object
 */
-SU_RESULT SUComponentDefinitionGetPath(SUComponentDefinitionRef comp_def,
-    SUStringRef* path);
+SU_RESULT SUComponentDefinitionGetPath(SUComponentDefinitionRef comp_def, SUStringRef* path);
 
 /**
 @brief Gets the load time of the component definition. For an internal component
@@ -413,8 +421,7 @@ SU_RESULT SUComponentDefinitionGetPath(SUComponentDefinitionRef comp_def,
 - \ref SU_ERROR_INVALID_INPUT if comp_def is invalid
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if load_time is NULL
 */
-SU_RESULT SUComponentDefinitionGetLoadTime(SUComponentDefinitionRef comp_def,
-    struct tm* load_time);
+SU_RESULT SUComponentDefinitionGetLoadTime(SUComponentDefinitionRef comp_def, struct tm* load_time);
 
 /**
 @brief Retrieves the number of openings from the component definition.
@@ -427,12 +434,11 @@ SU_RESULT SUComponentDefinitionGetLoadTime(SUComponentDefinitionRef comp_def,
 - \ref SU_ERROR_INVALID_INPUT if comp_def is invalid
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if count is NULL
 */
-SU_RESULT SUComponentDefinitionGetNumOpenings(SUComponentDefinitionRef comp_def,
-    size_t* count);
+SU_RESULT SUComponentDefinitionGetNumOpenings(SUComponentDefinitionRef comp_def, size_t* count);
 
 /**
 @brief Retrieves the openings from the component definition. The openings
-       retrieved must be released with \ref SUOpeningRelease.
+       retrieved must be released with SUOpeningRelease().
 @since SketchUp 2016, API 4.0
 @param[in]  comp_def  The component definition object.
 @param[in]  len       The number of openings to retrieve.
@@ -444,8 +450,8 @@ SU_RESULT SUComponentDefinitionGetNumOpenings(SUComponentDefinitionRef comp_def,
 - \ref SU_ERROR_INVALID_INPUT if comp_def is invalid
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if openings or count is NULL
 */
-SU_RESULT SUComponentDefinitionGetOpenings(SUComponentDefinitionRef comp_def,
-    size_t len, SUOpeningRef openings[], size_t* count);
+SU_RESULT SUComponentDefinitionGetOpenings(
+    SUComponentDefinitionRef comp_def, size_t len, SUOpeningRef openings[], size_t* count);
 
 /**
 @brief Retrieves the insertion point from the component definition.
@@ -458,22 +464,22 @@ SU_RESULT SUComponentDefinitionGetOpenings(SUComponentDefinitionRef comp_def,
 - \ref SU_ERROR_INVALID_INPUT if comp_def is invalid
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if point is NULL
 */
-SU_RESULT SUComponentDefinitionGetInsertPoint(SUComponentDefinitionRef comp_def,
-    struct SUPoint3D* point);
+SU_RESULT SUComponentDefinitionGetInsertPoint(
+    SUComponentDefinitionRef comp_def, struct SUPoint3D* point);
 
 /**
-@brief Retrieves the \ref SUComponentType from the component definition.
+@brief Retrieves the \ref SUComponentType() from the component definition.
 @since SketchUp 2016, API 4.0
 @param[in]  comp_def  The component definition object.
-@param[out] type      The \ref SUComponentType retrieved.
+@param[out] type      The \ref SUComponentType() retrieved.
 @related SUComponentDefinitionRef
 @return
 - \ref SU_ERROR_NONE on success
 - \ref SU_ERROR_INVALID_INPUT if comp_def is invalid
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if type is NULL
 */
-SU_RESULT SUComponentDefinitionGetType(SUComponentDefinitionRef comp_def,
-    enum SUComponentType* type);
+SU_RESULT SUComponentDefinitionGetType(
+    SUComponentDefinitionRef comp_def, enum SUComponentType* type);
 
 /**
 @brief Updates the faces in the component definition so that they are oriented
@@ -485,27 +491,30 @@ SU_RESULT SUComponentDefinitionGetType(SUComponentDefinitionRef comp_def,
 - \ref SU_ERROR_NONE on success
 - \ref SU_ERROR_INVALID_INPUT if comp_def is invalid
 */
-SU_RESULT SUComponentDefinitionOrientFacesConsistently(
-    SUComponentDefinitionRef comp_def);
+SU_RESULT SUComponentDefinitionOrientFacesConsistently(SUComponentDefinitionRef comp_def);
 
 /**
 @brief Sets the insertion point for the component definition.
 @since SketchUp 2016, API 4.0
-@deprecated This function will be removed. It is now a NOOP.
-@warning *** Breaking Change: The behavior of this method was changed in
+
+@deprecated As of SketchUp 2020.0 the insertion point cannot be changed.
+  This function is now a NOOP.
+
+@warning Breaking Change: The behavior of this method was changed in
          SketchUp 2018, API 6.0. In previous releases if the second argument was
          null this method returned \ref SU_ERROR_NULL_POINTER_OUTPUT, but this
          was changed to \ref SU_ERROR_NULL_POINTER_INPUT for consistency with
          other API methods.
+
 @param[in] comp_def  The component definition object.
 @param[in] point     The \ref SUPoint3D to use.
 @related SUComponentDefinitionRef
 @return
 - \ref SU_ERROR_NONE
 */
-SU_DEPRECATED_FUNCTION("8.0") 
-SU_RESULT SUComponentDefinitionSetInsertPoint(SUComponentDefinitionRef comp_def,
-    const struct SUPoint3D* point);
+SU_DEPRECATED_FUNCTION("8.0")
+SU_RESULT SUComponentDefinitionSetInsertPoint(
+    SUComponentDefinitionRef comp_def, const struct SUPoint3D* point);
 
 /**
 @brief Sets the axes of the component definition.
@@ -517,15 +526,33 @@ SU_RESULT SUComponentDefinitionSetInsertPoint(SUComponentDefinitionRef comp_def,
 - \ref SU_ERROR_NONE on success
 - \ref SU_ERROR_INVALID_INPUT if comp_def or axes are invalid
 */
-SU_RESULT SUComponentDefinitionSetAxes(SUComponentDefinitionRef comp_def,
-    SUAxesRef axes);
+SU_RESULT SUComponentDefinitionSetAxes(SUComponentDefinitionRef comp_def, SUAxesRef axes);
+
+/**
+@brief Retrieves a flag indicating whether the component definition is a Live
+  Component or a sub-definition of a Live Component.
+
+@note These components are parametrically generated and API users should not
+  modify them.
+
+@since SketchUp 2021.0, API9.0
+
+@param[in]  comp_def  The component definition object.
+@param[out] is_live   The bool value retrieved.
+@related SUComponentDefinitionRef
+@return
+- \ref SU_ERROR_NONE on success
+- \ref SU_ERROR_INVALID_INPUT if \p comp_def is invalid
+- \ref SU_ERROR_NULL_POINTER_OUTPUT if \p is_live is NULL
+*/
+SU_RESULT SUComponentDefinitionIsLiveComponent(SUComponentDefinitionRef comp_def, bool* is_live);
 
 #ifdef __cplusplus
 }  // extern "C"
 #endif
 
 #if defined(__APPLE__)
-#pragma GCC diagnostic pop
+  #pragma GCC diagnostic pop
 #endif
 
 #pragma pack(pop)

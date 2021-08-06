@@ -1,5 +1,9 @@
-// Copyright 2014 Trimble Navigation Ltd. All Rights Reserved.
+// Copyright 2014 Trimble Inc. All Rights Reserved.
 
+/**
+ * @file
+ * @brief Interfaces for SUGuideLineRef.
+ */
 #ifndef SKETCHUP_MODEL_GUIDE_LINE_H_
 #define SKETCHUP_MODEL_GUIDE_LINE_H_
 
@@ -13,6 +17,7 @@ extern "C" {
 
 /**
 @struct SUGuideLineRef
+@extends SUDrawingElementRef
 @brief  A guide line that has a start and end position.
 @since SketchUp 2016, API 4.0
 */
@@ -52,8 +57,7 @@ SU_EXPORT SUGuideLineRef SUGuideLineFromEntity(SUEntityRef entity);
 - The converted \ref SUEntityRef if guide_line is a valid guide line
 - If not, the returned reference will be invalid
 */
-SU_EXPORT SUDrawingElementRef SUGuideLineToDrawingElement(SUGuideLineRef
-  guide_line);
+SU_EXPORT SUDrawingElementRef SUGuideLineToDrawingElement(SUGuideLineRef guide_line);
 
 /**
 @brief Converts from an \ref SUDrawingElementRef to an \ref SUGuideLineRef.
@@ -66,12 +70,11 @@ SU_EXPORT SUDrawingElementRef SUGuideLineToDrawingElement(SUGuideLineRef
 - The converted \ref SUGuideLineRef if the downcast operation succeeds
 - If not, the returned reference will be invalid.
 */
-SU_EXPORT SUGuideLineRef SUGuideLineFromDrawingElement(SUDrawingElementRef
-  drawing_elem);
+SU_EXPORT SUGuideLineRef SUGuideLineFromDrawingElement(SUDrawingElementRef drawing_elem);
 
 /**
 @brief Creates a finite guide line object. The guide line object must be
-       subsequently deallocated with \ref SUGuideLineRelease unless it is
+       subsequently deallocated with \ref SUGuideLineRelease() unless it is
        associated with a parent object.  The generated line will be a segment
        with start and end points.  The end point can be obtained by adding the
        direction vector to the start point.
@@ -86,13 +89,12 @@ SU_EXPORT SUGuideLineRef SUGuideLineFromDrawingElement(SUDrawingElementRef
 - \ref SU_ERROR_OVERWRITE_VALID if guide_line references a valid object
 - \ref SU_ERROR_NULL_POINTER_INPUT if start or end is NULL
 */
-SU_RESULT SUGuideLineCreateFinite(SUGuideLineRef* guide_line,
-                                  const struct SUPoint3D* start,
-                                  const struct SUPoint3D* end);
+SU_RESULT SUGuideLineCreateFinite(
+    SUGuideLineRef* guide_line, const struct SUPoint3D* start, const struct SUPoint3D* end);
 
 /**
 @brief Creates a infinite guide line object. The guide line object must be
-       subsequently deallocated with \ref SUGuideLineRelease unless it is
+       subsequently deallocated with \ref SUGuideLineRelease() unless it is
        associated with a parent object.  The generated line will be infinite.
        Defined with a point along the line and a direction vector.
 @since SketchUp 2016, API 4.0
@@ -106,13 +108,12 @@ SU_RESULT SUGuideLineCreateFinite(SUGuideLineRef* guide_line,
 - \ref SU_ERROR_OVERWRITE_VALID if guide_line references a valid object
 - \ref SU_ERROR_NULL_POINTER_INPUT if start or end is NULL
 */
-SU_RESULT SUGuideLineCreateInfinite(SUGuideLineRef* guide_line,
-                                    const struct SUPoint3D* point,
-                                    const struct SUVector3D* direction);
+SU_RESULT SUGuideLineCreateInfinite(
+    SUGuideLineRef* guide_line, const struct SUPoint3D* point, const struct SUVector3D* direction);
 
 /**
 @brief Releases a guide line object. The guide line object must have been
-       created with \ref SUGuideLineCreateFinite or \ref
+       created with \ref SUGuideLineCreateFinite() or \ref
        SUGuideLineCreateInfinite and not subsequently associated with a parent
        object (e.g. \ref SUEntitiesRef).
 @since SketchUp 2016, API 4.0
@@ -127,11 +128,11 @@ SU_RESULT SUGuideLineRelease(SUGuideLineRef* guide_line);
 
 /**
 @brief Retrieves the data defining the line (a point, a direction vector, and a
-       boolean flagging if the line is infinite).  For finite lines @param
-       start is the start point, and the end point can be obtained by adding
-       the direction vector (@param direction) to the start point (@param
-       start).  For infinite lines @param start is simply a point on the guide
-       line, and @param direction is always a unit vector.
+       boolean flagging if the line is infinite).  For finite lines \p start
+       is the start point, and the end point can be obtained by adding
+       the direction vector (\p direction) to the start point (\p start).
+       For infinite lines \p start is simply a point on the guide line, and
+       \p direction is always a unit vector.
 @since SketchUp 2016, API 4.0
 @param[in]  guide_line The guide line object.
 @param[out] start      A point on the guide line.
@@ -143,10 +144,9 @@ SU_RESULT SUGuideLineRelease(SUGuideLineRef* guide_line);
 - \ref SU_ERROR_INVALID_INPUT if guide line is an invalid object
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if start, direction, or isinfinite is NULL
 */
-SU_RESULT SUGuideLineGetData(SUGuideLineRef guide_line,
-                             struct SUPoint3D* start,
-                             struct SUVector3D* direction,
-                             bool* isinfinite);
+SU_RESULT SUGuideLineGetData(
+    SUGuideLineRef guide_line, struct SUPoint3D* start, struct SUVector3D* direction,
+    bool* isinfinite);
 
 #ifdef __cplusplus
 }  // extern "C"

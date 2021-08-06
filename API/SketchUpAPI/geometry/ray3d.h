@@ -1,5 +1,9 @@
 // Copyright 2017 Trimble Inc., All rights reserved.
 
+/**
+ * @file
+ * @brief Interfaces for SURay3D.
+ */
 #ifndef SKETCHUP_GEOMETRY_RAY3D_H_
 #define SKETCHUP_GEOMETRY_RAY3D_H_
 
@@ -21,9 +25,7 @@ extern "C" {
 - \ref SU_ERROR_NULL_POINTER_INPUT if ray or point are NULL
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if is_on is NULL
 */
-SU_RESULT SURay3DIsOn(const struct SURay3D* ray,
-                      const struct SUPoint3D* point,
-                      bool* is_on);
+SU_RESULT SURay3DIsOn(const struct SURay3D* ray, const struct SUPoint3D* point, bool* is_on);
 
 /**
 @brief Gets the distance from the point to the ray.
@@ -37,9 +39,8 @@ SU_RESULT SURay3DIsOn(const struct SURay3D* ray,
 - \ref SU_ERROR_NULL_POINTER_INPUT if ray or point are NULL
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if distance is NULL
 */
-SU_RESULT SURay3DDistanceTo(const struct SURay3D* ray,
-                            const struct SUPoint3D* point,
-                            double* distance);
+SU_RESULT SURay3DDistanceTo(
+    const struct SURay3D* ray, const struct SUPoint3D* point, double* distance);
 
 /**
 @brief Projects a point onto the ray.
@@ -53,9 +54,8 @@ SU_RESULT SURay3DDistanceTo(const struct SURay3D* ray,
 - \ref SU_ERROR_NULL_POINTER_INPUT if ray or point are NULL
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if projected_point is NULL
 */
-SU_RESULT SURay3DProjectTo(const struct SURay3D* ray,
-                           const struct SUPoint3D* point,
-                           struct SUPoint3D* projected_point);
+SU_RESULT SURay3DProjectTo(
+    const struct SURay3D* ray, const struct SUPoint3D* point, struct SUPoint3D* projected_point);
 
 #ifdef __cplusplus
 }  // end extern "C"

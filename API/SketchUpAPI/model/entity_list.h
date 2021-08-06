@@ -1,5 +1,9 @@
 // Copyright 2017 Trimble Inc. All Rights Reserved.
 
+/**
+ * @file
+ * @brief Interfaces for SUEntityListRef.
+ */
 #ifndef SKETCHUP_MODEL_ENTITY_LIST_H_
 #define SKETCHUP_MODEL_ENTITY_LIST_H_
 
@@ -41,9 +45,9 @@ SU_RESULT SUEntityListRelease(SUEntityListRef* list);
 
 /**
 @brief Sets the iterator reference to the beginning of the list. The given
-       iterator object must have been constructed using \ref
-       SUEntityListIteratorCreate. The iterator must be released using \ref
-       SUEntityListIteratorRelease when it is no longer needed.
+       iterator object must have been constructed using
+       SUEntityListIteratorCreate(). The iterator must be released using
+       SUEntityListIteratorRelease() when it is no longer needed.
 @since SketchUp 2018, API 6.0
 @param[in]  list     The list.
 @param[out] iterator An iterator Ref reference the beginning of the list.
@@ -54,8 +58,7 @@ SU_RESULT SUEntityListRelease(SUEntityListRef* list);
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if iterator is NULL
 - \ref SU_ERROR_INVALID_OUTPUT if *iterator is not a valid object
 */
-SU_RESULT SUEntityListBegin(SUEntityListRef list,
-    SUEntityListIteratorRef* iterator);
+SU_RESULT SUEntityListBegin(SUEntityListRef list, SUEntityListIteratorRef* iterator);
 
 /**
 @brief Gets the number of entities in the list.

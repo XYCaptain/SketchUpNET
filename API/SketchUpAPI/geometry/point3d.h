@@ -1,8 +1,11 @@
 // Copyright 2017 Trimble Inc. All Rights Reserved.
 
+/**
+ * @file
+ * @brief Interfaces for SUPoint3D.
+ */
 #ifndef SKETCHUP_GEOMETRY_POINT3D_H_
 #define SKETCHUP_GEOMETRY_POINT3D_H_
-
 
 #include <SketchUpAPI/common.h>
 #include <SketchUpAPI/geometry.h>
@@ -26,9 +29,8 @@ extern "C" {
 - \ref SU_ERROR_NULL_POINTER_INPUT if point1 or point2 is NULL
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if equal is NULL
 */
-SU_RESULT SUPoint3DGetEqual(const struct SUPoint3D* point1,
-                            const struct SUPoint3D* point2,
-                            bool* equal);
+SU_RESULT SUPoint3DGetEqual(
+    const struct SUPoint3D* point1, const struct SUPoint3D* point2, bool* equal);
 
 /**
 @brief Determines if point1 is less than point2.
@@ -42,9 +44,8 @@ SU_RESULT SUPoint3DGetEqual(const struct SUPoint3D* point1,
 - \ref SU_ERROR_NULL_POINTER_INPUT if point1 or point2 is NULL
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if less_than is NULL
 */
-SU_RESULT SUPoint3DLessThan(const struct SUPoint3D* point1,
-                            const struct SUPoint3D* point2,
-                            bool* less_than);
+SU_RESULT SUPoint3DLessThan(
+    const struct SUPoint3D* point1, const struct SUPoint3D* point2, bool* less_than);
 
 /**
 @brief Creates a new point that is offset from another point.
@@ -58,9 +59,8 @@ SU_RESULT SUPoint3DLessThan(const struct SUPoint3D* point1,
 - \ref SU_ERROR_NULL_POINTER_INPUT if point1 or vector is NULL
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if point2 is NULL
  */
-SU_RESULT SUPoint3DOffset(const struct SUPoint3D* point1,
-                          const struct SUVector3D* vector,
-                          struct SUPoint3D* point2);
+SU_RESULT SUPoint3DOffset(
+    const struct SUPoint3D* point1, const struct SUVector3D* vector, struct SUPoint3D* point2);
 
 /**
 @brief Gets the distance between two point objects.
@@ -74,9 +74,8 @@ SU_RESULT SUPoint3DOffset(const struct SUPoint3D* point1,
 - \ref SU_ERROR_NULL_POINTER_INPUT if point1 or point2 is NULL
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if distance is NULL
  */
-SU_RESULT SUPoint3DDistanceToSUPoint3D(const struct SUPoint3D* point1,
-                                       const struct SUPoint3D* point2,
-                                       double* distance);
+SU_RESULT SUPoint3DDistanceToSUPoint3D(
+    const struct SUPoint3D* point1, const struct SUPoint3D* point2, double* distance);
 
 /**
 @brief Transforms the provided 3D point by applying the provided 3D
@@ -90,8 +89,7 @@ SU_RESULT SUPoint3DDistanceToSUPoint3D(const struct SUPoint3D* point1,
 - \ref SU_ERROR_NULL_POINTER_INPUT if transform is NULL
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if point is NULL
 */
-SU_RESULT SUPoint3DTransform(const struct SUTransformation* transform,
-                             struct SUPoint3D* point);
+SU_RESULT SUPoint3DTransform(const struct SUTransformation* transform, struct SUPoint3D* point);
 
 #ifdef __cplusplus
 }  // extern "C"

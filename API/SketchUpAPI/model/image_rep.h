@@ -1,4 +1,9 @@
-// Copyright 2016 Trimble Navigation Ltd. All Rights Reserved.
+// Copyright 2016 Trimble Inc. All Rights Reserved.
+
+/**
+ * @file
+ * @brief Interfaces for SUImageRepRef.
+ */
 #ifndef SKETCHUP_MODEL_IMAGE_REP_H_
 #define SKETCHUP_MODEL_IMAGE_REP_H_
 
@@ -20,18 +25,18 @@ extern "C" {
        order indices facilitate platform independent code when it is necessary
        to manipulate image pixel data. The struct's data also applies to 24-bit
        bitmap images except that such images don't have an alpha channel so the
-       \ref alpha_index varaible can be ignored.
+       \ref SUColorOrder.alpha_index varaible can be ignored.
 @since SketchUp 2017, API 5.2
 */
 struct SUColorOrder {
-  // Indicates the position of the red byte within a single pixel's data.
-  short red_index;
-  // Indicates the position of the green byte within a single pixel's data.
-  short green_index;
-  // Indicates the position of the blue byte within a single pixel's data.
-  short blue_index;
-  // Indicates the position of the alpha byte within a single pixel's data.
-  short alpha_index;
+  short red_index;    ///< Indicates the position of the red byte within a single
+                      ///< pixel's data.
+  short green_index;  ///< Indicates the position of the green byte within a
+                      ///< single pixel's data.
+  short blue_index;   ///< Indicates the position of the blue byte within a
+                      ///< single pixel's data.
+  short alpha_index;  ///< Indicates the position of the alpha byte within a
+                      ///< single pixel's data.
 };
 
 /**
@@ -105,9 +110,9 @@ SU_RESULT SUImageRepCopy(SUImageRepRef image, SUImageRepRef copy_image);
 - \ref SU_ERROR_OUT_OF_RANGE if width or height are 0
 - \ref SU_ERROR_OUT_OF_RANGE if bits per pixel is not 8, 24, or 32
 */
-SU_RESULT SUImageRepSetData(SUImageRepRef image, size_t width, size_t height,
-                            size_t bits_per_pixel, size_t row_padding,
-                            const SUByte pixel_data[]);
+SU_RESULT SUImageRepSetData(
+    SUImageRepRef image, size_t width, size_t height, size_t bits_per_pixel, size_t row_padding,
+    const SUByte pixel_data[]);
 
 /**
 @brief Loads image data from the specified file into the provided image.
@@ -152,8 +157,7 @@ SU_RESULT SUImageRepSaveToFile(SUImageRepRef image, const char* file_path);
 - \ref SU_ERROR_INVALID_INPUT if image is not a valid object
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if width or height is NULL
 */
-SU_RESULT SUImageRepGetPixelDimensions(SUImageRepRef image, size_t* width,
-                                       size_t* height);
+SU_RESULT SUImageRepGetPixelDimensions(SUImageRepRef image, size_t* width, size_t* height);
 
 /**
 @brief Retrieves the size of the row padding of an image, in bytes.
@@ -198,8 +202,8 @@ SU_RESULT SUImageRepConvertTo32BitsPerPixel(SUImageRepRef image);
 /**
 @brief  Returns the total size and bits-per-pixel value of an image. This
         function is useful to determine the size of the buffer necessary to be
-        passed into \ref SUImageRepGetData. The returned data can be used along
-        with the returned bits-per-pixel value and the image dimensions to
+        passed into \ref SUImageRepGetData(). The returned data can be used
+        along with the returned bits-per-pixel value and the image dimensions to
         compute RGBA values at individual pixels of the image.
 @since SketchUp 2017, API 5.0
 @param[in]  image          The image object.
@@ -211,13 +215,12 @@ SU_RESULT SUImageRepConvertTo32BitsPerPixel(SUImageRepRef image);
 - \ref SU_ERROR_INVALID_INPUT if image is an invalid object
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if data_size or bits_per_pixel is NULL
 */
-SU_RESULT SUImageRepGetDataSize(SUImageRepRef image, size_t* data_size,
-                                size_t* bits_per_pixel);
+SU_RESULT SUImageRepGetDataSize(SUImageRepRef image, size_t* data_size, size_t* bits_per_pixel);
 
 /**
 @brief Returns the pixel data for an image. The given array must be large
        enough to hold the image's data. This size can be obtained by calling
-       \ref SUImageRepGetDataSize.
+       \ref SUImageRepGetDataSize().
 @since SketchUp 2017, API 5.0
 @param[in]  image      The image object.
 @param[in]  data_size  The size of the byte array.
@@ -230,8 +233,7 @@ SU_RESULT SUImageRepGetDataSize(SUImageRepRef image, size_t* data_size,
 - \ref SU_ERROR_INSUFFICIENT_SIZE if data_size is insufficient for the image
 data
 */
-SU_RESULT SUImageRepGetData(SUImageRepRef image, size_t data_size,
-                            SUByte pixel_data[]);
+SU_RESULT SUImageRepGetData(SUImageRepRef image, size_t data_size, SUByte pixel_data[]);
 
 /**
 @brief Returns the color data of an image in a \ref SUColor array.
@@ -263,8 +265,8 @@ SU_RESULT SUImageRepGetDataAsColors(SUImageRepRef image, SUColor color_data[]);
 - \ref SU_ERROR_INVALID_INPUT if image is an invalid object
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if color is NULL
 */
-SU_RESULT SUImageRepGetColorAtUV(SUImageRepRef image, double u, double v,
-                                 bool bilinear, SUColor* color);
+SU_RESULT SUImageRepGetColorAtUV(
+    SUImageRepRef image, double u, double v, bool bilinear, SUColor* color);
 
 #ifdef __cplusplus
 }  // extern "C"

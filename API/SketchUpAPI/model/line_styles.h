@@ -1,5 +1,9 @@
 // Copyright 2018 Trimble Inc. All Rights Reserverd.
 
+/**
+ * @file
+ * @brief Interfaces for SULineStylesRef.
+ */
 #ifndef SKETCHUP_SOURCE_SKORE_SKETCHUP_PUBLIC_MODEL_LINESTYLES_H_
 #define SKETCHUP_SOURCE_SKORE_SKETCHUP_PUBLIC_MODEL_LINESTYLES_H_
 
@@ -27,8 +31,7 @@ extern "C" {
 - \ref SU_ERROR_INVALID_INPUT if line_style_manager is not valid
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if count is NULL
 */
-SU_RESULT SULineStylesGetNumLineStyles(
-    SULineStylesRef line_styles, size_t* count);
+SU_RESULT SULineStylesGetNumLineStyles(SULineStylesRef line_styles, size_t* count);
 
 /**
 @brief  Retrieves line styles associated with the line styles manager.
@@ -48,8 +51,8 @@ retrieved.
 are invalid
 */
 SU_RESULT SULineStylesGetLineStyleNames(
-    SULineStylesRef line_styles, size_t len,
-    SUStringRef line_styles_provider_names[], size_t* count);
+    SULineStylesRef line_styles, size_t len, SUStringRef line_styles_provider_names[],
+    size_t* count);
 
 /**
 @brief  Retrieves the line styles provider given a name.
@@ -67,8 +70,7 @@ SU_RESULT SULineStylesGetLineStyleNames(
 - \ref SU_ERROR_NO_DATA if name does not match the name of any existing style.
 */
 SU_RESULT SULineStylesGetLineStyleByName(
-    SULineStylesRef line_styles, const char* name,
-    SULineStyleRef* line_style);
+    SULineStylesRef line_styles, const char* name, SULineStyleRef* line_style);
 
 
 #ifdef __cplusplus
@@ -76,4 +78,4 @@ SU_RESULT SULineStylesGetLineStyleByName(
 #endif
 #pragma pack(pop)
 
-#endif // SKETCHUP_SOURCE_SKORE_SKETCHUP_PUBLIC_MODEL_LINESTYLES_H_
+#endif  // SKETCHUP_SOURCE_SKORE_SKETCHUP_PUBLIC_MODEL_LINESTYLES_H_

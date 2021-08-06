@@ -1,5 +1,9 @@
-// Copyright 2016 Trimble Navigation Ltd. All Rights Reserved
+// Copyright 2016-2020 Trimble Inc. All Rights Reserved
 
+/**
+ * @file
+ * @brief Interfaces for SUClassificationInfoRef.
+ */
 #ifndef SKETCHUP_MODEL_CLASSIFICATION_INFO_H_
 #define SKETCHUP_MODEL_CLASSIFICATION_INFO_H_
 
@@ -15,14 +19,14 @@ extern "C" {
 @struct SUClassificationInfoRef
 @brief  References an object with classification information. Each
         SUClassificationInfoRef contains the names of the schemas and the schema
-        types, and the types attributes. See \ref
-        SUClassificationAttributeRef for details on the type attributes.
+        types, and the types attributes. See SUClassificationAttributeRef for
+        details on the type attributes.
 */
 
 /**
 @brief Releases the classification info. Classification info objects are created
-       from component instance using \ref
-       SUComponentInstanceCreateClassificationInfo, and must be released using
+       from component instance using
+       SUComponentInstanceCreateClassificationInfo(), and must be released using
        this function. This function also invalidates the given
        SUClassificationInfoRef.
 @since SketchUp 2017, API 5.0
@@ -33,8 +37,7 @@ extern "C" {
 - \ref SU_ERROR_NULL_POINTER_INPUT if classification_info is NULL
 - \ref SU_ERROR_INVALID_INPUT if classification_info is not a valid object
 */
-SU_RESULT SUClassificationInfoRelease(
-    SUClassificationInfoRef* classification_info);
+SU_RESULT SUClassificationInfoRelease(SUClassificationInfoRef* classification_info);
 
 /**
 @brief Retrieves the number of schemas that have been applied to the
@@ -49,8 +52,7 @@ SU_RESULT SUClassificationInfoRelease(
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if count is NULL
 */
 SU_RESULT SUClassificationInfoGetNumSchemas(
-    SUClassificationInfoRef classification_info,
-    size_t* count);
+    SUClassificationInfoRef classification_info, size_t* count);
 
 /**
 @brief Retrieves the schema name for the classification at the given index.
@@ -66,9 +68,7 @@ SU_RESULT SUClassificationInfoGetNumSchemas(
 - \ref SU_ERROR_INVALID_OUTPUT if *schema_name is not a valid object
 */
 SU_RESULT SUClassificationInfoGetSchemaName(
-    SUClassificationInfoRef classification_info,
-    size_t index,
-    SUStringRef* schema_name);
+    SUClassificationInfoRef classification_info, size_t index, SUStringRef* schema_name);
 
 /**
 @brief Retrieves the schema type for the classification at the given index.
@@ -84,9 +84,7 @@ SU_RESULT SUClassificationInfoGetSchemaName(
 - \ref SU_ERROR_INVALID_OUTPUT if *schema_type is not a valid object
 */
 SU_RESULT SUClassificationInfoGetSchemaType(
-    SUClassificationInfoRef classification_info,
-    size_t index,
-    SUStringRef* schema_type);
+    SUClassificationInfoRef classification_info, size_t index, SUStringRef* schema_type);
 
 /**
 @brief Retrieves the classification attribute for the classification at the
@@ -102,8 +100,7 @@ SU_RESULT SUClassificationInfoGetSchemaType(
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if attribute is NULL
 */
 SU_RESULT SUClassificationInfoGetSchemaAttribute(
-    SUClassificationInfoRef classification_info,
-    size_t index,
+    SUClassificationInfoRef classification_info, size_t index,
     SUClassificationAttributeRef* attribute);
 
 /**
@@ -118,12 +115,11 @@ SU_RESULT SUClassificationInfoGetSchemaAttribute(
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if attribute is NULL
 */
 SU_RESULT SUClassificationInfoGetSchemaAttributeByPath(
-    SUClassificationInfoRef classification_info,
-    SUStringRef path,
+    SUClassificationInfoRef classification_info, SUStringRef path,
     SUClassificationAttributeRef* attribute);
 
 #ifdef __cplusplus
 }  //  extern "C" {
 #endif
 
-#endif // SKETCHUP_MODEL_CLASSIFICATION_INFO_H_
+#endif  // SKETCHUP_MODEL_CLASSIFICATION_INFO_H_

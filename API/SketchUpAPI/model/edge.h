@@ -1,4 +1,9 @@
-// Copyright 2013 Trimble Navigation Ltd. All Rights Reserved.
+// Copyright 2013 Trimble Inc. All Rights Reserved.
+
+/**
+ * @file
+ * @brief Interfaces for SUEdgeRef.
+ */
 #ifndef SKETCHUP_MODEL_EDGE_H_
 #define SKETCHUP_MODEL_EDGE_H_
 
@@ -14,9 +19,10 @@ extern "C" {
 #endif
 
 /**
-@struct SUEdgeRef
-@brief  References an edge.
-*/
+ * @struct SUEdgeRef
+ * @extends SUDrawingElementRef
+ * @brief  References an edge.
+ */
 
 /**
 @brief Converts from an \ref SUEdgeRef to an \ref SUEntityRef.
@@ -62,13 +68,12 @@ SU_EXPORT SUDrawingElementRef SUEdgeToDrawingElement(SUEdgeRef edge);
 - The converted \ref SUEdgeRef if the downcast operation succeeds
 - If not, the returned reference will be invalid.
 */
-SU_EXPORT SUEdgeRef SUEdgeFromDrawingElement(SUDrawingElementRef
-                                             drawing_elem);
+SU_EXPORT SUEdgeRef SUEdgeFromDrawingElement(SUDrawingElementRef drawing_elem);
 
 /**
 @brief Creates a new edge object.
 
-The edge object must be subsequently deallocated with \ref SUEdgeRelease unless
+The edge object must be subsequently deallocated with \ref SUEdgeRelease() unless
 the edge object is associated with a parent object.
 @param[out] edge  The edge object.
 @param[in]  start The start position of the edge object.
@@ -80,15 +85,13 @@ the edge object is associated with a parent object.
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if edge is NULL
 - \ref SU_ERROR_GENERIC if start and end specify the same position.
 */
-SU_RESULT SUEdgeCreate(SUEdgeRef* edge,
-                       const struct SUPoint3D* start,
-                       const struct SUPoint3D* end);
+SU_RESULT SUEdgeCreate(SUEdgeRef* edge, const struct SUPoint3D* start, const struct SUPoint3D* end);
 
 /**
 @brief Releases an edge object.
 
-The edge object must have been created with \ref SUEdgeCreate and not
-subsequently associated with a parent object (e.g. \ref SUEntitiesAddEdges).
+The edge object must have been created with SUEdgeCreate() and not
+subsequently associated with a parent object (e.g. SUEntitiesAddEdges()).
 @param[in] edge The edge object.
 @related SUEdgeRef
 @return
@@ -205,8 +208,7 @@ SU_RESULT SUEdgeGetNumFaces(SUEdgeRef edge, size_t* count);
 - \ref SU_ERROR_INVALID_INPUT if edge is an invalid object
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if faces or count is NULL
 */
-SU_RESULT SUEdgeGetFaces(SUEdgeRef edge, size_t len, SUFaceRef faces[],
-                         size_t* count);
+SU_RESULT SUEdgeGetFaces(SUEdgeRef edge, size_t len, SUFaceRef faces[], size_t* count);
 
 /**
 @brief Retrieves the color of an edge object.
@@ -222,7 +224,6 @@ SU_RESULT SUEdgeGetColor(SUEdgeRef edge, SUColor* color);
 
 /**
 @brief Computes the length of the edge with the provided transformation applied.
-@since 
 @param[in]  edge      The edge object.
 @param[in]  transform A transformation to be appllied to the edge.
 @param[out] length    The length retrieved.
@@ -232,9 +233,8 @@ SU_RESULT SUEdgeGetColor(SUEdgeRef edge, SUColor* color);
 - \ref SU_ERROR_INVALID_INPUT if edge is not a valid object
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if color is NULL
 */
-SU_RESULT SUEdgeGetLengthWithTransform(SUEdgeRef edge,
-                                       const struct SUTransformation* transform,
-                                       double* length);
+SU_RESULT SUEdgeGetLengthWithTransform(
+    SUEdgeRef edge, const struct SUTransformation* transform, double* length);
 
 /**
 @brief Sets the color of an edge object.
@@ -247,6 +247,21 @@ SU_RESULT SUEdgeGetLengthWithTransform(SUEdgeRef edge,
 - \ref SU_ERROR_NULL_POINTER_INPUT if color is NULL.
 */
 SU_RESULT SUEdgeSetColor(SUEdgeRef edge, const SUColor* color);
+
+/**
+@brief Determine if \p edge is reversed in \p face 's bounding loop.
+@since SketchUp 2021.1, API 9.1
+@param [in]  edge The edge object.
+@param [in]  face The face object.
+@param [out] reversed The reverse status retrieved.
+@return
+- \ref SU_ERROR_NONE on success
+- \ref SU_ERROR_INVALID_INPUT if \p edge is an invalid object.
+- \ref SU_ERROR_INVALID_INPUT if \p face is an invalid object.
+- \ref SU_ERROR_NULL_POINTER_OUTPUT if \p reversed is null.
+- \ref SU_ERROR_INVALID_ARGUMENT if \p edge is not bounding \p face.
+*/
+SU_RESULT SUEdgeReversedInFace(SUEdgeRef edge, SUFaceRef face, bool* reversed);
 
 #ifdef __cplusplus
 }  // extern "C"

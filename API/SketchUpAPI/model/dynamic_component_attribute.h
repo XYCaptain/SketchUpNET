@@ -1,5 +1,9 @@
-// Copyright 2015 Trimble Navigation Ltd.  All Rights Reserved
+// Copyright 2015 Trimble Inc.  All Rights Reserved
 
+/**
+ * @file
+ * @brief Interfaces for SUDynamicComponentAttributeRef.
+ */
 #ifndef SKETCHUP_MODEL_DYNAMIC_COMPONENT_ATTRIBUTE_H_
 #define SKETCHUP_MODEL_DYNAMIC_COMPONENT_ATTRIBUTE_H_
 
@@ -30,8 +34,7 @@ extern "C" {
   SUStringRef object
 */
 SU_RESULT SUDynamicComponentAttributeGetName(
-    SUDynamicComponentAttributeRef attribute,
-    SUStringRef* name);
+    SUDynamicComponentAttributeRef attribute, SUStringRef* name);
 
 /**
 @brief Gets the display name of the attribute.
@@ -48,8 +51,7 @@ SU_RESULT SUDynamicComponentAttributeGetName(
   SUStringRef object
 */
 SU_RESULT SUDynamicComponentAttributeGetDisplayName(
-    SUDynamicComponentAttributeRef attribute,
-    SUStringRef* display_name);
+    SUDynamicComponentAttributeRef attribute, SUStringRef* display_name);
 
 /**
 @brief Gets the visibility setting of the attribute.
@@ -64,8 +66,7 @@ SU_RESULT SUDynamicComponentAttributeGetDisplayName(
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if visible is NULL
 */
 SU_RESULT SUDynamicComponentAttributeGetVisibility(
-    SUDynamicComponentAttributeRef attribute,
-    bool* visible);
+    SUDynamicComponentAttributeRef attribute, bool* visible);
 
 /**
 @brief Gets the display value of the attribute.
@@ -82,11 +83,10 @@ SU_RESULT SUDynamicComponentAttributeGetVisibility(
   SUStringRef object
 */
 SU_RESULT SUDynamicComponentAttributeGetDisplayValue(
-    SUDynamicComponentAttributeRef attribute,
-    SUStringRef* display_value);
+    SUDynamicComponentAttributeRef attribute, SUStringRef* display_value);
 
 #ifdef __cplusplus
 }  //  extern "C" {
 #endif
 
-#endif // SKETCHUP_MODEL_DYNAMIC_COMPONENT_ATTRIBUTE_H_
+#endif  // SKETCHUP_MODEL_DYNAMIC_COMPONENT_ATTRIBUTE_H_

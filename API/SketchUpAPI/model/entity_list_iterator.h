@@ -1,5 +1,9 @@
 // Copyright 2017 Trimble Inc. All Rights Reserved.
 
+/**
+ * @file
+ * @brief Interfaces for SUEntityListIteratorRef.
+ */
 #ifndef SKETCHUP_MODEL_ENTITY_LIST_ITERATOR_H_
 #define SKETCHUP_MODEL_ENTITY_LIST_ITERATOR_H_
 
@@ -51,8 +55,7 @@ SU_RESULT SUEntityListIteratorRelease(SUEntityListIteratorRef* iterator);
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if entity is NULL
 - \ref SU_ERROR_NO_DATA if the iterator references an invalid entity
 */
-SU_RESULT SUEntityListIteratorGetEntity(SUEntityListIteratorRef iterator,
-    SUEntityRef* entity);
+SU_RESULT SUEntityListIteratorGetEntity(SUEntityListIteratorRef iterator, SUEntityRef* entity);
 
 /**
 @brief Increments the provided iterator.
@@ -78,8 +81,7 @@ SU_RESULT SUEntityListIteratorNext(SUEntityListIteratorRef iterator);
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if in_range is NULL
 - \ref SU_ERROR_OUT_OF_RANGE if the iterator is at the end of the collection
 */
-SU_RESULT SUEntityListIteratorIsInRange(SUEntityListIteratorRef iterator,
-    bool* in_range);
+SU_RESULT SUEntityListIteratorIsInRange(SUEntityListIteratorRef iterator, bool* in_range);
 
 #ifdef __cplusplus
 }  // extern "C"

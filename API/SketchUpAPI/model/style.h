@@ -1,5 +1,9 @@
-// Copyright 2015 Trimble Navigation Ltd. All Rights Reserved.
+// Copyright 2015 Trimble Inc. All Rights Reserved.
 
+/**
+ * @file
+ * @brief Interfaces for SUStyleRef.
+ */
 #ifndef SKETCHUP_MODEL_STYLE_H_
 #define SKETCHUP_MODEL_STYLE_H_
 
@@ -14,6 +18,7 @@ extern "C" {
 
 /**
 @struct SUStyleRef
+@extends SUEntityRef
 @brief  A style entity reference.
 @since SketchUp 2017, API 5.0
 */
@@ -224,15 +229,15 @@ SU_RESULT SUStyleSaveToFile(SUStyleRef style, const char* path);
 */
 enum SUStylePropertyType {
   // Edge Parameters (0 - 63)
-  SUStyleEdgesColor = 0, ///< data type: SUTypedValueType_Color.
-  SUStyleEdgesExtensionsEnabled = 1, ///< data type: SUTypedValueType_Bool.
-  SUStyleEdgesExtensionLength = 2, ///< data type: SUTypedValueType_Int32.
-  SUStyleEdgesProfilesEnabled = 3, ///< data type: SUTypedValueType_Bool.
-  SUStyleEdgesProfileWidth = 4, ///< data type: SUTypedValueType_Int32.
-  SUStyleEdgesDepthCueEnabled = 5, ///< data type: SUTypedValueType_Bool.
-  SUStyleEdgesDepthCueLevels = 6, ///< data type: SUTypedValueType_Int32.
+  SUStyleEdgesColor = 0,              ///< data type: SUTypedValueType_Color.
+  SUStyleEdgesExtensionsEnabled = 1,  ///< data type: SUTypedValueType_Bool.
+  SUStyleEdgesExtensionLength = 2,    ///< data type: SUTypedValueType_Int32.
+  SUStyleEdgesProfilesEnabled = 3,    ///< data type: SUTypedValueType_Bool.
+  SUStyleEdgesProfileWidth = 4,       ///< data type: SUTypedValueType_Int32.
+  SUStyleEdgesDepthCueEnabled = 5,    ///< data type: SUTypedValueType_Bool.
+  SUStyleEdgesDepthCueLevels = 6,     ///< data type: SUTypedValueType_Int32.
   // Background Parameters (64 - 127)
-  SUStyleBackgroundColor = 64 ///< data type: SUTypedValueType_Color.
+  SUStyleBackgroundColor = 64  ///< data type: SUTypedValueType_Color.
 };
 
 /**
@@ -249,9 +254,8 @@ enum SUStylePropertyType {
 - \ref SU_ERROR_OUT_OF_RANGE if attempting to set an unhandled property type
 - \ref SU_ERROR_NO_DATA if attempting to set an unhandled data type
 */
-SU_RESULT SUStyleSetProperty(SUStyleRef style,
-                             enum SUStylePropertyType type,
-                             SUTypedValueRef value);
+SU_RESULT SUStyleSetProperty(
+    SUStyleRef style, enum SUStylePropertyType type, SUTypedValueRef value);
 
 /**
 @brief Retrieves a \ref SUTypedValueRef containing the value of the specified
@@ -270,15 +274,14 @@ SU_RESULT SUStyleSetProperty(SUStyleRef style,
 - \ref SU_ERROR_NO_DATA if the style doesn't contain the specified property.
 - \ref SU_ERROR_GENERIC if the retrieved data type is incorrect.
 */
-SU_RESULT SUStyleGetProperty(SUStyleRef style,
-                             enum SUStylePropertyType type,
-                             SUTypedValueRef* value);
+SU_RESULT SUStyleGetProperty(
+    SUStyleRef style, enum SUStylePropertyType type, SUTypedValueRef* value);
 
 
 /**
 @brief Retrieves an image containing the style's thumbnail.  The given image
-       representation object must have been constructed using \ref
-       SUImageRepCreate. It must be released using \ref SUImageRepRelease.
+       representation object must have been constructed using
+       SUImageRepCreate(). It must be released using SUImageRepRelease().
 @since SketchUp 2017, API 5.0
 @param[in]  style The style object.
 @param[out] image The image object retrieved.

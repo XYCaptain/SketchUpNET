@@ -1,5 +1,9 @@
 // Copyright 2017 Trimble Inc., All rights reserved.
 
+/**
+ * @file
+ * @brief Interfaces for SUTransformation.
+ */
 #ifndef SKETCHUP_GEOMETRY_TRANSFORMATION_H_
 #define SKETCHUP_GEOMETRY_TRANSFORMATION_H_
 
@@ -24,14 +28,14 @@ extern "C" {
 @param[in]  normal    The 3D vector specifying the rotation component of the
                       transformation. This is treated as a unit vector, so any
                       scaling will be ignored.
+@related SUTransformation
 @return
 - \ref SU_ERROR_NONE on success
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if transform is NULL
 - \ref SU_ERROR_NULL_POINTER_INPUT if point or normal are NULL
 */
 SU_RESULT SUTransformationSetFromPointAndNormal(
-    struct SUTransformation* transform,
-    const struct SUPoint3D* point,
+    struct SUTransformation* transform, const struct SUPoint3D* point,
     const struct SUVector3D* normal);
 
 /**
@@ -56,10 +60,8 @@ SU_RESULT SUTransformationSetFromPointAndNormal(
 - \ref SU_ERROR_NULL_POINTER_INPUT if point, x_axis, y_axis, or z_axis are NULL
 */
 SU_RESULT SUTransformationSetFromPointAndAxes(
-    struct SUTransformation* transform,
-    const struct SUPoint3D* point,
-    const struct SUVector3D* x_axis,
-    const struct SUVector3D* y_axis,
+    struct SUTransformation* transform, const struct SUPoint3D* point,
+    const struct SUVector3D* x_axis, const struct SUVector3D* y_axis,
     const struct SUVector3D* z_axis);
 
 /**
@@ -74,8 +76,8 @@ SU_RESULT SUTransformationSetFromPointAndAxes(
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if transform is NULL
 - \ref SU_ERROR_NULL_POINTER_INPUT if vector is NULL
 */
-SU_RESULT SUTransformationTranslation(struct SUTransformation* transform,
-                                      const struct SUVector3D* vector);
+SU_RESULT SUTransformationTranslation(
+    struct SUTransformation* transform, const struct SUVector3D* vector);
 
 /**
 @brief Creates a scale transformation using the given scale value.
@@ -87,8 +89,7 @@ SU_RESULT SUTransformationTranslation(struct SUTransformation* transform,
 - \ref SU_ERROR_NONE on success
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if transform is NULL
 */
-SU_RESULT SUTransformationScale(struct SUTransformation* transform,
-                                double scale);
+SU_RESULT SUTransformationScale(struct SUTransformation* transform, double scale);
 
 /**
 @brief Creates a scale transformation using the given scale values.
@@ -103,10 +104,8 @@ SU_RESULT SUTransformationScale(struct SUTransformation* transform,
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if transform is NULL
 - \ref SU_ERROR_NULL_POINTER_INPUT if x_scale, y_scale, or z_scale are NULL
 */
-SU_RESULT SUTransformationNonUniformScale(struct SUTransformation* transform,
-                                          double x_scale,
-                                          double y_scale,
-                                          double z_scale);
+SU_RESULT SUTransformationNonUniformScale(
+    struct SUTransformation* transform, double x_scale, double y_scale, double z_scale);
 
 /**
 @brief Creates a scale transformation using the given scale value and origin.
@@ -121,9 +120,8 @@ SU_RESULT SUTransformationNonUniformScale(struct SUTransformation* transform,
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if transform is NULL
 - \ref SU_ERROR_NULL_POINTER_INPUT if point or scale are NULL
 */
-SU_RESULT SUTransformationScaleAboutPoint(struct SUTransformation* transform,
-                                          const struct SUPoint3D* point,
-                                          double scale);
+SU_RESULT SUTransformationScaleAboutPoint(
+    struct SUTransformation* transform, const struct SUPoint3D* point, double scale);
 
 /**
 @brief Creates a scale transformation using the given scale values and origin.
@@ -142,11 +140,8 @@ SU_RESULT SUTransformationScaleAboutPoint(struct SUTransformation* transform,
   NULL
 */
 SU_RESULT SUTransformationNonUniformScaleAboutPoint(
-    struct SUTransformation* transform,
-    const struct SUPoint3D* point,
-    double x_scale,
-    double y_scale,
-    double z_scale);
+    struct SUTransformation* transform, const struct SUPoint3D* point, double x_scale,
+    double y_scale, double z_scale);
 
 /**
 @brief Creates a transformation given an origin, vector of rotation, and angle.
@@ -163,10 +158,9 @@ SU_RESULT SUTransformationNonUniformScaleAboutPoint(
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if transform is NULL
 - \ref SU_ERROR_OUT_OF_RANGE if weight is not between 0.0 and 1.0
 */
-SU_RESULT SUTransformationRotation(struct SUTransformation* transform,
-                                   const struct SUPoint3D* point,
-                                   const struct SUVector3D* vector,
-                                   double angle);
+SU_RESULT SUTransformationRotation(
+    struct SUTransformation* transform, const struct SUPoint3D* point,
+    const struct SUVector3D* vector, double angle);
 
 /**
 @brief Performs an interpolation between two transformations. The weight
@@ -186,10 +180,9 @@ SU_RESULT SUTransformationRotation(struct SUTransformation* transform,
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if transform is NULL
 - \ref SU_ERROR_OUT_OF_RANGE if weight is not between 0.0 and 1.0
 */
-SU_RESULT SUTransformationInterpolate(struct SUTransformation* transform,
-                                      const struct SUTransformation* t1,
-                                      const struct SUTransformation* t2,
-                                      double weight);
+SU_RESULT SUTransformationInterpolate(
+    struct SUTransformation* transform, const struct SUTransformation* t1,
+    const struct SUTransformation* t2, double weight);
 
 /**
 @brief Gets whether the transformation is an identity transformation.
@@ -202,8 +195,7 @@ SU_RESULT SUTransformationInterpolate(struct SUTransformation* transform,
 - \ref SU_ERROR_NULL_POINTER_INPUT if transform is NULL
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if is_identity is NULL
 */
-SU_RESULT SUTransformationIsIdentity(const struct SUTransformation* transform,
-                                     bool* is_identity);
+SU_RESULT SUTransformationIsIdentity(const struct SUTransformation* transform, bool* is_identity);
 
 /**
 @brief Gets the inverse transformation of the given transformation object.
@@ -217,8 +209,8 @@ SU_RESULT SUTransformationIsIdentity(const struct SUTransformation* transform,
 - \ref SU_ERROR_NULL_POINTER_INPUT if inverse is NULL
 - \ref SU_ERROR_INVALID_ARGUMENT if the transform cannot be inverted
 */
-SU_RESULT SUTransformationGetInverse(const struct SUTransformation* transform,
-                                     struct SUTransformation* inverse);
+SU_RESULT SUTransformationGetInverse(
+    const struct SUTransformation* transform, struct SUTransformation* inverse);
 
 /**
 @brief Gets the origin point of the given transformation object.
@@ -231,8 +223,8 @@ SU_RESULT SUTransformationGetInverse(const struct SUTransformation* transform,
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if transform is NULL
 - \ref SU_ERROR_NULL_POINTER_INPUT if origin is NULL
 */
-SU_RESULT SUTransformationGetOrigin(const struct SUTransformation* transform,
-                                    struct SUPoint3D* origin);
+SU_RESULT SUTransformationGetOrigin(
+    const struct SUTransformation* transform, struct SUPoint3D* origin);
 
 /**
 @brief Gets the x axis vector of the given transformation object.
@@ -245,8 +237,8 @@ SU_RESULT SUTransformationGetOrigin(const struct SUTransformation* transform,
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if transform is NULL
 - \ref SU_ERROR_NULL_POINTER_INPUT if x_axis is NULL
 */
-SU_RESULT SUTransformationGetXAxis(const struct SUTransformation* transform,
-                                   struct SUVector3D* x_axis);
+SU_RESULT SUTransformationGetXAxis(
+    const struct SUTransformation* transform, struct SUVector3D* x_axis);
 
 /**
 @brief Gets the y axis vector of the given transformation object.
@@ -259,8 +251,8 @@ SU_RESULT SUTransformationGetXAxis(const struct SUTransformation* transform,
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if transform is NULL
 - \ref SU_ERROR_NULL_POINTER_INPUT if y_axis is NULL
 */
-SU_RESULT SUTransformationGetYAxis(const struct SUTransformation* transform,
-                                   struct SUVector3D* y_axis);
+SU_RESULT SUTransformationGetYAxis(
+    const struct SUTransformation* transform, struct SUVector3D* y_axis);
 
 /**
 @brief Gets the z_axis vector of the given transformation object.
@@ -273,8 +265,8 @@ SU_RESULT SUTransformationGetYAxis(const struct SUTransformation* transform,
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if transform is NULL
 - \ref SU_ERROR_NULL_POINTER_INPUT if z_axis is NULL
 */
-SU_RESULT SUTransformationGetZAxis(const struct SUTransformation* transform,
-                                   struct SUVector3D* z_axis);
+SU_RESULT SUTransformationGetZAxis(
+    const struct SUTransformation* transform, struct SUVector3D* z_axis);
 
 /**
 @brief Gets the rotation about the z axis from the given transformation object.
@@ -287,8 +279,8 @@ SU_RESULT SUTransformationGetZAxis(const struct SUTransformation* transform,
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if transform is NULL
 - \ref SU_ERROR_NULL_POINTER_INPUT if z_rotation is NULL
 */
-SU_RESULT SUTransformationGetZRotation(const struct SUTransformation* transform,
-                                       double* z_rotation);
+SU_RESULT SUTransformationGetZRotation(
+    const struct SUTransformation* transform, double* z_rotation);
 
 /**
 @brief Multiplies a transformation by another transformation.
@@ -303,10 +295,10 @@ SU_RESULT SUTransformationGetZRotation(const struct SUTransformation* transform,
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if out_transform is NULL
 - \ref SU_ERROR_NULL_POINTER_INPUT if transform1 or transform2 is NULL
 */
-SU_RESULT SUTransformationMultiply(const struct SUTransformation* transform1,
-                                   const struct SUTransformation* transform2,
-                                   struct SUTransformation* out_transform);
-  
+SU_RESULT SUTransformationMultiply(
+    const struct SUTransformation* transform1, const struct SUTransformation* transform2,
+    struct SUTransformation* out_transform);
+
 /**
 @brief Returns true if transformation has been mirrored.
 @since SketchUp 2019, API 7.0
@@ -318,8 +310,7 @@ SU_RESULT SUTransformationMultiply(const struct SUTransformation* transform1,
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if is_mirrored is NULL
 - \ref SU_ERROR_NULL_POINTER_INPUT if transform is NULL
  */
-SU_RESULT SUTransformationIsMirrored(const struct SUTransformation* transform,
-                                     bool* is_mirrored);
+SU_RESULT SUTransformationIsMirrored(const struct SUTransformation* transform, bool* is_mirrored);
 
 #ifdef __cplusplus
 }  // end extern "C"

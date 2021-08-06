@@ -1,5 +1,9 @@
-// Copyright 2013 Trimble Navigation Ltd.  All Rights Reserved
+// Copyright 2013 Trimble Inc.  All Rights Reserved
 
+/**
+ * @file
+ * @brief Interfaces for SUOptionsManagerRef.
+ */
 #ifndef SKETCHUP_MODEL_OPTIONS_MANAGER_H_
 #define SKETCHUP_MODEL_OPTIONS_MANAGER_H_
 
@@ -29,7 +33,7 @@ extern "C" {
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if count is NULL
 */
 SU_RESULT SUOptionsManagerGetNumOptionsProviders(
-  SUOptionsManagerRef options_manager, size_t* count);
+    SUOptionsManagerRef options_manager, size_t* count);
 
 /**
 @brief  Retrieves options providers associated with the options manager.
@@ -48,8 +52,8 @@ SU_RESULT SUOptionsManagerGetNumOptionsProviders(
   are invalid
 */
 SU_RESULT SUOptionsManagerGetOptionsProviderNames(
-  SUOptionsManagerRef options_manager, size_t len,
-  SUStringRef options_provider_names[], size_t* count);
+    SUOptionsManagerRef options_manager, size_t len, SUStringRef options_provider_names[],
+    size_t* count);
 
 /**
 @brief  Retrieves the options provider given a name.
@@ -66,8 +70,7 @@ SU_RESULT SUOptionsManagerGetOptionsProviderNames(
 - \ref SU_ERROR_NO_DATA if the requested options provider object does not exist
 */
 SU_RESULT SUOptionsManagerGetOptionsProviderByName(
-  SUOptionsManagerRef options_manager, const char* name,
-  SUOptionsProviderRef* options_provider);
+    SUOptionsManagerRef options_manager, const char* name, SUOptionsProviderRef* options_provider);
 
 #ifdef __cplusplus
 }  //  extern "C" {

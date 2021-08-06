@@ -38,6 +38,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SO
 #include "Group.h"
 #include "Instance.h"
 #include "Component.h"
+#include "Axis.cpp"
 
 #pragma once
 
@@ -100,12 +101,15 @@ namespace SketchUpNET
 		/// <summary>
 		/// Containing Model Curves (Arcs)
 		/// </summary>
-		System::Collections::Generic::List<Curve^>^ Curves; 
+		System::Collections::Generic::List<Curve^>^ Curves;
 
 		/// <summary>
 		/// Containing Model Edges (Lines)
 		/// </summary>
 		System::Collections::Generic::List<Edge^>^ Edges;
+
+		Axis^ Axis;
+
 
 		/// <summary>
 		/// Loads a SketchUp Model from filepath without loading Meshes.
@@ -130,10 +134,12 @@ namespace SketchUpNET
 
 
 			SUModelRef model = SU_INVALID;
+			SUModelLoadStatus status;
+			SUResult res = SUModelCreateFromFileWithStatus(&model, path, &status);
 
-			SUResult res = SUModelCreateFromFile(&model, path);
-
-			
+			SUAxesRef axes;
+			SUModelGetAxes(model, &axes);
+			Axis = Axis::FromSU(axes);
 
 			if (res != SU_ERROR_NONE)
 				return false;
@@ -141,7 +147,7 @@ namespace SketchUpNET
 
 			Layers = gcnew System::Collections::Generic::List<Layer^>();
 			Groups = gcnew System::Collections::Generic::List<Group^>();
-			Components = gcnew System::Collections::Generic::Dictionary<String^,Component^>();
+			Components = gcnew System::Collections::Generic::Dictionary<String^, Component^>();
 			Materials = gcnew System::Collections::Generic::Dictionary<String^, Material^>();
 
 			SUEntitiesRef entities = SU_INVALID;
@@ -161,7 +167,7 @@ namespace SketchUpNET
 						Materials->Add(mat->Name, mat);
 				}
 			}
-			
+
 			//Get All Layers
 			size_t layerCount = 0;
 			SUModelGetNumLayers(model, &layerCount);
@@ -211,7 +217,7 @@ namespace SketchUpNET
 			Edges = Edge::GetEntityEdges(entities);
 			Instances = Instance::GetEntityInstances(entities);
 
-			for each (Instance^ var in Instances)
+			for each (Instance ^ var in Instances)
 			{
 				if (Components->ContainsKey(var->ParentID))
 				{
@@ -220,12 +226,12 @@ namespace SketchUpNET
 				}
 			}
 
-			for each (KeyValuePair<String^, Component^>^ cmp in Components)
+			for each (KeyValuePair<String^, Component^> ^ cmp in Components)
 			{
 				FixRefs(cmp->Value);
 			}
 
-			for each (Group^ var in Groups)
+			for each (Group ^ var in Groups)
 			{
 				FixRefs(var);
 			}
@@ -250,7 +256,8 @@ namespace SketchUpNET
 			SUInitialize();
 
 			SUModelRef model = SU_INVALID;
-			SUResult res = SUModelCreateFromFile(&model, path);
+			SUModelLoadStatus status;
+			SUResult res = SUModelCreateFromFileWithStatus(&model, path, &status);
 
 			if (res != SU_ERROR_NONE)
 				return false;
@@ -307,7 +314,8 @@ namespace SketchUpNET
 
 			SUModelRef model = SU_INVALID;
 
-			SUResult res = SUModelCreateFromFile(&model, path);
+			SUModelLoadStatus status;
+			SUResult res = SUModelCreateFromFileWithStatus(&model, path, &status);
 
 
 
@@ -323,7 +331,7 @@ namespace SketchUpNET
 			SUEntitiesAddCurves(entities, Curves->Count, Curve::ListToSU(Curves));
 
 			SUModelSaveToFile(model, Utilities::ToString(filename));
-			
+
 			SUModelRelease(&model);
 			SUTerminate();
 			return true;
@@ -349,8 +357,8 @@ namespace SketchUpNET
 			SUEntitiesAddFaces(entities, Surfaces->Count, Surface::ListToSU(Surfaces));
 			SUEntitiesAddEdges(entities, Edges->Count, Edge::ListToSU(Edges));
 			SUEntitiesAddCurves(entities, Curves->Count, Curve::ListToSU(Curves));
-			
-			
+
+
 			SUModelSaveToFile(model, Utilities::ToString(filename));
 			SUModelRelease(&model);
 			SUTerminate();
@@ -358,36 +366,36 @@ namespace SketchUpNET
 			return true;
 		}
 
-		private:
+	private:
 
 
-			void FixRefs(Component^ comp)
+		void FixRefs(Component^ comp)
+		{
+			for each (Instance ^ var in comp->Instances)
 			{
-				for each (Instance^ var in comp->Instances)
+				if (Components->ContainsKey(var->ParentID))
 				{
-					if (Components->ContainsKey(var->ParentID))
-					{
-						System::Object^ o = Components[var->ParentID];
-						var->Parent = o;
+					System::Object^ o = Components[var->ParentID];
+					var->Parent = o;
 
-						FixRefs(Components[var->ParentID]);
-					}
+					FixRefs(Components[var->ParentID]);
 				}
 			}
+		}
 
-			void FixRefs(Group^ comp)
+		void FixRefs(Group^ comp)
+		{
+			for each (Instance ^ var in comp->Instances)
 			{
-				for each (Instance^ var in comp->Instances)
+				if (Components->ContainsKey(var->ParentID))
 				{
-					if (Components->ContainsKey(var->ParentID))
-					{
-						System::Object^ o = Components[var->ParentID];
-						var->Parent = o;
+					System::Object^ o = Components[var->ParentID];
+					var->Parent = o;
 
-						FixRefs(Components[var->ParentID]);
-					}
+					FixRefs(Components[var->ParentID]);
 				}
 			}
+		}
 
 
 	};

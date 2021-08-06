@@ -1,4 +1,9 @@
-// Copyright 2013 Trimble Navigation Ltd. All Rights Reserved.
+// Copyright 2013-2020 Trimble Inc. All Rights Reserved.
+
+/**
+ * @file
+ * @brief Interfaces for SUCameraRef.
+ */
 #ifndef SKETCHUP_MODEL_CAMERA_H_
 #define SKETCHUP_MODEL_CAMERA_H_
 
@@ -52,10 +57,9 @@ SU_RESULT SUCameraRelease(SUCameraRef* camera);
 - \ref SU_ERROR_INVALID_INPUT if camera is not a valid object
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if position, target, or up_vector is NULL
 */
-SU_RESULT SUCameraGetOrientation(SUCameraRef camera,
-                                 struct SUPoint3D* position,
-                                 struct SUPoint3D* target,
-                                 struct SUVector3D* up_vector);
+SU_RESULT SUCameraGetOrientation(
+    SUCameraRef camera, struct SUPoint3D* position, struct SUPoint3D* target,
+    struct SUVector3D* up_vector);
 
 /**
 @brief Sets the position of a camera object.
@@ -69,10 +73,9 @@ SU_RESULT SUCameraGetOrientation(SUCameraRef camera,
 - \ref SU_ERROR_INVALID_INPUT if camera is not a valid object
 - \ref SU_ERROR_NULL_POINTER_INPUT if position, target or up_vector is NULL
 */
-SU_RESULT SUCameraSetOrientation(SUCameraRef camera,
-                                 const struct SUPoint3D* position,
-                                 const struct SUPoint3D* target,
-                                 const struct SUVector3D* up_vector);
+SU_RESULT SUCameraSetOrientation(
+    SUCameraRef camera, const struct SUPoint3D* position, const struct SUPoint3D* target,
+    const struct SUVector3D* up_vector);
 
 /**
 @brief Retrieves the look at matrix of the camera object.
@@ -80,13 +83,13 @@ SU_RESULT SUCameraSetOrientation(SUCameraRef camera,
 @param[in]  camera         The camera object.
 @param[out] transformation The look at matrix retrieved.
 @related SUCameraRef
-@return 
+@return
 - \ref SU_ERROR_NONE on success.
 - \ref SU_ERROR_INVALID_INPUT if camera is not a valid object
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if transformation is NULL
 */
-SU_RESULT SUCameraGetViewTransformation(SUCameraRef camera,
-                                        struct SUTransformation* transformation);
+SU_RESULT SUCameraGetViewTransformation(
+    SUCameraRef camera, struct SUTransformation* transformation);
 
 /**
 @brief Sets the field of view angle of a camera object. If the camera object is
@@ -155,8 +158,7 @@ SU_RESULT SUCameraGetAspectRatio(SUCameraRef camera, double* aspect_ratio);
 - \ref SU_ERROR_NONE on success
 - \ref SU_ERROR_INVALID_INPUT if camera is not a valid object
 */
-SU_RESULT SUCameraSetOrthographicFrustumHeight(SUCameraRef camera,
-                                               double height);
+SU_RESULT SUCameraSetOrthographicFrustumHeight(SUCameraRef camera, double height);
 
 /**
 @brief Retrieves the height of an orthographic camera object.
@@ -170,8 +172,7 @@ SU_RESULT SUCameraSetOrthographicFrustumHeight(SUCameraRef camera,
        camera)
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if height is NULL
 */
-SU_RESULT SUCameraGetOrthographicFrustumHeight(SUCameraRef camera,
-                                               double* height);
+SU_RESULT SUCameraGetOrthographicFrustumHeight(SUCameraRef camera, double* height);
 
 /**
 @brief Sets a camera object perspective or orthographic.
@@ -209,9 +210,7 @@ SU_RESULT SUCameraGetPerspective(SUCameraRef camera, bool* perspective);
 - \ref SU_ERROR_INVALID_INPUT if camera is an invalid object
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if znear or zfar is NULL
 */
-SU_RESULT SUCameraGetClippingDistances(SUCameraRef camera, 
-                                       double* znear, 
-                                       double* zfar);
+SU_RESULT SUCameraGetClippingDistances(SUCameraRef camera, double* znear, double* zfar);
 
 /**
 @brief Sets whether the field of view value represents the camera view height.
@@ -270,7 +269,6 @@ SU_RESULT SUCameraSetImageWidth(SUCameraRef camera, double width);
 */
 SU_RESULT SUCameraGetImageWidth(SUCameraRef camera, double* width);
 
-
 /**
 @brief Sets the description of a camera object.
 @since SketchUp 2017, API 5.0
@@ -311,8 +309,7 @@ SU_RESULT SUCameraGetDescription(SUCameraRef camera, SUStringRef* desc);
 - \ref SU_ERROR_INVALID_INPUT if camera is not a valid object
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if direction is NULL
 */
-SU_RESULT SUCameraGetDirection(SUCameraRef camera,
-    struct SUVector3D* direction);
+SU_RESULT SUCameraGetDirection(SUCameraRef camera, struct SUVector3D* direction);
 
 /**
 @brief Sets whether a camera is two dimensional. 2 point perspective mode and
@@ -378,12 +375,11 @@ SU_RESULT SUCameraGetScale2D(SUCameraRef camera, double* scale);
 - \ref SU_ERROR_INVALID_INPUT if camera is not a valid object
 - \ref SU_ERROR_NULL_POINTER_INPUT if center is NULL
 */
-SU_RESULT SUCameraSetCenter2D(SUCameraRef camera,
-    const struct SUPoint3D* center);
+SU_RESULT SUCameraSetCenter2D(SUCameraRef camera, const struct SUPoint3D* center);
 
 /**
 @brief Retrieves the camera's 2D center point. Since this is accessing a 2D
-       point with a 3D point structure the z coordinate is always set to 0.0. 
+       point with a 3D point structure the z coordinate is always set to 0.0.
 @since SketchUp 2017, API 5.0
 @param[in]  camera The camera object.
 @param[out] center The center point retrieved.

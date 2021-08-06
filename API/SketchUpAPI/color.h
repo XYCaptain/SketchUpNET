@@ -1,5 +1,9 @@
 // Copyright 2013 Trimble Inc., All rights reserved.
 
+/**
+ * @file
+ * @brief Interfaces for SUColor.
+ */
 #ifndef SKETCHUP_COLOR_H_
 #define SKETCHUP_COLOR_H_
 
@@ -21,10 +25,10 @@ typedef unsigned char SUByte;
 @brief Stores a RGBA color with 8 bit channels.
 */
 typedef struct {
-  SUByte red;
-  SUByte green;
-  SUByte blue;
-  SUByte alpha;
+  SUByte red;    ///< Red color channel
+  SUByte green;  ///< Green color channel
+  SUByte blue;   ///< Blue color channel
+  SUByte alpha;  ///< Alpha color channel
 } SUColor;
 
 /**
@@ -42,8 +46,8 @@ typedef struct {
 - \ref SU_ERROR_OUT_OF_RANGE if weight is out of range
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if blended_color is NULL
 */
-SU_RESULT SUColorBlend(const SUColor color1, const SUColor color2,
-                       const double weight, SUColor* blended_color);
+SU_RESULT SUColorBlend(
+    const SUColor color1, const SUColor color2, const double weight, SUColor* blended_color);
 
 /**
 @brief Retrieves the number of color names recognized by SketchUp.
@@ -54,7 +58,7 @@ SU_RESULT SUColorBlend(const SUColor color1, const SUColor color2,
 - \ref SU_ERROR_NONE on success
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if size is NULL
 */
-SU_RESULT SUColorGetNumNames(size_t *size);
+SU_RESULT SUColorGetNumNames(size_t* size);
 
 /**
 @brief Retrives all the color names recognized by SketchUp.
@@ -79,7 +83,7 @@ SU_RESULT SUColorGetNames(SUStringRef names[], const size_t size);
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if color is NULL
 - \ref SU_ERROR_INVALID_ARGUMENT if name is empty
 */
-SU_RESULT SUColorSetByName(SUColor *color, const char *name);
+SU_RESULT SUColorSetByName(SUColor* color, const char* name);
 
 /**
 @brief Sets the color with the provided value. The passed in value can either be
@@ -93,7 +97,7 @@ SU_RESULT SUColorSetByName(SUColor *color, const char *name);
 - \ref SU_ERROR_NONE on success
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if color is NULL
 */
-SU_RESULT SUColorSetByValue(SUColor *color, const size_t value);
+SU_RESULT SUColorSetByValue(SUColor* color, const size_t value);
 
 #ifdef __cplusplus
 }  // end extern "C"

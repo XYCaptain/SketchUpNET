@@ -1,4 +1,9 @@
-// Copyright 2013 Trimble Navigation Ltd. All Rights Reserved.
+// Copyright 2013-2021 Trimble Inc. All Rights Reserved.
+
+/**
+ * @file
+ * @brief Interfaces for SUFaceRef.
+ */
 #ifndef SKETCHUP_MODEL_FACE_H_
 #define SKETCHUP_MODEL_FACE_H_
 
@@ -16,6 +21,7 @@ extern "C" {
 
 /**
 @struct SUFaceRef
+@extends SUDrawingElementRef
 @brief  References a face.
 */
 
@@ -63,11 +69,15 @@ SU_EXPORT SUDrawingElementRef SUFaceToDrawingElement(SUFaceRef face);
 - The converted \ref SUFaceRef if the downcast operation succeeds
 - If not, the returned reference will be invalid
 */
-SU_EXPORT SUFaceRef SUFaceFromDrawingElement(SUDrawingElementRef
-                                             drawing_elem);
+SU_EXPORT SUFaceRef SUFaceFromDrawingElement(SUDrawingElementRef drawing_elem);
 
 /**
 @brief Creates a face without holes.
+
+@bug SUEntitiesAddFaces() will not merge overlapping vertices and edges, which
+  produces SketchUp models with unexpected state. Avoid using these functions
+  and instead use SUGeometryInputRef along with SUEntitiesFill().
+
 @param[out] face       The face object created.
 @param[in]  vertices3d The array of vertices that make the face.
 @param[in]  outer_loop The loop input that describes the outer loop of the face.
@@ -84,12 +94,16 @@ SU_EXPORT SUFaceRef SUFaceFromDrawingElement(SUDrawingElementRef
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if face is NULL
 - \ref SU_ERROR_OVERWRITE_VALID if face already refers to a valid object
 */
-SU_RESULT SUFaceCreate(SUFaceRef* face,
-                       const struct SUPoint3D vertices3d[],
-                       SULoopInputRef* outer_loop);
+SU_RESULT SUFaceCreate(
+    SUFaceRef* face, const struct SUPoint3D vertices3d[], SULoopInputRef* outer_loop);
 
 /**
 @brief Creates a simple face without holes from an array of vertices.
+
+@bug SUEntitiesAddFaces() will not merge overlapping vertices and edges, which
+  produces SketchUp models with unexpected state. Avoid using these functions
+  and instead use SUGeometryInputRef along with SUEntitiesFill().
+
 @param[out] face       The face object created.
 @param[in]  vertices3d The array of vertices of the face.
 @param[in]  len        The length of the array of vertices.
@@ -102,9 +116,7 @@ SU_RESULT SUFaceCreate(SUFaceRef* face,
   1.0e-3 tolerance
 - \ref SU_ERROR_OVERWRITE_VALID if face already refers to a valid face object
 */
-SU_RESULT SUFaceCreateSimple(SUFaceRef* face,
-                             const struct SUPoint3D vertices3d[],
-                             size_t len);
+SU_RESULT SUFaceCreateSimple(SUFaceRef* face, const struct SUPoint3D vertices3d[], size_t len);
 
 /**
 @brief Retrieves the normal vector of a face object.
@@ -153,8 +165,7 @@ SU_RESULT SUFaceGetNumEdges(SUFaceRef face, size_t* count);
 - \ref SU_ERROR_INVALID_INPUT if face is not a valid object
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if edges or count is NULL
 */
-SU_RESULT SUFaceGetEdges(SUFaceRef face, size_t len, SUEdgeRef edges[],
-  size_t* count);
+SU_RESULT SUFaceGetEdges(SUFaceRef face, size_t len, SUEdgeRef edges[], size_t* count);
 
 /**
 @brief Retrieves the number of edge uses in a face.
@@ -182,8 +193,7 @@ SU_RESULT SUFaceGetNumEdgeUses(SUFaceRef face, size_t* count);
 - \ref SU_ERROR_INVALID_INPUT if face is not a valid object
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if edges or count is NULL
 */
-SU_RESULT SUFaceGetEdgeUses(SUFaceRef face, size_t len, SUEdgeUseRef edges[],
-  size_t* count);
+SU_RESULT SUFaceGetEdgeUses(SUFaceRef face, size_t len, SUEdgeUseRef edges[], size_t* count);
 
 /**
 @brief Retrieves the plane of the face.
@@ -221,8 +231,7 @@ SU_RESULT SUFaceGetNumVertices(SUFaceRef face, size_t* count);
 - \ref SU_ERROR_INVALID_INPUT if face is not a valid object
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if vertices or count is NULL
 */
-SU_RESULT SUFaceGetVertices(SUFaceRef face, size_t len,
-                            SUVertexRef vertices[], size_t* count);
+SU_RESULT SUFaceGetVertices(SUFaceRef face, size_t len, SUVertexRef vertices[], size_t* count);
 
 /**
 @brief Retrieves the outer loop of a face object.
@@ -261,8 +270,7 @@ SU_RESULT SUFaceGetNumInnerLoops(SUFaceRef face, size_t* count);
 - \ref SU_ERROR_INVALID_INPUT if face object is not a valid object
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if loops or count is NULL
 */
-SU_RESULT SUFaceGetInnerLoops(SUFaceRef face, size_t len, SULoopRef loops[],
-                              size_t* count);
+SU_RESULT SUFaceGetInnerLoops(SUFaceRef face, size_t len, SULoopRef loops[], size_t* count);
 
 /**
 @brief Adds a hole to the face. The face object must be associated with a parent
@@ -281,9 +289,8 @@ SU_RESULT SUFaceGetInnerLoops(SUFaceRef face, size_t len, SULoopRef loops[],
 - \ref SU_ERROR_GENERIC if the face object is not associated with a parent
   component.
 */
-SU_RESULT SUFaceAddInnerLoop(SUFaceRef face,
-                             const struct SUPoint3D vertices3d[],
-                             SULoopInputRef* loop);
+SU_RESULT SUFaceAddInnerLoop(
+    SUFaceRef face, const struct SUPoint3D vertices3d[], SULoopInputRef* loop);
 
 /**
 @brief Retrieves the number of openings in a face.
@@ -299,8 +306,8 @@ SU_RESULT SUFaceAddInnerLoop(SUFaceRef face,
 SU_RESULT SUFaceGetNumOpenings(SUFaceRef face, size_t* count);
 
 /**
-@brief Retrieves the openings in the face. The retrieved \ref SUOpeningRef objects
-       must be manually released by calling \ref SUOpeningRelease on each one.
+@brief Retrieves the openings in the face. The retrieved SUOpeningRef() objects
+       must be manually released by calling SUOpeningRelease() on each one.
 @since SketchUp 2014, API 2.0
 @param[in]  face     The face object.
 @param[in]  len      The number of openings to retrieve.
@@ -312,8 +319,7 @@ SU_RESULT SUFaceGetNumOpenings(SUFaceRef face, size_t* count);
 - \ref SU_ERROR_INVALID_INPUT if face is not a valid object
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if openings or count is NULL
 */
-SU_RESULT SUFaceGetOpenings(SUFaceRef face, size_t len, SUOpeningRef openings[],
-                            size_t* count);
+SU_RESULT SUFaceGetOpenings(SUFaceRef face, size_t len, SUOpeningRef openings[], size_t* count);
 /**
 @brief Retrieves the front material associated with a face object.
 @param[in]  face     The face object.
@@ -350,8 +356,7 @@ SU_RESULT SUFaceSetFrontMaterial(SUFaceRef face, SUMaterialRef material);
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if material is NULL
 - \ref SU_ERROR_INVALID_ARGUMENT is the material is owned by a layer or image
 */
-SU_RESULT SUFaceGetBackMaterial(SUFaceRef face,
-                                SUMaterialRef* material);
+SU_RESULT SUFaceGetBackMaterial(SUFaceRef face, SUMaterialRef* material);
 
 /**
 @brief Sets the back material of a face object.
@@ -421,9 +426,8 @@ SU_RESULT SUFaceGetArea(SUFaceRef face, double* area);
 - \ref SU_ERROR_NULL_POINTER_INPUT if transformation is NULL
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if area is NULL
 */
-SU_RESULT SUFaceGetAreaWithTransform(SUFaceRef face,
-                                     const struct SUTransformation* transform,
-                                     double *area);
+SU_RESULT SUFaceGetAreaWithTransform(
+    SUFaceRef face, const struct SUTransformation* transform, double* area);
 
 /**
 @brief Retrieves a flag indicating whether the face is complex, i.e. contains
@@ -449,16 +453,16 @@ SU_RESULT SUFaceIsComplex(SUFaceRef face, bool* is_complex);
 @param[in]  texture_writer An optional texture writer to aid in texture
                            coordinate calculations for non-affine textures.
 @param[out] uv_helper      The UV helper object created. Must be deallocated
-                           via \ref SUUVHelperRelease.
+                           via SUUVHelperRelease().
 @related SUFaceRef
 @return
 - \ref SU_ERROR_NONE on success
 - \ref SU_ERROR_INVALID_INPUT if face is not a valid object
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if uv_helper is NULL
 */
-SU_RESULT SUFaceGetUVHelper(SUFaceRef face, bool front, bool back,
-                            SUTextureWriterRef texture_writer,
-                            SUUVHelperRef* uv_helper);
+SU_RESULT SUFaceGetUVHelper(
+    SUFaceRef face, bool front, bool back, SUTextureWriterRef texture_writer,
+    SUUVHelperRef* uv_helper);
 
 /**
 @brief Creates a UV helper for the face given a specific texture handle.
@@ -472,18 +476,15 @@ SU_RESULT SUFaceGetUVHelper(SUFaceRef face, bool front, bool back,
 @param[in] textureHandle  The handle of the image that should be mapped to the
                           face.
 @param[out] uv_helper     The UV helper object created.  Must be deallocated
-                          via \ref SUUVHelperRelease.
+                          via SUUVHelperRelease().
 @related SUFaceRef
 @return
 - \ref SU_ERROR_NONE on success
 - \ref SU_ERROR_INVALID_INPUT if face is not a valid object
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if uv_helper is NULL.
 */
-SU_RESULT SUFaceGetUVHelperWithTextureHandle(SUFaceRef face,
-    bool front,
-    bool back,
-    SUTextureWriterRef texture_writer,
-    long textureHandle,
+SU_RESULT SUFaceGetUVHelperWithTextureHandle(
+    SUFaceRef face, bool front, bool back, SUTextureWriterRef texture_writer, long textureHandle,
     SUUVHelperRef* uv_helper);
 
 /**
@@ -497,8 +498,7 @@ SU_RESULT SUFaceGetUVHelperWithTextureHandle(SUFaceRef face,
 - \ref SU_ERROR_INVALID_INPUT if the face is not a valid object
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if count is NULL
 */
-SU_RESULT SUFaceGetNumAttachedDrawingElements(SUFaceRef face,
-                                              size_t* count);
+SU_RESULT SUFaceGetNumAttachedDrawingElements(SUFaceRef face, size_t* count);
 
 /**
 @brief Retrieves the attached drawing elements in the face.
@@ -513,13 +513,12 @@ SU_RESULT SUFaceGetNumAttachedDrawingElements(SUFaceRef face,
 - \ref SU_ERROR_INVALID_INPUT if face is not a valid object
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if elems or count is NULL
 */
-SU_RESULT SUFaceGetAttachedDrawingElements(SUFaceRef face,
-                                           size_t len,
-                                           SUDrawingElementRef elems[],
-                                           size_t* count);
+SU_RESULT SUFaceGetAttachedDrawingElements(
+    SUFaceRef face, size_t len, SUDrawingElementRef elems[], size_t* count);
 
 /**
 @brief Reverses a face object.
+@since SketchUp 2016, API 4.0
 @param[in] face The face object.
 @related SUFaceRef
 @return
@@ -528,7 +527,141 @@ SU_RESULT SUFaceGetAttachedDrawingElements(SUFaceRef face,
 */
 SU_RESULT SUFaceReverse(SUFaceRef face);
 
+/**
+@brief Retrieves the world and UV coordinates of a UV tile.
 
+The UV tile bounds the given reference point on the plane of the face. If the
+reference isn't on the plane of the face it will be projected onto it.
+
+The world coordinates are on the plane of the face unless the texture is
+projected. When the texture is projected the the world points are on an
+arbitrary plane that is perpendicular to the projection direction.
+
+The returned \p points and \p uv_coords can be used directly with
+\ref SUMaterialPositionInput.
+
+@since SketchUp 2021.1, API 9.1
+
+@param[in] face
+@param[in] reference A point of reference on the plane of the face.
+@param[in] front Flag indicating whether to compute the UV Tile for the front
+                 side of the face.
+@param[out] points World coordinates for the bounding UV tile.
+@param[out] uv_coords UV coordinates for the bounding UV tile.
+@related SUFaceRef
+@return
+- \ref SU_ERROR_NONE on success
+- \ref SU_ERROR_INVALID_INPUT if \p face is not a valid object.
+- \ref SU_ERROR_NO_DATA if the \p face has no textured material of the given side.
+- \ref SU_ERROR_NULL_POINTER_INPUT if \p reference is NULL.
+- \ref SU_ERROR_NULL_POINTER_OUTPUT if \p points is NULL.
+- \ref SU_ERROR_NULL_POINTER_OUTPUT if \p uv_coords is NULL.
+*/
+SU_RESULT SUFaceGetUVTileAt(
+    SUFaceRef face, const struct SUPoint3D* reference, bool front, struct SUPoint3D points[4],
+    struct SUPoint2D uv_coords[4]);
+
+/**
+@brief Retrieves a flag indicating whether the face has a positioned texture.
+
+A texture is positioned when it's not using the default texture coordinates.
+
+When a user uses the Paint Bucket Tool to apply a material sampled from the
+Material Browser it will use default texture coordinates and not be
+positioned. It will be positioned if the user uses the Position Texture Tool.
+
+@since SketchUp 2021.1, API 9.1
+
+@param[in]  face
+@param[in] front  Flag indicating whether to check the front or back side of the face.
+@param[out] is_positioned
+@related SUFaceRef
+@return
+- \ref SU_ERROR_NONE on success.
+- \ref SU_ERROR_INVALID_INPUT if \p face is not a valid face object.
+- \ref SU_ERROR_NULL_POINTER_OUTPUT if \p is_positioned is NULL.
+*/
+SU_RESULT SUFaceIsTexturePositioned(SUFaceRef face, bool front, bool* is_positioned);
+
+/**
+@brief Retrieves a flag indicating whether the face has a projected texture.
+
+A texture is projected when the user enables this property via the Position Texture Tool.
+
+In SketchUp a projected texture can use an arbitrary plane, rather than the face's own plane. The
+projection vector defines the normal of this plane and used this to project the texture onto the
+face.
+
+@since SketchUp 2021.1, API 9.1
+
+@param[in]  face
+@param[in] front  Flag indicating whether to check the front or back side of the face.
+@param[out] is_projected
+@related SUFaceRef
+@return
+- \ref SU_ERROR_NONE on success.
+- \ref SU_ERROR_INVALID_INPUT if \p face is not a valid face object.
+- \ref SU_ERROR_NULL_POINTER_OUTPUT if \p is_projected is NULL.
+*/
+SU_RESULT SUFaceIsTextureProjected(SUFaceRef face, bool front, bool* is_projected);
+
+/**
+@brief Retrieves a vector representing the projection direction for the texture on
+       the given side of the face.
+
+@since SketchUp 2021.1, API 9.1
+
+@param[in]  face
+@param[in] front  Flag indicating whether to use the front or back side of the face.
+@param[out] vector
+@related SUFaceRef
+@return
+- \ref SU_ERROR_NONE on success.
+- \ref SU_ERROR_INVALID_INPUT if \p face is not a valid face object.
+- \ref SU_ERROR_NO_DATA if \p face does not have a projected material applied.
+- \ref SU_ERROR_NULL_POINTER_OUTPUT if \p vector is NULL.
+*/
+SU_RESULT SUFaceGetTextureProjection(SUFaceRef face, bool front, struct SUVector3D* vector);
+
+/**
+@brief Clears the texture projection.
+
+This is similar to toggling off Projection from the Position Texture tool in the UI.
+
+@since SketchUp 2021.1, API 9.1
+
+@param[in]  face
+@param[in] front  Flag indicating whether to clear the front or back side of the face.
+@related SUFaceRef
+@return
+- \ref SU_ERROR_NONE on success.
+- \ref SU_ERROR_INVALID_INPUT if \p face is not a valid face object.
+*/
+SU_RESULT SUFaceClearTextureProjection(SUFaceRef face, bool front);
+
+/**
+@brief Positions a textured material on the face.
+
+The texture is positioned using 1 to 4 pairs of model and uv points. The points are used in pairs to
+describe where a point in the texture image is positioned on the face. This is similar to how
+textures are positioned in the UI using the Position Texture tool.
+
+@since SketchUp 2021.1, API 9.1
+
+@param[in] face
+@param[in] front  Flag indicating whether to use the front or back side of the face.
+@param[in] mapping
+@related SUFaceRef
+@return
+- \ref SU_ERROR_NONE on success
+- \ref SU_ERROR_INVALID_INPUT if \p face is not a valid face object
+- \ref SU_ERROR_NULL_POINTER_INPUT if \p mapping is NULL
+- \ref SU_ERROR_INVALID_ARGUMENT if \p mapping doesn't have a valid textured material
+- \ref SU_ERROR_INVALID_ARGUMENT if \p mapping doesn't have 1-4 points/uv_coords.
+- \ref SU_ERROR_INVALID_ARGUMENT if valid texture coordinates could not be computed from \p mapping.
+*/
+SU_RESULT SUFacePositionMaterial(
+    SUFaceRef face, bool front, struct SUMaterialPositionInput* mapping);
 
 #ifdef __cplusplus
 }  //  extern "C" {

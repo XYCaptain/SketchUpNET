@@ -1,4 +1,9 @@
-// Copyright 2013 Trimble Navigation Ltd. All Rights Reserved.
+// Copyright 2013 Trimble Inc. All Rights Reserved.
+
+/**
+ * @file
+ * @brief Interfaces for SUCurveRef.
+ */
 #ifndef SKETCHUP_MODEL_CURVE_H_
 #define SKETCHUP_MODEL_CURVE_H_
 
@@ -11,6 +16,7 @@ extern "C" {
 
 /**
 @struct SUCurveRef
+@extends SUEntityRef
 @brief  References a curve.
 */
 
@@ -18,10 +24,7 @@ extern "C" {
 @enum SUCurveType
 @brief Defines curve types that can be represented by \ref SUCurveRef.
 */
-enum SUCurveType {
-  SUCurveType_Simple = 0,
-  SUCurveType_Arc
-};
+enum SUCurveType { SUCurveType_Simple = 0, SUCurveType_Arc };
 
 /**
 @brief Converts from an \ref SUCurveRef to an \ref SUEntityRef.
@@ -52,7 +55,7 @@ SU_EXPORT SUCurveRef SUCurveFromEntity(SUEntityRef entity);
         for each edge in the range [0, N] the start position of each edge is the
         same as the end position of the previous edge in the array.  Each
         element of the array of edges is subsequently associated with the
-        created curve object and must not be deallocated via \ref SUEdgeRelease.
+        created curve object and must not be deallocated via SUEdgeRelease().
 @param curve The curve object created.
 @param edges The array of edge objects.
 @param len   The number of edge objects in the array.
@@ -67,8 +70,7 @@ SU_EXPORT SUCurveRef SUCurveFromEntity(SUEntityRef entity);
   in the array are not connected, if any of the edges are associated with a face
   object, or the edges describe a loop
 */
-SU_RESULT SUCurveCreateWithEdges(SUCurveRef* curve, const SUEdgeRef edges[],
-                                 size_t len);
+SU_RESULT SUCurveCreateWithEdges(SUCurveRef* curve, const SUEdgeRef edges[], size_t len);
 
 /**
 @brief  Releases a curve object and its associated edge objects.
@@ -119,8 +121,20 @@ SU_RESULT SUCurveGetNumEdges(SUCurveRef curve, size_t* count);
 - \ref SU_ERROR_INVALID_INPUT if curve is not a valid curve object
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if edges or count is NULL
 */
-SU_RESULT SUCurveGetEdges(SUCurveRef curve, size_t len, SUEdgeRef edges[],
-                          size_t* count);
+SU_RESULT SUCurveGetEdges(SUCurveRef curve, size_t len, SUEdgeRef edges[], size_t* count);
+
+/**
+@brief True if this edge was originally created by the polygon tool, otherwise false.
+@since SketchUp 2021.1, API 9.1
+@param[in]  curve
+@param[out] is_curve The edges retrieved.
+@related SUCurveRef
+@return
+- \ref SU_ERROR_NONE on success
+- \ref SU_ERROR_INVALID_INPUT if \p curve is not a valid curve object
+- \ref SU_ERROR_NULL_POINTER_OUTPUT if \p is_curve is NULL
+*/
+SU_RESULT SUCurveIsPolygon(SUCurveRef curve, bool* is_curve);
 
 #ifdef __cplusplus
 }  // extern "C"

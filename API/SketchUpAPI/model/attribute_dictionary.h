@@ -1,4 +1,9 @@
-// Copyright 2013 Trimble Navigation Ltd.  All Rights Reserved
+// Copyright 2013-2020 Trimble Inc.  All Rights Reserved
+
+/**
+ * @file
+ * @brief Interfaces for SUAttributeDictionaryRef.
+ */
 #ifndef SKETCHUP_MODEL_ATTRIBUTE_DICTIONARY_H_
 #define SKETCHUP_MODEL_ATTRIBUTE_DICTIONARY_H_
 
@@ -24,8 +29,7 @@ extern "C" {
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if dictionary is NULL
 - \ref SU_ERROR_OVERWRITE_VALID if dictionary already references a valid object
 */
-SU_RESULT SUAttributeDictionaryCreate(SUAttributeDictionaryRef* dictionary,
-                                      const char* name);
+SU_RESULT SUAttributeDictionaryCreate(SUAttributeDictionaryRef* dictionary, const char* name);
 
 /**
 @brief Releases an attributes dictionary object and its associated attributes.
@@ -50,8 +54,7 @@ SU_RESULT SUAttributeDictionaryRelease(SUAttributeDictionaryRef* dictionary);
 - The converted \ref SUEntityRef if dictionary is a valid object
 - If not, the returned reference will be invalid
 */
-SU_EXPORT SUEntityRef SUAttributeDictionaryToEntity(SUAttributeDictionaryRef
-                                                    dictionary);
+SU_EXPORT SUEntityRef SUAttributeDictionaryToEntity(SUAttributeDictionaryRef dictionary);
 
 /**
 @brief Converts from an \ref SUEntityRef to an \ref SUAttributeDictionaryRef.
@@ -64,11 +67,11 @@ SU_EXPORT SUEntityRef SUAttributeDictionaryToEntity(SUAttributeDictionaryRef
 - The converted \ref SUAttributeDictionaryRef if the downcast operation succeeds
 - If not, the returned reference will be invalid
 */
-SU_EXPORT SUAttributeDictionaryRef SUAttributeDictionaryFromEntity(SUEntityRef
-                                                                   entity);
+SU_EXPORT SUAttributeDictionaryRef SUAttributeDictionaryFromEntity(SUEntityRef entity);
 
 /**
 @struct SUAttributeDictionaryRef
+@extends SUEntityRef
 @brief  A dictionary type with SUStringRef objects as keys and SUTypedValueRef
         objects as values.
 */
@@ -85,8 +88,7 @@ SU_EXPORT SUAttributeDictionaryRef SUAttributeDictionaryFromEntity(SUEntityRef
 - \ref SU_ERROR_INVALID_OUTPUT if name does not point to a valid \ref
   SUStringRef object
 */
-SU_RESULT SUAttributeDictionaryGetName(SUAttributeDictionaryRef dictionary,
-                                       SUStringRef* name);
+SU_RESULT SUAttributeDictionaryGetName(SUAttributeDictionaryRef dictionary, SUStringRef* name);
 
 /**
 @brief Inserts a key-value pair into an attribute dictionary object.
@@ -99,10 +101,10 @@ SU_RESULT SUAttributeDictionaryGetName(SUAttributeDictionaryRef dictionary,
 - \ref SU_ERROR_NONE on success
 - \ref SU_ERROR_INVALID_INPUT if dictionary or value_in is an invalid object.
 - \ref SU_ERROR_NULL_POINTER_INPUT if key is NULL
+- \ref SU_ERROR_INVALID_OPERATION if dictionary is read-only.
 */
-SU_RESULT SUAttributeDictionarySetValue(SUAttributeDictionaryRef dictionary,
-                                        const char* key,
-                                        SUTypedValueRef value_in);
+SU_RESULT SUAttributeDictionarySetValue(
+    SUAttributeDictionaryRef dictionary, const char* key, SUTypedValueRef value_in);
 
 /**
 @brief Retrieves the value associated with a given key from an attribute
@@ -111,7 +113,7 @@ SU_RESULT SUAttributeDictionarySetValue(SUAttributeDictionaryRef dictionary,
 @param[in] key        The key of the key-value pair. Assumed to be UTF-8
                       encoded.
 @param[out] value_out The value retrieved. Must be a valid object, i.e.
-                      must have been allocated via \ref SUTypedValueCreate.
+                      must have been allocated via SUTypedValueCreate().
 @related SUAttributeDictionaryRef
 @return
 - \ref SU_ERROR_NONE on success
@@ -122,9 +124,8 @@ SU_RESULT SUAttributeDictionarySetValue(SUAttributeDictionaryRef dictionary,
 - \ref SU_ERROR_NO_DATA if there is no value associated with the given key in
   the dictionary
 */
-SU_RESULT SUAttributeDictionaryGetValue(SUAttributeDictionaryRef dictionary,
-                                        const char* key,
-                                        SUTypedValueRef* value_out);
+SU_RESULT SUAttributeDictionaryGetValue(
+    SUAttributeDictionaryRef dictionary, const char* key, SUTypedValueRef* value_out);
 
 /**
 @brief Retrieves the number of keys in an attribute dictionary object.
@@ -136,8 +137,7 @@ SU_RESULT SUAttributeDictionaryGetValue(SUAttributeDictionaryRef dictionary,
 - \ref SU_ERROR_INVALID_INPUT if dictionary is an invalid object
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if count is NULL
 */
-SU_RESULT SUAttributeDictionaryGetNumKeys(SUAttributeDictionaryRef dictionary,
-                                          size_t* count);
+SU_RESULT SUAttributeDictionaryGetNumKeys(SUAttributeDictionaryRef dictionary, size_t* count);
 
 /**
 @brief Retrieves the array of keys of an attribute dictionary object.
@@ -151,10 +151,8 @@ SU_RESULT SUAttributeDictionaryGetNumKeys(SUAttributeDictionaryRef dictionary,
 - \ref SU_ERROR_INVALID_INPUT if dictionary is an invalid object
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if keys or count is NULL
 */
-SU_RESULT SUAttributeDictionaryGetKeys(SUAttributeDictionaryRef dictionary,
-                                       size_t len,
-                                       SUStringRef keys[],
-                                       size_t* count);
+SU_RESULT SUAttributeDictionaryGetKeys(
+    SUAttributeDictionaryRef dictionary, size_t len, SUStringRef keys[], size_t* count);
 
 #ifdef __cplusplus
 }  //  extern "C" {

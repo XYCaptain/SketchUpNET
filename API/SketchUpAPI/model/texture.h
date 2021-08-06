@@ -1,5 +1,9 @@
-// Copyright 2013 Trimble Navigation Ltd. All Rights Reserved.
+// Copyright 2013 Trimble Inc. All Rights Reserved.
 
+/**
+ * @file
+ * @brief Interfaces for SUTextureRef.
+ */
 #ifndef SKETCHUP_MODEL_TEXTURE_H_
 #define SKETCHUP_MODEL_TEXTURE_H_
 
@@ -14,6 +18,7 @@ extern "C" {
 
 /**
 @struct SUTextureRef
+@extends SUEntityRef
 @brief  Used to manage image data that can be associated with any \ref
         SUEntityRef.
 */
@@ -47,8 +52,8 @@ SU_EXPORT SUTextureRef SUTextureFromEntity(SUEntityRef entity);
         material), then the texture object must be deallocated with \ref
         SUTextureRelease.
 @deprecated Will be removed in the next version of the SketchUp API. The
-            functionality is replaced by SUImageRepSetData followed by
-            SUTextureCreateFromImageRep.
+            functionality is replaced by SUImageRepSetData() followed by
+            SUTextureCreateFromImageRep().
 @param[out] texture        The texture object created.
 @param[in]  width          The width in pixels of the texture data.
 @param[in]  height         The height in pixels of the texture data.
@@ -62,10 +67,9 @@ SU_EXPORT SUTextureRef SUTextureFromEntity(SUEntityRef entity);
 - \ref SU_ERROR_OVERWRITE_VALID if texture already references a valid object
 */
 SU_DEPRECATED_FUNCTION("5.0")
-SU_RESULT SUTextureCreateFromImageData(SUTextureRef* texture,
-                                       size_t width, size_t height,
-                                       size_t bits_per_pixel,
-                                       const SUByte pixel_data[]);
+SU_RESULT SUTextureCreateFromImageData(
+    SUTextureRef* texture, size_t width, size_t height, size_t bits_per_pixel,
+    const SUByte pixel_data[]);
 
 /**
 @brief Creates a new texture object from an image representation object.
@@ -80,8 +84,7 @@ SU_RESULT SUTextureCreateFromImageData(SUTextureRef* texture,
 - \ref SU_ERROR_INVALID_INPUT if image is not a valid object
 - \ref SU_ERROR_NO_DATA if the image contains no data
 */
-SU_RESULT SUTextureCreateFromImageRep(SUTextureRef* texture,
-    SUImageRepRef image);
+SU_RESULT SUTextureCreateFromImageRep(SUTextureRef* texture, SUImageRepRef image);
 
 /**
 @brief  Creates a new texture object from an image file specified by a path.
@@ -102,9 +105,8 @@ SU_RESULT SUTextureCreateFromImageRep(SUTextureRef* texture,
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if texture is NULL
 - \ref SU_ERROR_OVERWRITE_VALID is texture already references a valid object
 */
-SU_RESULT SUTextureCreateFromFile(SUTextureRef* texture,
-                                  const char* file_path,
-                                  double s_scale, double t_scale);
+SU_RESULT SUTextureCreateFromFile(
+    SUTextureRef* texture, const char* file_path, double s_scale, double t_scale);
 
 /**
 @brief  Deallocates a texture object and its resources. If the texture object
@@ -125,9 +127,8 @@ SU_RESULT SUTextureRelease(SUTextureRef* texture);
         The s_scale and t_scale values are useful when a face doesn't have a
         material applied directly, but instead inherit from a parent group or
         component instance. Then you want use these values to multiply the
-        result of \ref SUMeshHelperGetFrontSTQCoords or
-        \ref SUUVHelperGetFrontUVQ. If the material is applied directly then
-        this would not be needed.
+        result of SUMeshHelperGetFrontSTQCoords() or SUUVHelperGetFrontUVQ().
+        If the material is applied directly then this would not be needed.
 @param[in] texture  The texture object whose dimensions are retrieved.
 @param[out] width   The width in pixels.
 @param[out] height  The height in pixels.
@@ -142,14 +143,13 @@ SU_RESULT SUTextureRelease(SUTextureRef* texture);
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if width, height, s_scale, or t_scale is
   NULL
 */
-SU_RESULT SUTextureGetDimensions(SUTextureRef texture,
-                                 size_t* width, size_t* height,
-                                 double* s_scale, double* t_scale);
+SU_RESULT SUTextureGetDimensions(
+    SUTextureRef texture, size_t* width, size_t* height, double* s_scale, double* t_scale);
 
 /**
 @brief  Returns the total size and bits-per-pixel value of a texture's image
         data. This function is useful to determine the size of the buffer
-        necessary to be passed into \ref SUTextureGetImageData. The returned
+        necessary to be passed into \ref SUTextureGetImageData(). The returned
         data can be used along with the returned bits-per-pixel value and the
         texture dimensions to compute RGBA values at individual pixels of the
         texture image.
@@ -166,14 +166,13 @@ SU_RESULT SUTextureGetDimensions(SUTextureRef texture,
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if data_size or bits_per_pixel is NULL
 */
 SU_DEPRECATED_FUNCTION("5.0")
-SU_RESULT SUTextureGetImageDataSize(SUTextureRef texture,
-                                    size_t* data_size,
-                                    size_t* bits_per_pixel);
+SU_RESULT SUTextureGetImageDataSize(
+    SUTextureRef texture, size_t* data_size, size_t* bits_per_pixel);
 
 /**
 @brief  Returns the texture's image data. The given array must be large enough
         to hold the texture's image data. This size can be obtained by calling
-        \ref SUTextureGetImageDataSize.
+        \ref SUTextureGetImageDataSize().
 @deprecated Will be removed in the next version of the SketchUp API. The
             functionality is replaced by SUTextureGetImageRep followed by
             SUImageRepGetImageData.
@@ -189,18 +188,15 @@ SU_RESULT SUTextureGetImageDataSize(SUTextureRef texture,
   data
 */
 SU_DEPRECATED_FUNCTION("5.0")
-SU_RESULT SUTextureGetImageData(SUTextureRef texture,
-                                size_t data_size,
-                                SUByte pixel_data[]);
-
+SU_RESULT SUTextureGetImageData(SUTextureRef texture, size_t data_size, SUByte pixel_data[]);
 
 /**
 @brief Retrieves a texture's image.  The given image object must have been
        constructed using one of the SUImageRepCreate*  functions. It must be
-       released using \ref SUImageRepRelease. The difference between this 
-       function and \ref SUTextureGetColorizedImageRep is that 
-       \ref SUTextureGetColorizedImageRep will retrieve the colorized image rep,
-       if the material has been colorized.
+       released using SUImageRepRelease(). The difference between this
+       function and SUTextureGetColorizedImageRep() is that
+       SUTextureGetColorizedImageRep() will retrieve the colorized image
+       rep, if the material has been colorized.
 @since SketchUp 2017, API 5.0
 @param[in]  texture The texture object.
 @param[out] image The image object retrieved.
@@ -218,7 +214,7 @@ SU_RESULT SUTextureGetImageRep(SUTextureRef texture, SUImageRepRef* image);
 /**
 @brief  Writes a texture object as an image to disk. If the material has been
         colorized this will write out a colorized texture.
-        Use \ref SUTextureWriteOriginalToFile to obtain the original texture
+        Use \ref SUTextureWriteOriginalToFile() to obtain the original texture
         without colorization.
 @param[in] texture   The texture object.
 @param[in] file_path The file path destination of the texture image. Assumed to
@@ -253,7 +249,7 @@ SU_RESULT SUTextureSetFileName(SUTextureRef texture, const char* name);
 @brief Retrieves the image file name of a texture object. A full path may be
        stored with the texture, but this method will always return a file name
        string with no path. If the texture was created from an
-       \ref SUImageRepRef created with \ref SUImageRepLoadFile then this will
+       \ref SUImageRepRef created with SUImageRepLoadFile() then this will
        return only the file extension representing the file format of the image
        data (e.g. ".png").
 @param[in]  texture   The texture object.
@@ -267,8 +263,7 @@ SU_RESULT SUTextureSetFileName(SUTextureRef texture, const char* name);
 - \ref SU_ERROR_INVALID_OUTPUT if file_name does not point to a valid \ref
   SUStringRef object
 */
-SU_RESULT SUTextureGetFileName(SUTextureRef texture,
-                               SUStringRef* file_name);
+SU_RESULT SUTextureGetFileName(SUTextureRef texture, SUStringRef* file_name);
 
 /**
 @brief  Retrieves the value of the flag that indicates whether a texture object
@@ -282,8 +277,7 @@ SU_RESULT SUTextureGetFileName(SUTextureRef texture,
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if alpha_channel_used is NULL
 - \ref SU_ERROR_NO_DATA if the flag value could not be retrieved
 */
-SU_RESULT SUTextureGetUseAlphaChannel(SUTextureRef texture,
-                                      bool* alpha_channel_used);
+SU_RESULT SUTextureGetUseAlphaChannel(SUTextureRef texture, bool* alpha_channel_used);
 
 /**
 @brief  Retrieves the average color for the texture.
@@ -295,14 +289,13 @@ SU_RESULT SUTextureGetUseAlphaChannel(SUTextureRef texture,
 - \ref SU_ERROR_INVALID_INPUT if texture is not a valid object
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if color_val is NULL
 */
-SU_RESULT SUTextureGetAverageColor(SUTextureRef texture,
-                                   SUColor* color_val);
+SU_RESULT SUTextureGetAverageColor(SUTextureRef texture, SUColor* color_val);
 
 /**
 @brief  Retrieves the image rep object of a colorized texture. If a
         non-colorized texture is used, then the original image rep will be
-        retrieved. The difference between this function and 
-        \ref SUTextureGetImageRep is that \ref SUTextureGetImageRep will always
+        retrieved. The difference between this function and
+        \ref SUTextureGetImageRep is that \ref SUTextureGetImageRep() will always
         retrieve the original image rep.
 @since SketchUp 2018, API 6.0
 @param[in]  texture   The texture object.
@@ -315,15 +308,14 @@ SU_RESULT SUTextureGetAverageColor(SUTextureRef texture,
 - \ref SU_ERROR_NO_DATA if no data was retrieved from the texture
 - \ref SU_ERROR_OUT_OF_RANGE if the pixel data is out of range
 */
-SU_RESULT SUTextureGetColorizedImageRep(SUTextureRef texture,
-                                        SUImageRepRef* image_rep);
+SU_RESULT SUTextureGetColorizedImageRep(SUTextureRef texture, SUImageRepRef* image_rep);
 
 /**
 @brief  Writes a texture object as an image to disk without any colorization.
         If the texture was created from a file on disk this will write out the
         original file data if the provided file extension matches. This will be
         the fastest way to extract the original texture from the model.
-        Use \ref SUTextureGetFilename to obtain the original file format.
+        Use SUTextureGetFilename() to obtain the original file format.
 @since SketchUp 2019.2, API 7.1
 @param[in] texture   The texture object.
 @param[in] file_path The file path destination of the texture image. Assumed to
@@ -335,11 +327,10 @@ SU_RESULT SUTextureGetColorizedImageRep(SUTextureRef texture,
 - \ref SU_ERROR_NULL_POINTER_INPUT if file_path is NULL
 - \ref SU_ERROR_SERIALIZATION if image file could not be written to disk
 */
-SU_RESULT SUTextureWriteOriginalToFile(SUTextureRef texture,
-                                       const char* file_path);
+SU_RESULT SUTextureWriteOriginalToFile(SUTextureRef texture, const char* file_path);
 
 #ifdef __cplusplus
-}   // extern "C"
+}  // extern "C"
 #endif
 
 #endif  // SKETCHUP_MODEL_TEXTURE_H_

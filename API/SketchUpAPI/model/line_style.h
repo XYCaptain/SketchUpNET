@@ -1,5 +1,9 @@
 // Copyright 2018 Trimble Inc. All Rights Reserverd.
 
+/**
+ * @file
+ * @brief Interfaces for SULineStyleRef.
+ */
 #ifndef SKETCHUP_SOURCE_SKORE_SKETCHUP_PUBLIC_MODEL_LINESTYLE_H_
 #define SKETCHUP_SOURCE_SKORE_SKETCHUP_PUBLIC_MODEL_LINESTYLE_H_
 
@@ -14,6 +18,7 @@ extern "C" {
 
 /**
 @struct SULineStyleRef
+@extends SUEntityRef
 @brief  References a line style.
 */
 
@@ -34,7 +39,7 @@ SU_EXPORT SUEntityRef SULineStyleToEntity(SULineStyleRef line_style);
        This is essentially a downcast operation so the given entity must be
        convertible to a \ref SULineStyleRef.
 @since SketchUp 2020.1, API 8.1
-@param[in] entity The given entity reference.
+@param[in] entity_ref  The given entity reference.
 @related SULineStyleRef
 @return
 - The converted \ref SULineStyleRef if the downcast operation succeeds
@@ -61,4 +66,4 @@ SU_RESULT SULineStyleGetName(SULineStyleRef line_style, SUStringRef* name);
 #endif
 #pragma pack(pop)
 
-#endif // SKETCHUP_SOURCE_SKORE_SKETCHUP_PUBLIC_MODEL_LINESTYLE_H_
+#endif  // SKETCHUP_SOURCE_SKORE_SKETCHUP_PUBLIC_MODEL_LINESTYLE_H_

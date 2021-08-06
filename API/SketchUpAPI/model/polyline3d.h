@@ -1,5 +1,9 @@
-// Copyright 2013 Trimble Navigation Ltd. All Rights Reserved.
+// Copyright 2013 Trimble Inc. All Rights Reserved.
 
+/**
+ * @file
+ * @brief Interfaces for SUPolyline3dRef.
+ */
 #ifndef SKETCHUP_MODEL_POLYLINE3D_H_
 #define SKETCHUP_MODEL_POLYLINE3D_H_
 
@@ -13,6 +17,7 @@ extern "C" {
 
 /**
 @struct SUPolyline3dRef
+@extends SUEntityRef
 @brief  A polyline3d object. These are curve-like entities that do not
         generate inference snaps or affect geometry in any way.
 */
@@ -49,8 +54,7 @@ SU_EXPORT SUPolyline3dRef SUPolyline3dFromEntity(SUEntityRef entity);
 - The converted \ref SUEntityRef if line is a valid object. If not, the returned
   reference will be invalid.
 */
-SU_EXPORT SUDrawingElementRef SUPolyline3dToDrawingElement(SUPolyline3dRef
-                                                           line);
+SU_EXPORT SUDrawingElementRef SUPolyline3dToDrawingElement(SUPolyline3dRef line);
 
 /**
 @brief  Converts from an \ref SUDrawingElementRef to an \ref SUPolyline3dRef.
@@ -62,12 +66,11 @@ SU_EXPORT SUDrawingElementRef SUPolyline3dToDrawingElement(SUPolyline3dRef
 - The converted \ref SUPolyline3dRef if the downcast operation succeeds. If not,
   the returned reference will be invalid.
 */
-SU_EXPORT SUPolyline3dRef SUPolyline3dFromDrawingElement(SUDrawingElementRef
-                                                         drawing_elem);
+SU_EXPORT SUPolyline3dRef SUPolyline3dFromDrawingElement(SUDrawingElementRef drawing_elem);
 
 /**
 @brief Creates a new polyline3d object. The polyline3d object must be
-       subsequently deallocated with \ref SUPolyline3dRelease unless it is
+       subsequently deallocated with \ref SUPolyline3dRelease() unless it is
        associated with a parent object.
 @param[out] polyline The polyline3d object.
 @related SUPolyline3dRef
@@ -100,9 +103,8 @@ SU_RESULT SUPolyline3dRelease(SUPolyline3dRef* polyline);
 - \ref SU_ERROR_INVALID_INPUT if polyline is not a valid object
 - \ref SU_ERROR_NULL_POINTER_INPUT if points is NULL
 */
-SU_RESULT SUPolyline3dAddPoints(SUPolyline3dRef polyline,
-                                size_t num_points,
-                                struct SUPoint3D points[]);
+SU_RESULT SUPolyline3dAddPoints(
+    SUPolyline3dRef polyline, size_t num_points, struct SUPoint3D points[]);
 
 /**
 @brief  Retrieves the number of points contained by a polyline3d.
@@ -128,10 +130,8 @@ SU_RESULT SUPolyline3dGetNumPoints(SUPolyline3dRef line, size_t* count);
 - \ref SU_ERROR_INVALID_INPUT if line is an invalid object
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if points or count is NULL
 */
-SU_RESULT SUPolyline3dGetPoints(SUPolyline3dRef line,
-                                size_t len,
-                                struct SUPoint3D points[],
-                                size_t* count);
+SU_RESULT SUPolyline3dGetPoints(
+    SUPolyline3dRef line, size_t len, struct SUPoint3D points[], size_t* count);
 
 #ifdef __cplusplus
 }  // extern "C"

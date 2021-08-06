@@ -1,5 +1,9 @@
-// Copyright 2016 Trimble Navigation Ltd. All Rights Reserved.
+// Copyright 2016 Trimble Inc. All Rights Reserved.
 
+/**
+ * @file
+ * @brief Interfaces for SUDimensionRadialRef.
+ */
 #ifndef SKETCHUP_MODEL_DIMENSION_RADIAL_H_
 #define SKETCHUP_MODEL_DIMENSION_RADIAL_H_
 
@@ -12,6 +16,7 @@ extern "C" {
 
 /**
 @struct SUDimensionRadialRef
+@extends SUDimensionRef
 @brief  A radial dimension entity reference.
 @since SketchUp 2017, API 5.0
 */
@@ -26,8 +31,7 @@ extern "C" {
 - The converted \ref SUDimensionRef if dimension is a valid object
 - If not, the returned reference will be invalid
 */
-SU_EXPORT SUDimensionRef SUDimensionRadialToDimension(
-    SUDimensionRadialRef dimension);
+SU_EXPORT SUDimensionRef SUDimensionRadialToDimension(SUDimensionRadialRef dimension);
 
 /**
 @brief Converts from an SUDimensionRef to an \ref SUDimensionRadialRef. This is
@@ -40,8 +44,7 @@ SU_EXPORT SUDimensionRef SUDimensionRadialToDimension(
 - The converted \ref SUDimensionRadialRef if the downcast operation succeeds
 - If not, the returned reference will be invalid
 */
-SU_EXPORT SUDimensionRadialRef SUDimensionRadialFromDimension(
-    SUDimensionRef dimension);
+SU_EXPORT SUDimensionRadialRef SUDimensionRadialFromDimension(SUDimensionRef dimension);
 
 /**
 @brief Creates a new radial dimension for measuring the provided arccurve.
@@ -59,8 +62,7 @@ SU_EXPORT SUDimensionRadialRef SUDimensionRadialFromDimension(
 - \ref SU_ERROR_GENERIC if path refers to a valid instance path but the path's
        leaf is not an arccurve
 */
-SU_RESULT SUDimensionRadialCreate(SUDimensionRadialRef* dimension,
-    SUInstancePathRef path);
+SU_RESULT SUDimensionRadialCreate(SUDimensionRadialRef* dimension, SUInstancePathRef path);
 
 /**
 @brief Releases a dimension object.
@@ -78,8 +80,8 @@ SU_RESULT SUDimensionRadialRelease(SUDimensionRadialRef* dimension);
 @brief Retrieves the arccurve instance being mesured by a dimension object. The
        given instance path object either must have been constructed using one
        of the SUInstancePathCreate* functions or it will be generated on the
-       fly if it is invalid. It must be released using \ref
-       SUInstancePathRelease when it is no longer needed.
+       fly if it is invalid. It must be released using
+       SUInstancePathRelease() when it is no longer needed.
 @since SketchUp 2017, API 5.0
 @param[in]  dimension The dimension object.
 @param[out] path      The instance path retrieved.
@@ -89,8 +91,8 @@ SU_RESULT SUDimensionRadialRelease(SUDimensionRadialRef* dimension);
 - \ref SU_ERROR_INVALID_INPUT if dimension is not a valid object
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if path is NULL
 */
-SU_RESULT SUDimensionRadialGetCurveInstancePath(SUDimensionRadialRef dimension,
-    SUInstancePathRef* path);
+SU_RESULT SUDimensionRadialGetCurveInstancePath(
+    SUDimensionRadialRef dimension, SUInstancePathRef* path);
 
 /**
 @brief Sets which arccurve instance is measured by the radial dimension. The
@@ -108,8 +110,8 @@ SU_RESULT SUDimensionRadialGetCurveInstancePath(SUDimensionRadialRef dimension,
 - \ref SU_ERROR_GENERIC if path refers to a valid instance path but the path's
        leaf is not an arccurve
 */
-SU_RESULT SUDimensionRadialSetCurveInstancePath(SUDimensionRadialRef dimension,
-    SUInstancePathRef path);
+SU_RESULT SUDimensionRadialSetCurveInstancePath(
+    SUDimensionRadialRef dimension, SUInstancePathRef path);
 
 /**
 @brief Retrieves whether the dimension is a diameter.  Radial dimensions can be
@@ -123,8 +125,7 @@ SU_RESULT SUDimensionRadialSetCurveInstancePath(SUDimensionRadialRef dimension,
 - \ref SU_ERROR_INVALID_INPUT if dimension is not a valid object
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if is_diameter is NULL
 */
-SU_RESULT SUDimensionRadialGetDiameter(SUDimensionRadialRef dimension,
-    bool* is_diameter);
+SU_RESULT SUDimensionRadialGetDiameter(SUDimensionRadialRef dimension, bool* is_diameter);
 
 /**
 @brief Sets whether the dimension measures diameter or radius.
@@ -136,8 +137,7 @@ SU_RESULT SUDimensionRadialGetDiameter(SUDimensionRadialRef dimension,
 - \ref SU_ERROR_NONE on success
 - \ref SU_ERROR_INVALID_INPUT if dimension is not a valid object
 */
-SU_RESULT SUDimensionRadialSetDiameter(SUDimensionRadialRef dimension,
-    bool is_diameter);
+SU_RESULT SUDimensionRadialSetDiameter(SUDimensionRadialRef dimension, bool is_diameter);
 
 /**
 @brief Gets the radial dimension's leader line break point. The leader line
@@ -184,8 +184,8 @@ SU_RESULT SUDimensionRadialSetLeaderBreakPoint(
 - \ref SU_ERROR_INVALID_INPUT if dimension is not a valid object
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if points is NULL
 */
-SU_RESULT SUDimensionRadialGetLeaderPoints(SUDimensionRadialRef dimension,
-    struct SUPoint3D points[3]);
+SU_RESULT SUDimensionRadialGetLeaderPoints(
+    SUDimensionRadialRef dimension, struct SUPoint3D points[3]);
 
 #ifdef __cplusplus
 }  // extern "C"

@@ -1,5 +1,9 @@
 // Copyright 2017 Trimble Inc., All rights reserved.
 
+/**
+ * @file
+ * @brief Interfaces for SUBoundingBox3D.
+ */
 #ifndef SKETCHUP_GEOMETRY_BOUNDING_BOX_H_
 #define SKETCHUP_GEOMETRY_BOUNDING_BOX_H_
 
@@ -20,8 +24,8 @@ extern "C" {
 - \ref SU_ERROR_NULL_POINTER_INPUT if bounding_box is NULL
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if mid_point NULL
 */
-SU_RESULT SUBoundingBox3DGetMidPoint(const struct SUBoundingBox3D* bounding_box,
-                                     struct SUPoint3D* mid_point);
+SU_RESULT SUBoundingBox3DGetMidPoint(
+    const struct SUBoundingBox3D* bounding_box, struct SUPoint3D* mid_point);
 
 #ifdef __cplusplus
 }  // end extern "C"

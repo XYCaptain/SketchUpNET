@@ -1,5 +1,9 @@
-// Copyright 2013 Trimble Navigation Ltd. All Rights Reserved.
+// Copyright 2013 Trimble Inc. All Rights Reserved.
 
+/**
+ * @file
+ * @brief Interfaces for SUUVHelperRef.
+ */
 #ifndef SKETCHUP_MODEL_UV_HELPER_H_
 #define SKETCHUP_MODEL_UV_HELPER_H_
 
@@ -21,9 +25,9 @@ extern "C" {
 @brief Stores UV texture coordinates.
 */
 struct SUUVQ {
-  double u;
-  double v;
-  double q;
+  double u;  ///< U coordinate
+  double v;  ///< V coordinate
+  double q;  ///< Q coordinate
 };
 
 /**
@@ -49,9 +53,8 @@ SU_RESULT SUUVHelperRelease(SUUVHelperRef* uvhelper);
 - \ref SU_ERROR_NULL_POINTER_INPUT if point is NULL
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if uvq is NULL
 */
-SU_RESULT SUUVHelperGetFrontUVQ(SUUVHelperRef uvhelper,
-                                const struct SUPoint3D* point,
-                                struct SUUVQ* uvq);
+SU_RESULT SUUVHelperGetFrontUVQ(
+    SUUVHelperRef uvhelper, const struct SUPoint3D* point, struct SUUVQ* uvq);
 
 /**
 @brief  Retrieves the UVQ point at the given point for the back of the face.
@@ -65,9 +68,8 @@ SU_RESULT SUUVHelperGetFrontUVQ(SUUVHelperRef uvhelper,
 - \ref SU_ERROR_NULL_POINTER_INPUT if point is NULL
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if uvq is NULL
 */
-SU_RESULT SUUVHelperGetBackUVQ(SUUVHelperRef uvhelper,
-                               const struct SUPoint3D* point,
-                               struct SUUVQ* uvq);
+SU_RESULT SUUVHelperGetBackUVQ(
+    SUUVHelperRef uvhelper, const struct SUPoint3D* point, struct SUUVQ* uvq);
 
 #ifdef __cplusplus
 }  //  extern "C" {

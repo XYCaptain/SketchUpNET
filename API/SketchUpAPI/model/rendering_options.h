@@ -1,5 +1,9 @@
-// Copyright 2013 Trimble Navigation Ltd.  All rights reserved.
+// Copyright 2013 Trimble Inc.  All rights reserved.
 
+/**
+ * @file
+ * @brief Interfaces for SURenderingOptionsRef.
+ */
 #ifndef SKETCHUP_MODEL_RENDERING_OPTIONS_H_
 #define SKETCHUP_MODEL_RENDERING_OPTIONS_H_
 
@@ -28,8 +32,7 @@ extern "C" {
 - \ref SU_ERROR_INVALID_INPUT if rendering_options is not valid
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if count is NULL
 */
-SU_RESULT SURenderingOptionsGetNumKeys(SURenderingOptionsRef rendering_options,
-                                       size_t* count);
+SU_RESULT SURenderingOptionsGetNumKeys(SURenderingOptionsRef rendering_options, size_t* count);
 
 /**
 @brief  Retrieves keys associated with the rendering options object.
@@ -46,10 +49,8 @@ SU_RESULT SURenderingOptionsGetNumKeys(SURenderingOptionsRef rendering_options,
 - \ref SU_ERROR_INVALID_OUTPUT if any of the strings in the keys array are
   invalid.
 */
-SU_RESULT SURenderingOptionsGetKeys(SURenderingOptionsRef rendering_options,
-                                    size_t len,
-                                    SUStringRef keys[],
-                                    size_t* count);
+SU_RESULT SURenderingOptionsGetKeys(
+    SURenderingOptionsRef rendering_options, size_t len, SUStringRef keys[], size_t* count);
 
 /**
 @brief  Sets values in a rendering options object.
@@ -63,9 +64,8 @@ SU_RESULT SURenderingOptionsGetKeys(SURenderingOptionsRef rendering_options,
   object
 - \ref SU_ERROR_NULL_POINTER_INPUT if key is NULL
 */
-SU_RESULT SURenderingOptionsSetValue(SURenderingOptionsRef rendering_options,
-                                     const char* key,
-                                     SUTypedValueRef value_in);
+SU_RESULT SURenderingOptionsSetValue(
+    SURenderingOptionsRef rendering_options, const char* key, SUTypedValueRef value_in);
 
 /**
 @brief  Retrieves the value of a given rendering option.
@@ -165,9 +165,8 @@ FaceColorMode   | 0:    | TwoSided
 EdgeType        | 0:    | EdgeStandard
 &nbsp;          | 1:    | EdgeNPR
 */
-SU_RESULT SURenderingOptionsGetValue(SURenderingOptionsRef rendering_options,
-                                     const char* key,
-                                     SUTypedValueRef* value_out);
+SU_RESULT SURenderingOptionsGetValue(
+    SURenderingOptionsRef rendering_options, const char* key, SUTypedValueRef* value_out);
 
 #ifdef __cplusplus
 }

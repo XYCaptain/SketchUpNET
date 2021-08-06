@@ -1,4 +1,9 @@
-// Copyright 2013 Trimble Navigation Ltd. All Rights Reserved.
+// Copyright 2013 Trimble Inc. All Rights Reserved.
+
+/**
+ * @file
+ * @brief Interfaces for SUMaterialRef.
+ */
 #ifndef SKETCHUP_MODEL_MATERIAL_H_
 #define SKETCHUP_MODEL_MATERIAL_H_
 
@@ -7,13 +12,13 @@
 #include <SketchUpAPI/unicodestring.h>
 #include <SketchUpAPI/model/defs.h>
 
-
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 /**
 @struct SUMaterialRef
+@extends SUEntityRef
 @brief  References a material object.
 */
 
@@ -22,9 +27,9 @@ extern "C" {
 @brief Indicates material type.
 */
 enum SUMaterialType {
-  SUMaterialType_Colored = 0,     ///< Colored material
-  SUMaterialType_Textured,        ///< Textured material
-  SUMaterialType_ColorizedTexture ///< Colored and textured material
+  SUMaterialType_Colored = 0,      ///< Colored material
+  SUMaterialType_Textured,         ///< Textured material
+  SUMaterialType_ColorizedTexture  ///< Colored and textured material
 };
 
 /**
@@ -33,10 +38,10 @@ enum SUMaterialType {
 @since SketchUp 2019.2, API 7.1
 */
 enum SUMaterialOwnerType {
-  SUMaterialOwnerType_None = 0,       ///< Not owned
-  SUMaterialOwnerType_DrawingElement, ///< Can be applied to SUDrawingElements
-  SUMaterialOwnerType_Image,          ///< Owned exclusively by an Image
-  SUMaterialOwnerType_Layer           ///< Owned exclusively by a Layer
+  SUMaterialOwnerType_None = 0,        ///< Not owned
+  SUMaterialOwnerType_DrawingElement,  ///< Can be applied to SUDrawingElements
+  SUMaterialOwnerType_Image,           ///< Owned exclusively by an Image
+  SUMaterialOwnerType_Layer            ///< Owned exclusively by a Layer
 };
 
 /**
@@ -45,8 +50,8 @@ enum SUMaterialOwnerType {
 @since SketchUp 2019.2, API 7.1
 */
 enum SUMaterialColorizeType {
-  SUMaterialColorizeType_Shift = 0,   ///< Shifts the texture's Hue
-  SUMaterialColorizeType_Tint,        ///< Colorize the texture
+  SUMaterialColorizeType_Shift = 0,  ///< Shifts the texture's Hue
+  SUMaterialColorizeType_Tint,       ///< Colorize the texture
 };
 
 /**
@@ -76,7 +81,7 @@ SU_EXPORT SUMaterialRef SUMaterialFromEntity(SUEntityRef entity);
 @brief Creates a material.
 
 If the material is not associated with any face, it must be deallocated with
-\ref SUMaterialRelease.
+\ref SUMaterialRelease().
 @param[out] material The material created.
 @related SUMaterialRef
 @return
@@ -100,10 +105,12 @@ SU_RESULT SUMaterialRelease(SUMaterialRef* material);
 
 /**
 @brief Sets the name of a material object.
-@warning *** Breaking Change: A new failure mode was added in SketchUp 2018,
+
+@warning Breaking Change: A new failure mode was added in SketchUp 2018,
          API 6.0. Returns \ref SU_ERROR_INVALID_ARGUMENT if the material is
          managed by a model and the provided name was previously associated
          with a different material in the model.
+
 @param[in] material The material object.
 @param[in] name     The name to set the material name. Assumed to be UTF-8
                     encoded.
@@ -119,11 +126,13 @@ SU_RESULT SUMaterialSetName(SUMaterialRef material, const char* name);
 /**
 @brief Retrieves the internal name of a material object. The internal name is
        the unprocessed  identifier string stored with the material.
-@warning *** Breaking Change: The behavior of this method was changed in
+
+@warning Breaking Change: The behavior of this method was changed in
          SketchUp 2017, API 5.0. In previous releases this method retrieved the
          material's non-localized display name but it was changed to retrieve
          the internal name. If the old functionality is required, use \ref
          SUMaterialGetNameLegacyBehavior.
+
 @param[in]  material The material object.
 @param[out] name     The name retrieved.
 @related SUMaterialRef
@@ -138,7 +147,7 @@ SU_RESULT SUMaterialGetName(SUMaterialRef material, SUStringRef* name);
 
 /**
 @brief Retrieves the name of a material object. This method was added for users
-       who require the functionality of \ref SUMaterialGetName prior to
+       who require the functionality of \ref SUMaterialGetName() prior to
        SketchUp 2017, API 5.0. If the internal name is encased in square
        brackets, [], this method will return the name without brackets,
        otherwise the name will match the name retrieved by \ref
@@ -154,8 +163,7 @@ SU_RESULT SUMaterialGetName(SUMaterialRef material, SUStringRef* name);
 - \ref SU_ERROR_INVALID_OUTPUT if name does not point to a valid \ref
   SUStringRef object
 */
-SU_RESULT SUMaterialGetNameLegacyBehavior(SUMaterialRef material,
-    SUStringRef* name);
+SU_RESULT SUMaterialGetNameLegacyBehavior(SUMaterialRef material, SUStringRef* name);
 
 /**
 @brief Sets the color of a material object.
@@ -193,8 +201,7 @@ SU_RESULT SUMaterialGetColor(SUMaterialRef material, SUColor* color);
 - \ref SU_ERROR_INVALID_INPUT if material or texture is not a valid object
 - \ref SU_ERROR_GENERIC if texture contains invalid image data
 */
-SU_RESULT SUMaterialSetTexture(SUMaterialRef material,
-                               SUTextureRef texture);
+SU_RESULT SUMaterialSetTexture(SUMaterialRef material, SUTextureRef texture);
 
 /**
 @brief Retrieves the texture of a material object.
@@ -208,8 +215,7 @@ SU_RESULT SUMaterialSetTexture(SUMaterialRef material,
 - \ref SU_ERROR_INVALID_OUTPUT if texture is not a valid object
 - \ref SU_ERROR_NO_DATA if the material object does not have a texture
 */
-SU_RESULT SUMaterialGetTexture(SUMaterialRef material,
-                               SUTextureRef* texture);
+SU_RESULT SUMaterialGetTexture(SUMaterialRef material, SUTextureRef* texture);
 
 /**
 @brief Retrieves the alpha value (0.0 - 1.0) of a material object.
@@ -246,8 +252,7 @@ SU_RESULT SUMaterialSetOpacity(SUMaterialRef material, double alpha);
 - \ref SU_ERROR_INVALID_INPUT if material is not a valid object
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if use_opacity is NULL
 */
-SU_RESULT SUMaterialGetUseOpacity(SUMaterialRef material,
-                                  bool* use_opacity);
+SU_RESULT SUMaterialGetUseOpacity(SUMaterialRef material, bool* use_opacity);
 
 /**
 @brief Sets the flag indicating whether alpha values are used on a material
@@ -259,8 +264,7 @@ SU_RESULT SUMaterialGetUseOpacity(SUMaterialRef material,
 - \ref SU_ERROR_NONE on success
 - \ref SU_ERROR_INVALID_INPUT if material is not a valid object
 */
-SU_RESULT SUMaterialSetUseOpacity(SUMaterialRef material,
-                                  bool use_opacity);
+SU_RESULT SUMaterialSetUseOpacity(SUMaterialRef material, bool use_opacity);
 
 /**
 @brief Sets the type of a material object.
@@ -271,8 +275,7 @@ SU_RESULT SUMaterialSetUseOpacity(SUMaterialRef material,
 - \ref SU_ERROR_NONE on success
 - \ref SU_ERROR_INVALID_INPUT if material is not a valid object
 */
-SU_RESULT SUMaterialSetType(SUMaterialRef material,
-                            enum SUMaterialType type);
+SU_RESULT SUMaterialSetType(SUMaterialRef material, enum SUMaterialType type);
 
 /**
 @brief Retrieves the type of a material object.
@@ -284,8 +287,7 @@ SU_RESULT SUMaterialSetType(SUMaterialRef material,
 - \ref SU_ERROR_INVALID_INPUT if material is not a valid object
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if type is NULL
 */
-SU_RESULT SUMaterialGetType(SUMaterialRef material,
-                            enum SUMaterialType* type);
+SU_RESULT SUMaterialGetType(SUMaterialRef material, enum SUMaterialType* type);
 
 /**
 @brief Retrieves the flag indicating whether the material is drawn with
@@ -299,13 +301,14 @@ SU_RESULT SUMaterialGetType(SUMaterialRef material,
 - \ref SU_ERROR_INVALID_INPUT if material is not a valid object
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if is_drawn_transparent is NULL
 */
-SU_RESULT SUMaterialIsDrawnTransparent(SUMaterialRef material,
-                                       bool* transparency);
+SU_RESULT SUMaterialIsDrawnTransparent(SUMaterialRef material, bool* transparency);
 
 /**
 @brief Retrieves the owner type of a material object.
-@warning *** Materials owned by SUImageRef and SULayerRef may not be applied
-             to any other entity in the model.
+
+@warning Materials owned by SUImageRef and SULayerRef may not be applied
+         to any other entity in the model.
+
 @since SketchUp 2019.2, API 7.1
 @param[in]  material The material object.
 @param[out] type     The type retrieved.
@@ -315,8 +318,7 @@ SU_RESULT SUMaterialIsDrawnTransparent(SUMaterialRef material,
 - \ref SU_ERROR_INVALID_INPUT if material is not a valid object
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if type is NULL
 */
-SU_RESULT SUMaterialGetOwnerType(SUMaterialRef material,
-                                 enum SUMaterialOwnerType* type);
+SU_RESULT SUMaterialGetOwnerType(SUMaterialRef material, enum SUMaterialOwnerType* type);
 
 /**
 @brief Sets the colorization type of a material object. This is used when the
@@ -331,8 +333,7 @@ SU_RESULT SUMaterialGetOwnerType(SUMaterialRef material,
 - \ref SU_ERROR_INVALID_INPUT if material is not a valid object
 - \ref SU_ERROR_INVALID_ARGUMENT if type is not a valid value
 */
-SU_RESULT SUMaterialSetColorizeType(SUMaterialRef material,
-                                    enum SUMaterialColorizeType type);
+SU_RESULT SUMaterialSetColorizeType(SUMaterialRef material, enum SUMaterialColorizeType type);
 
 /**
 @brief Retrieves the colorization type of a material object.
@@ -345,8 +346,7 @@ SU_RESULT SUMaterialSetColorizeType(SUMaterialRef material,
 - \ref SU_ERROR_INVALID_INPUT if material is not a valid object
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if type is NULL
 */
-SU_RESULT SUMaterialGetColorizeType(SUMaterialRef material,
-                                    enum SUMaterialColorizeType* type);
+SU_RESULT SUMaterialGetColorizeType(SUMaterialRef material, enum SUMaterialColorizeType* type);
 
 /**
 @brief The colorize_deltas method retrieves the HLS deltas for colorized
@@ -363,9 +363,23 @@ SU_RESULT SUMaterialGetColorizeType(SUMaterialRef material,
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if either hue, saturation or lightness
                                     is NULL
 */
-SU_RESULT SUMaterialGetColorizeDeltas(SUMaterialRef material,
-                                      double* hue, double* saturation,
-                                      double* lightness);
+SU_RESULT SUMaterialGetColorizeDeltas(
+    SUMaterialRef material, double* hue, double* saturation, double* lightness);
+/**
+@brief Writes a material to a SKM file.
+@since SketchUp 2021.1, API 9.1
+@param[in]  material   The material object.
+@param[in]  file_path  The location to save the material to. Assumed to be
+                       UTF-8 encoded.
+@related SUMaterialRef
+@return
+- \ref SU_ERROR_NONE on success
+- \ref SU_ERROR_INVALID_INPUT if \p material is not a valid object
+- \ref SU_ERROR_INVALID_INPUT if \p material is not attached to a model
+- \ref SU_ERROR_NULL_POINTER_INPUT if \p file_path is NULL
+- \ref SU_ERROR_SERIALIZATION if the serialization operation itself fails
+*/
+SU_RESULT SUMaterialWriteToFile(SUMaterialRef material, const char* file_path);
 
 #ifdef __cplusplus
 }  // extern "C"

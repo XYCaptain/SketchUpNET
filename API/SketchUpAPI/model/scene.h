@@ -1,5 +1,9 @@
-// Copyright 2013 Trimble Navigation Ltd. All Rights Reserved.
+// Copyright 2013 Trimble Inc. All Rights Reserved.
 
+/**
+ * @file
+ * @brief Interfaces for SUSceneRef.
+ */
 #ifndef SKETCHUP_MODEL_SCENE_H_
 #define SKETCHUP_MODEL_SCENE_H_
 
@@ -13,28 +17,31 @@ extern "C" {
 
 /**
 @struct SUSceneRef
+@extends SUEntityRef
 @brief Used to get and set a scene's camera views, using the \ref SUCameraRef
        object.
 */
 
 /**
- * \defgroup SUSceneFlags Flags for SUSceneGetFlags and SUSceneSetFlags
- * Flags for \ref SUSceneGetFlags and \ref SUSceneSetFlags. These are combined
- * bitwise.
+ * @anchor SUSceneFlags
+ * @name Scene Flags
+ * @brief Flags for SUSceneGetFlags() and SUSceneSetFlags(). These are combined
+ *   bitwise.
+ * @see SUSceneRef
  * @{
  */
-#define FLAG_USE_CAMERA              0x0001
-#define FLAG_USE_RENDERING_OPTIONS   0x0002
-#define FLAG_USE_SHADOWINFO          0x0004
-#define FLAG_USE_AXES                0x0008
-#define FLAG_USE_HIDDEN              0x0010
-#define FLAG_USE_LAYER_VISIBILITY    0x0020
-#define FLAG_USE_SECTION_PLANES      0x0040
-#define FLAG_USE_HIDDEN_GEOMETRY     0x0080
-#define FLAG_USE_HIDDEN_OBJECTS      0x0100
+#define FLAG_USE_CAMERA 0x0001
+#define FLAG_USE_RENDERING_OPTIONS 0x0002
+#define FLAG_USE_SHADOWINFO 0x0004
+#define FLAG_USE_AXES 0x0008
+#define FLAG_USE_HIDDEN 0x0010
+#define FLAG_USE_LAYER_VISIBILITY 0x0020
+#define FLAG_USE_SECTION_PLANES 0x0040
+#define FLAG_USE_HIDDEN_GEOMETRY 0x0080
+#define FLAG_USE_HIDDEN_OBJECTS 0x0100
 
-#define FLAG_USE_ALL                 0x0fff
-#define FLAG_NO_CAMERA               0x0ffe
+#define FLAG_USE_ALL 0x0fff
+#define FLAG_NO_CAMERA 0x0ffe
 /**@}*/
 
 /**
@@ -110,7 +117,7 @@ SU_RESULT SUSceneSetUseCamera(SUSceneRef scene, bool use_camera);
 /**
 @brief Retrieves the camera of a scene object. The returned camera object
        points to scene's internal camera. So the camera must not be released
-       via \ref SUCameraRelease.
+       via SUCameraRelease().
 @param[in]  scene  The scene object.
 @param[out] camera The camera object retrieved.
 @related SUSceneRef
@@ -124,8 +131,8 @@ SU_RESULT SUSceneGetCamera(SUSceneRef scene, SUCameraRef* camera);
 /**
 @brief Sets a given scene's camera object.  The scene does not take ownership
        of the provided camera, it just copies the properties to the scene's
-       owned camera.  If the input camera was created using \ref
-       SUCameraCreate it must be released using \ref SUCameraRelease.
+       owned camera.  If the input camera was created using SUCameraCreate()
+       it must be released using SUCameraRelease().
 @since SketchUp 2016, API 4.0
 @param[in] scene  The scene object.
 @param[in] camera The camera object to be set.
@@ -148,22 +155,20 @@ SU_RESULT SUSceneSetCamera(SUSceneRef scene, SUCameraRef camera);
  - \ref SU_ERROR_INVALID_INPUT if scene is not a valid object
  - \ref SU_ERROR_NULL_POINTER_OUTPUT if include_in_animation is NULL
  */
-SU_RESULT SUSceneGetIncludeInAnimation(SUSceneRef scene,
-                                       bool* include_in_animation);
+SU_RESULT SUSceneGetIncludeInAnimation(SUSceneRef scene, bool* include_in_animation);
 
-  /**
- @brief Sets the "include in animation" setting of a scene object.
- @since SketchUp 2018, API 6.0
- @param[in] scene                The scene object.
- @param[in] include_in_animation The new setting for whether or not to include
-                                 in animation.
- @related SUSceneRef
- @return
- - \ref SU_ERROR_NONE on success
- - \ref SU_ERROR_INVALID_INPUT if scene is not a valid object
- */
-SU_RESULT SUSceneSetIncludeInAnimation(SUSceneRef scene,
-                                       bool include_in_animation);
+/**
+@brief Sets the "include in animation" setting of a scene object.
+@since SketchUp 2018, API 6.0
+@param[in] scene                The scene object.
+@param[in] include_in_animation The new setting for whether or not to include
+                               in animation.
+@related SUSceneRef
+@return
+- \ref SU_ERROR_NONE on success
+- \ref SU_ERROR_INVALID_INPUT if scene is not a valid object
+*/
+SU_RESULT SUSceneSetIncludeInAnimation(SUSceneRef scene, bool include_in_animation);
 
 /**
 @brief Retrieves the name of a scene object.
@@ -181,9 +186,11 @@ SU_RESULT SUSceneGetName(SUSceneRef scene, SUStringRef* name);
 
 /**
 @brief Sets the name of a scene object.
-@warning *** Breaking Change: The behavior of SUSceneSetName changed in
+
+@warning Breaking Change: The behavior of SUSceneSetName changed in
          SketchUp SDK 2018 API 6.0 to return SU_ERROR_INVALID_ARGUMENT if the
          given name already exists in the scene's model.
+
 @param[in] scene      The scene object.
 @param[in] scene_name The name of the scene object. Assumed to be UTF-8 encoded.
 @related SUSceneRef
@@ -206,8 +213,7 @@ SU_RESULT SUSceneSetName(SUSceneRef scene, const char* scene_name);
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if options is NULL
 - \ref SU_ERROR_NO_DATA if the scene does not use rendering options
 */
-SU_RESULT SUSceneGetRenderingOptions(SUSceneRef scene,
-                                     SURenderingOptionsRef* options);
+SU_RESULT SUSceneGetRenderingOptions(SUSceneRef scene, SURenderingOptionsRef* options);
 
 /**
 @brief Retrieves the shadow info of a scene.
@@ -222,8 +228,7 @@ SU_RESULT SUSceneGetRenderingOptions(SUSceneRef scene,
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if shadow_info is NULL
 - \ref SU_ERROR_NO_DATA if the scene does not use shadow info
 */
-SU_RESULT SUSceneGetShadowInfo(SUSceneRef scene,
-                               SUShadowInfoRef* shadow_info);
+SU_RESULT SUSceneGetShadowInfo(SUSceneRef scene, SUShadowInfoRef* shadow_info);
 
 /**
 @brief Retrieves the "use shadow info" setting of a scene object.
@@ -237,8 +242,7 @@ SU_RESULT SUSceneGetShadowInfo(SUSceneRef scene,
 - \ref SU_ERROR_INVALID_INPUT if scene is not a valid object
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if use_shadow_info is NULL
 */
-SU_RESULT SUSceneGetUseShadowInfo(SUSceneRef scene,
-                                  bool* use_shadow_info);
+SU_RESULT SUSceneGetUseShadowInfo(SUSceneRef scene, bool* use_shadow_info);
 
 /**
 @brief Sets the "use shadow info" setting of a scene object.
@@ -251,8 +255,7 @@ SU_RESULT SUSceneGetUseShadowInfo(SUSceneRef scene,
 - \ref SU_ERROR_NONE on success
 - \ref SU_ERROR_INVALID_INPUT if scene is not a valid object
 */
-SU_RESULT SUSceneSetUseShadowInfo(SUSceneRef scene,
-                                  bool use_shadow_info);
+SU_RESULT SUSceneSetUseShadowInfo(SUSceneRef scene, bool use_shadow_info);
 
 /**
 @brief Retrieves the "use rendering options" setting of a scene object.
@@ -266,8 +269,7 @@ SU_RESULT SUSceneSetUseShadowInfo(SUSceneRef scene,
 - \ref SU_ERROR_INVALID_INPUT if scene is not a valid object
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if use_shadow_info is NULL
 */
-SU_RESULT SUSceneGetUseRenderingOptions(SUSceneRef scene,
-                                        bool* use_rendering_options);
+SU_RESULT SUSceneGetUseRenderingOptions(SUSceneRef scene, bool* use_rendering_options);
 
 /**
 @brief Sets the "use rendering options" setting of a scene object.
@@ -280,8 +282,7 @@ SU_RESULT SUSceneGetUseRenderingOptions(SUSceneRef scene,
 - \ref SU_ERROR_NONE on success
 - \ref SU_ERROR_INVALID_INPUT if scene is not a valid object
 */
-SU_RESULT SUSceneSetUseRenderingOptions(SUSceneRef scene,
-                                        bool use_rendering_options);
+SU_RESULT SUSceneSetUseRenderingOptions(SUSceneRef scene, bool use_rendering_options);
 
 /**
 @brief Gets whether the scene uses the hidden properties of entities.
@@ -341,7 +342,6 @@ SU_RESULT SUSceneGetUseHiddenGeometry(SUSceneRef scene, bool* use_hidden);
 */
 SU_RESULT SUSceneSetUseHiddenGeometry(SUSceneRef scene, bool use_hidden);
 
-
 /**
 @brief Gets whether the scene uses the hidden properties of objects.
 @since SketchUp 2020.1, API 8.1
@@ -381,8 +381,7 @@ SU_RESULT SUSceneSetUseHiddenObjects(SUSceneRef scene, bool use_hidden);
 - \ref SU_ERROR_INVALID_INPUT if scene is not a valid object
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if use_hidden_layers is NULL
 */
-SU_RESULT SUSceneGetUseHiddenLayers(SUSceneRef scene,
-                                    bool* use_hidden_layers);
+SU_RESULT SUSceneGetUseHiddenLayers(SUSceneRef scene, bool* use_hidden_layers);
 
 /**
 @brief Sets the "use hidden layers" setting of a scene object.
@@ -395,8 +394,7 @@ SU_RESULT SUSceneGetUseHiddenLayers(SUSceneRef scene,
 - \ref SU_ERROR_NONE on success
 - \ref SU_ERROR_INVALID_INPUT if scene is not a valid object
 */
-SU_RESULT SUSceneSetUseHiddenLayers(SUSceneRef scene,
-                                    bool use_hidden_layers);
+SU_RESULT SUSceneSetUseHiddenLayers(SUSceneRef scene, bool use_hidden_layers);
 
 /**
 @brief Gets whether the scene uses section planes.
@@ -410,8 +408,7 @@ SU_RESULT SUSceneSetUseHiddenLayers(SUSceneRef scene,
 - \ref SU_ERROR_INVALID_INPUT if scene is not a valid object
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if use_section_planes is NULL
 */
-SU_RESULT SUSceneGetUseSectionPlanes(SUSceneRef scene,
-                                     bool* use_section_planes);
+SU_RESULT SUSceneGetUseSectionPlanes(SUSceneRef scene, bool* use_section_planes);
 
 /**
 @brief Sets whether the scene uses section planes.
@@ -424,8 +421,7 @@ SU_RESULT SUSceneGetUseSectionPlanes(SUSceneRef scene,
 - \ref SU_ERROR_NONE on success
 - \ref SU_ERROR_INVALID_INPUT if scene is not a valid object
 */
-SU_RESULT SUSceneSetUseSectionPlanes(SUSceneRef scene,
-                                     bool use_section_planes);
+SU_RESULT SUSceneSetUseSectionPlanes(SUSceneRef scene, bool use_section_planes);
 
 /**
 @brief Retrieves the number of layers in the scene object.
@@ -453,14 +449,14 @@ SU_RESULT SUSceneGetNumLayers(SUSceneRef scene, size_t* count);
 - \ref SU_ERROR_INVALID_INPUT if scene is not a valid object
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if layers or count is NULL
 */
-SU_RESULT SUSceneGetLayers(SUSceneRef scene,
-                           size_t len,
-                           SULayerRef layers[],
-                           size_t*  count);
+SU_RESULT SUSceneGetLayers(SUSceneRef scene, size_t len, SULayerRef layers[], size_t* count);
 
 /**
-@brief Adds the specified layer to the provided scene. This function does not
-       take ownership of the specified layer.
+@brief Adds the specified layer to the provided scene.
+
+       Adding a layer to a scene will flag the layer to be the opposite of its
+       default scene visibility. See \ref SULayerVisibilityDefaultType. This
+       function does not take ownership of the specified layer.
 @note Prior to SketchUp 2020.0, API 8.0 this function did not return
       SU_ERROR_INVALID_ARGUMENT.
 @since SketchUp 2016, API 4.0
@@ -477,8 +473,11 @@ SU_RESULT SUSceneGetLayers(SUSceneRef scene,
 SU_RESULT SUSceneAddLayer(SUSceneRef scene, SULayerRef layer);
 
 /**
-@brief Removes the specified layer from the provided scene. Scenes do not own
-       their layers so removing them doesn't release them.
+@brief Removes the specified layer from the provided scene.
+
+       Removing a layer from a scene will flag the layer to use its default
+       scene visibility. See \ref SULayerVisibilityDefaultType. Scenes do not
+       own their layers so removing them doesn't release them.
 @note Prior to SketchUp 2020.0, API 8.0 this function did not return
       SU_ERROR_INVALID_ARGUMENT.
 @since SketchUp 2016, API 4.0
@@ -493,7 +492,7 @@ SU_RESULT SUSceneAddLayer(SUSceneRef scene, SULayerRef layer);
 SU_RESULT SUSceneRemoveLayer(SUSceneRef scene, SULayerRef layer);
 
 /**
-@brief Clears out the provided scene's layers vector. Scenes do not own their
+@brief Removes all of the layers from the provided scene. Scenes do not own their
        layers so removing them does not release them.
 @since SketchUp 2016, API 4.0
 @param[in] scene The scene object.
@@ -503,6 +502,85 @@ SU_RESULT SUSceneRemoveLayer(SUSceneRef scene, SULayerRef layer);
 - \ref SU_ERROR_INVALID_INPUT if scene is not a valid object
 */
 SU_RESULT SUSceneClearLayers(SUSceneRef scene);
+
+/**
+@brief Retrieves the number of layer folders in the scene object.
+@since SketchUp 2021.0, API 9.0
+@param[in]  scene The scene object.
+@param[out] count The number of layer folders.
+@related SUSceneRef
+@return
+- \ref SU_ERROR_NONE on success
+- \ref SU_ERROR_INVALID_INPUT if \p scene is not a valid object
+- \ref SU_ERROR_NULL_POINTER_OUTPUT if \p count is NULL
+*/
+SU_RESULT SUSceneGetNumLayerFolders(SUSceneRef scene, size_t* count);
+
+/**
+@brief Retrieves the layer folders in the scene object.
+@since SketchUp 2021.0, API 9.0
+@param[in]  scene         The entities object.
+@param[in]  len           The number of layer_folders to retrieve.
+@param[out] layer_folders The layer_folders retrieved.
+@param[out] count         The number of layer_folders retrieved.
+@related SUSceneRef
+@return
+- \ref SU_ERROR_NONE on success
+- \ref SU_ERROR_INVALID_INPUT if \p scene is not a valid object
+- \ref SU_ERROR_NULL_POINTER_OUTPUT if \p layer_folders or \p count is NULL
+*/
+SU_RESULT SUSceneGetLayerFolders(
+    SUSceneRef scene, size_t len, SULayerFolderRef layer_folders[], size_t* count);
+
+/**
+@brief Adds the specified layer folder to the provided scene.
+
+       Adding a layer folder to a scene will cause that layer folder to be
+       flagged as HIDDEN for the specified scene. Any layers or layer folders
+       within that layer folder will also be hidden, and therefore don't need to
+       be added to the scene. This function does not take ownership of the
+       specified layer folder.
+@since SketchUp 2021.0, API 9.0
+@param[in] scene        The scene object.
+@param[in] layer_folder The new layer folder to be added to \p scene.
+@related SUSceneRef
+@return
+- \ref SU_ERROR_NONE on success
+- \ref SU_ERROR_INVALID_INPUT if \p scene or \p layer_folder is not a valid object
+- \ref SU_ERROR_NO_DATA if \p scene is not owned by a valid model
+- \ref SU_ERROR_GENERIC if \p scene's model does not contain \p layer_folder
+- \ref SU_ERROR_INVALID_ARGUMENT if \p layer_folder already exists in \p scene
+*/
+SU_RESULT SUSceneAddLayerFolder(SUSceneRef scene, SULayerFolderRef layer_folder);
+
+/**
+@brief Removes the specified layer folder from the provided scene.
+
+       Removing a layer folder from a scene will cause that layer folder to be
+       flagged as VISIBLE for the specified scene. Scenes do not own their layer
+       folders so removing them doesn't release them.
+@since SketchUp 2021.0, API 9.0
+@param[in] scene        The scene object.
+@param[in] layer_folder The layer folder to be removed from \p scene.
+@related SUSceneRef
+@return
+- \ref SU_ERROR_NONE on success
+- \ref SU_ERROR_INVALID_INPUT if \p scene or \p layer_folder is not a valid object
+- \ref SU_ERROR_INVALID_ARGUMENT if \p layer_folder doesn't exist in \p scene
+*/
+SU_RESULT SUSceneRemoveLayerFolder(SUSceneRef scene, SULayerFolderRef layer_folder);
+
+/**
+@brief Removes all of the layer folders from the provided scene. Scenes do not own
+       their layer folders so removing them does not release them.
+@since SketchUp 2021.0, API 9.0
+@param[in] scene The scene object.
+@related SUSceneRef
+@return
+- \ref SU_ERROR_NONE on success
+- \ref SU_ERROR_INVALID_INPUT if \p scene is not a valid object
+*/
+SU_RESULT SUSceneClearLayerFolders(SUSceneRef scene);
 
 /**
 @brief Retrieves the axes of a scene object.
@@ -568,15 +646,13 @@ SU_RESULT SUSceneGetNumHiddenEntities(SUSceneRef scene, size_t* count);
 - \ref SU_ERROR_INVALID_INPUT if scene is not a valid object
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if entities or count is NULL
 */
-SU_RESULT SUSceneGetHiddenEntities(SUSceneRef scene,
-    size_t len,
-    SUEntityRef entities[],
-    size_t* count);
+SU_RESULT SUSceneGetHiddenEntities(
+    SUSceneRef scene, size_t len, SUEntityRef entities[], size_t* count);
 
 /**
 @brief Sets the flags for a scene object.
 
-See \ref SUSceneFlags for available flags that can be combined bitwise.
+See \ref SUSceneFlags "Scene Flags" for available flags that can be combined bitwise.
 
 @since SketchUp 2017, API 5.0
 @param[in] scene The scene object.
@@ -591,7 +667,7 @@ SU_RESULT SUSceneSetFlags(SUSceneRef scene, uint32_t flags);
 /**
 @brief Retrieves the flags in the scene object.
 
-See \ref SUSceneFlags for available flags that can be combined bitwise.
+See \ref SUSceneFlags "Scene Flags" for available flags that can be combined bitwise.
 
 @since SketchUp 2017, API 5.0
 @param[in]  scene The scene object.
@@ -641,8 +717,7 @@ SU_RESULT SUSceneGetSketchAxesDisplayed(SUSceneRef scene, bool* displayed);
 - \ref SU_ERROR_INVALID_INPUT if scene is not a valid object
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if displayed is NULL
 */
-SU_RESULT SUSceneGetPhotoMatchImageDisplayed(SUSceneRef scene,
-    bool* displayed);
+SU_RESULT SUSceneGetPhotoMatchImageDisplayed(SUSceneRef scene, bool* displayed);
 
 /**
 @brief Clears the provided scene's photo match image.
@@ -707,9 +782,8 @@ SU_RESULT SUSceneActivate(SUSceneRef scene);
 - \ref SU_ERROR_INVALID_INPUT if scene or drawing_element is not a valid object
     or if the drawing_element is geometry in a nested component.
 */
-SU_RESULT SUSceneSetDrawingElementHidden(SUSceneRef scene,
-                                         SUDrawingElementRef drawing_element,
-                                         bool is_hidden);
+SU_RESULT SUSceneSetDrawingElementHidden(
+    SUSceneRef scene, SUDrawingElementRef drawing_element, bool is_hidden);
 
 /**
 @brief Get the visibility of a drawing element in a scene.
@@ -724,9 +798,8 @@ SU_RESULT SUSceneSetDrawingElementHidden(SUSceneRef scene,
 - \ref SU_ERROR_INVALID_INPUT if scene or drawing_element is not a valid object
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if is_hidden is NULL
 */
-SU_RESULT SUSceneGetDrawingElementHidden(SUSceneRef scene,
-                                         SUDrawingElementRef drawing_element,
-                                         bool* is_hidden);
+SU_RESULT SUSceneGetDrawingElementHidden(
+    SUSceneRef scene, SUDrawingElementRef drawing_element, bool* is_hidden);
 
 #ifdef __cplusplus
 }

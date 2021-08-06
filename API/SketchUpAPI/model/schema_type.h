@@ -1,5 +1,9 @@
-// Copyright 2014 Trimble Navigation Ltd. All Rights Reserved.
+// Copyright 2014 Trimble Inc. All Rights Reserved.
 
+/**
+ * @file
+ * @brief Interfaces for SUSchemaTypeRef.
+ */
 #ifndef SKETCHUP_MODEL_SCHEMA_TYPE_H_
 #define SKETCHUP_MODEL_SCHEMA_TYPE_H_
 
@@ -10,10 +14,10 @@
 extern "C" {
 #endif
 
-  /**
-  @struct SUSchemaTypeRef
-  @brief  Used to manage a SchemaType object
-  */
+/**
+@struct SUSchemaTypeRef
+@brief  Used to manage a SchemaType object
+*/
 
 #ifdef __cplusplus
 }

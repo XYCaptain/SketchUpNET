@@ -1,5 +1,9 @@
-// Copyright 2016 Trimble Navigation Ltd. All Rights Reserved.
+// Copyright 2016 Trimble Inc. All Rights Reserved.
 
+/**
+ * @file
+ * @brief Interfaces for SUInstancePathRef.
+ */
 #ifndef SKETCHUP_MODEL_INSTANCEPATH_H_
 #define SKETCHUP_MODEL_INSTANCEPATH_H_
 
@@ -40,8 +44,7 @@ SU_RESULT SUInstancePathCreate(SUInstancePathRef* instance_path);
 - \ref SU_ERROR_INVALID_INPUT if source_path is not a valid object
 - \ref SU_ERROR_OVERWRITE_VALID if *instance_path refers to a valid object
 */
-SU_RESULT SUInstancePathCreateCopy(SUInstancePathRef* instance_path,
-                                   SUInstancePathRef source_path);
+SU_RESULT SUInstancePathCreateCopy(SUInstancePathRef* instance_path, SUInstancePathRef source_path);
 
 /**
 @brief Releases an instance path object.
@@ -63,8 +66,8 @@ SU_RESULT SUInstancePathRelease(SUInstancePathRef* instance_path);
 - \ref SU_ERROR_INVALID_INPUT if instance_path or component_instance is not a
   valid object
 */
-SU_RESULT SUInstancePathPushInstance(SUInstancePathRef instance_path,
-                                     SUComponentInstanceRef component_instance);
+SU_RESULT SUInstancePathPushInstance(
+    SUInstancePathRef instance_path, SUComponentInstanceRef component_instance);
 
 /**
 @brief Pops the last \ref SUComponentInstanceRef from an \ref SUInstancePathRef.
@@ -85,8 +88,7 @@ SU_RESULT SUInstancePathPopInstance(SUInstancePathRef instance_path);
 - \ref SU_ERROR_NONE on success
 - \ref SU_ERROR_NULL_POINTER_INPUT if instance_path is NULL
 */
-SU_RESULT SUInstancePathSetLeaf(SUInstancePathRef instance_path,
-                                SUEntityRef entity);
+SU_RESULT SUInstancePathSetLeaf(SUInstancePathRef instance_path, SUEntityRef entity);
 
 /**
 @brief Gets a path depth for \ref SUInstancePathRef.
@@ -100,8 +102,7 @@ SU_RESULT SUInstancePathSetLeaf(SUInstancePathRef instance_path,
 - \ref SU_ERROR_INVALID_INPUT if instance_path is not a valid object
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if depth is NULL
 */
-SU_RESULT SUInstancePathGetPathDepth(SUInstancePathRef instance_path,
-                                     size_t* depth);
+SU_RESULT SUInstancePathGetPathDepth(SUInstancePathRef instance_path, size_t* depth);
 
 /**
 @brief Gets the full path depth (including the leaf) for \ref SUInstancePathRef.
@@ -114,8 +115,7 @@ SU_RESULT SUInstancePathGetPathDepth(SUInstancePathRef instance_path,
 - \ref SU_ERROR_INVALID_INPUT if instance_path is not a valid object
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if full_depth is NULL
 */
-SU_RESULT SUInstancePathGetFullDepth(SUInstancePathRef instance_path,
-                                     size_t* full_depth);
+SU_RESULT SUInstancePathGetFullDepth(SUInstancePathRef instance_path, size_t* full_depth);
 
 /**
 @brief Gets the transform for \ref SUInstancePathRef.
@@ -127,8 +127,8 @@ SU_RESULT SUInstancePathGetFullDepth(SUInstancePathRef instance_path,
 - \ref SU_ERROR_INVALID_INPUT if instance_path is not a valid object
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if transform is NULL
 */
-SU_RESULT SUInstancePathGetTransform(SUInstancePathRef instance_path,
-                                     struct SUTransformation* transform);
+SU_RESULT SUInstancePathGetTransform(
+    SUInstancePathRef instance_path, struct SUTransformation* transform);
 
 /**
 @brief Gets the transform up to depth level for \ref SUInstancePathRef.
@@ -142,9 +142,8 @@ SU_RESULT SUInstancePathGetTransform(SUInstancePathRef instance_path,
 - \ref SU_ERROR_OUT_OF_RANGE if depth exceeds the depth of instance_path
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if transform is NULL
 */
-SU_RESULT SUInstancePathGetTransformAtDepth(SUInstancePathRef instance_path,
-                                            size_t depth,
-                                            struct SUTransformation* transform);
+SU_RESULT SUInstancePathGetTransformAtDepth(
+    SUInstancePathRef instance_path, size_t depth, struct SUTransformation* transform);
 
 /**
 @brief Gets a component instance up to path depth level.
@@ -158,9 +157,8 @@ SU_RESULT SUInstancePathGetTransformAtDepth(SUInstancePathRef instance_path,
 - \ref SU_ERROR_OUT_OF_RANGE if depth exceeds the depth of instance_path
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if instance is NULL
 */
-SU_RESULT SUInstancePathGetInstanceAtDepth(SUInstancePathRef instance_path,
-                                           size_t depth,
-                                           SUComponentInstanceRef* instance);
+SU_RESULT SUInstancePathGetInstanceAtDepth(
+    SUInstancePathRef instance_path, size_t depth, SUComponentInstanceRef* instance);
 
 /**
 @brief Gets a leaf from an instance path as an entity object.
@@ -173,8 +171,7 @@ SU_RESULT SUInstancePathGetInstanceAtDepth(SUInstancePathRef instance_path,
 - \ref SU_ERROR_INVALID_INPUT if instance_path is not a valid object
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if entity is NULL
 */
-SU_RESULT SUInstancePathGetLeafAsEntity(SUInstancePathRef instance_path,
-                                        SUEntityRef* entity);
+SU_RESULT SUInstancePathGetLeafAsEntity(SUInstancePathRef instance_path, SUEntityRef* entity);
 
 /**
 @brief Gets a leaf from an entity path as a drawing element object.
@@ -186,8 +183,8 @@ SU_RESULT SUInstancePathGetLeafAsEntity(SUInstancePathRef instance_path,
 - \ref SU_ERROR_INVALID_INPUT if instance_path is not a valid object
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if entity is NULL
 */
-SU_RESULT SUInstancePathGetLeaf(SUInstancePathRef instance_path,
-                                SUDrawingElementRef* drawing_element);
+SU_RESULT SUInstancePathGetLeaf(
+    SUInstancePathRef instance_path, SUDrawingElementRef* drawing_element);
 
 /**
 @brief Validates an instance path.
@@ -225,9 +222,8 @@ SU_RESULT SUInstancePathIsEmpty(SUInstancePathRef instance_path, bool* empty);
                               or entity_ref is not a valid object
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if contains is NULL
 */
-SU_RESULT SUInstancePathContains(SUInstancePathRef instance_path,
-                                 SUEntityRef entity,
-                                 bool* contains);
+SU_RESULT SUInstancePathContains(
+    SUInstancePathRef instance_path, SUEntityRef entity, bool* contains);
 /**
 @brief Retrieves the full persistent id for a given instance path.
 @param[in]  instance_path  The instance path.
@@ -240,9 +236,7 @@ SU_RESULT SUInstancePathContains(SUInstancePathRef instance_path,
 - \ref SU_ERROR_INVALID_OUTPUT if pid is not a valid object
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if pid is NULL
 */
-SU_RESULT SUInstancePathGetPersistentID(SUInstancePathRef instance_path,
-                                        SUStringRef* pid);
-
+SU_RESULT SUInstancePathGetPersistentID(SUInstancePathRef instance_path, SUStringRef* pid);
 
 /**
 @brief Retrieves the persistent id of an entity up to depth level in a given
@@ -259,9 +253,8 @@ SU_RESULT SUInstancePathGetPersistentID(SUInstancePathRef instance_path,
 - \ref SU_ERROR_INVALID_OUTPUT if pid is not a valid object
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if pid is NULL
 */
-SU_RESULT SUInstancePathGetPersistentIDAtDepth(SUInstancePathRef instance_path,
-                                               size_t depth,
-                                               SUStringRef* pid);
+SU_RESULT SUInstancePathGetPersistentIDAtDepth(
+    SUInstancePathRef instance_path, size_t depth, SUStringRef* pid);
 
 #ifdef __cplusplus
 }  // extern "C"

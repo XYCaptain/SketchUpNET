@@ -1,5 +1,9 @@
-// Copyright 2015 Trimble Navigation Ltd. All Rights Reserved.
+// Copyright 2015 Trimble Inc. All Rights Reserved.
 
+/**
+ * @file
+ * @brief Interfaces for SUStylesRef.
+ */
 #ifndef SKETCHUP_MODEL_STYLES_H_
 #define SKETCHUP_MODEL_STYLES_H_
 
@@ -34,8 +38,7 @@ NOTE: Return value SU_ERROR_SERIALIZATION was added for SketchUp 2019, API 7.0
 - \ref SU_ERROR_SERIALIZATION if style couldn't be created from the file at path
 - \ref SU_ERROR_DUPLICATE if the name corresponds to an existing style
 */
-SU_RESULT SUStylesAddStyle(SUStylesRef styles, const char* path,
-    bool activate);
+SU_RESULT SUStylesAddStyle(SUStylesRef styles, const char* path, bool activate);
 
 /**
 @brief Retrieves the number of styles in a styles object.
@@ -63,8 +66,8 @@ SU_RESULT SUStylesGetNumStyles(SUStylesRef styles, size_t* count);
 - \ref SU_ERROR_INVALID_INPUT if styles is not a valid object
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if style_array or count is NULL
 */
-SU_RESULT SUStylesGetStyles(SUStylesRef styles, size_t len,
-    SUStyleRef style_array[], size_t* count);
+SU_RESULT SUStylesGetStyles(
+    SUStylesRef styles, size_t len, SUStyleRef style_array[], size_t* count);
 
 /**
 @brief Retrieves the active style.
@@ -77,8 +80,7 @@ SU_RESULT SUStylesGetStyles(SUStylesRef styles, size_t len,
 - \ref SU_ERROR_INVALID_INPUT if styles is not a valid object
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if style is NULL
 */
-SU_RESULT SUStylesGetActiveStyle(SUStylesRef styles,
-    SUStyleRef* style);
+SU_RESULT SUStylesGetActiveStyle(SUStylesRef styles, SUStyleRef* style);
 
 /**
 @brief Retrieves the selected style.
@@ -91,8 +93,7 @@ SU_RESULT SUStylesGetActiveStyle(SUStylesRef styles,
 - \ref SU_ERROR_INVALID_INPUT if styles is not a valid object
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if style is NULL
 */
-SU_RESULT SUStylesGetSelectedStyle(SUStylesRef styles,
-    SUStyleRef* style);
+SU_RESULT SUStylesGetSelectedStyle(SUStylesRef styles, SUStyleRef* style);
 
 /**
 @brief Retrieves the style corresponding to the specified Guid.
@@ -107,8 +108,7 @@ SU_RESULT SUStylesGetSelectedStyle(SUStylesRef styles,
 - \ref SU_ERROR_NULL_POINTER_INPUT if guid is NULL
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if style is NULL
 */
-SU_RESULT SUStylesGetStyleByGuid(SUStylesRef styles,
-    const char* guid, SUStyleRef* style);
+SU_RESULT SUStylesGetStyleByGuid(SUStylesRef styles, const char* guid, SUStyleRef* style);
 
 /**
 @brief Retrieves the style corresponding to the specified path.
@@ -124,8 +124,7 @@ SU_RESULT SUStylesGetStyleByGuid(SUStylesRef styles,
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if style is NULL
 - \ref SU_ERROR_NO_DATA if no style in styles matches the style at path.
 */
-SU_RESULT SUStylesGetStyleByPath(SUStylesRef styles,
-    const char* path, SUStyleRef* style);
+SU_RESULT SUStylesGetStyleByPath(SUStylesRef styles, const char* path, SUStyleRef* style);
 
 /**
 @brief Retrieves a bolean indicating if the active style has changed.
@@ -152,8 +151,7 @@ SU_RESULT SUStylesGetActiveStyleChanged(SUStylesRef styles, bool* changed);
 - \ref SU_ERROR_INVALID_INPUT if any of styles, style, or scene are not
                               valid objects
 */
-SU_RESULT SUStylesApplyStyleToScene(SUStylesRef styles, SUStyleRef style,
-    SUSceneRef scene);
+SU_RESULT SUStylesApplyStyleToScene(SUStylesRef styles, SUStyleRef style, SUSceneRef scene);
 
 /**
 @brief Sets the selected style.

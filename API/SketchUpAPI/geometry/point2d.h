@@ -1,8 +1,11 @@
 // Copyright 2017 Trimble Inc. All Rights Reserved.
 
+/**
+ * @file
+ * @brief Interfaces for SUPoint2D.
+ */
 #ifndef SKETCHUP_GEOMETRY_POINT2D_H_
 #define SKETCHUP_GEOMETRY_POINT2D_H_
-
 
 #include <SketchUpAPI/common.h>
 #include <SketchUpAPI/geometry.h>
@@ -25,9 +28,8 @@ extern "C" {
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if vector is NULL
  */
 SU_DEPRECATED_FUNCTION("6.0")
-SU_RESULT SUPoint2DToSUPoint2D(const struct SUPoint2D* point1,
-                               const struct SUPoint2D* point2,
-                               struct SUVector2D* vector);
+SU_RESULT SUPoint2DToSUPoint2D(
+    const struct SUPoint2D* point1, const struct SUPoint2D* point2, struct SUVector2D* vector);
 
 /**
 @brief Determines if two points are equal.
@@ -41,9 +43,8 @@ SU_RESULT SUPoint2DToSUPoint2D(const struct SUPoint2D* point1,
 - \ref SU_ERROR_NULL_POINTER_INPUT if point1 or point2 is NULL
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if equal is NULL
 */
-SU_RESULT SUPoint2DGetEqual(const struct SUPoint2D* point1,
-                            const struct SUPoint2D* point2,
-                            bool* equal);
+SU_RESULT SUPoint2DGetEqual(
+    const struct SUPoint2D* point1, const struct SUPoint2D* point2, bool* equal);
 
 /**
 @brief Creates a new point that is offset from another point.
@@ -57,9 +58,8 @@ SU_RESULT SUPoint2DGetEqual(const struct SUPoint2D* point1,
 - \ref SU_ERROR_NULL_POINTER_INPUT if point1 or vector is NULL
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if point2 is NULL
  */
-SU_RESULT SUPoint2DOffset(const struct SUPoint2D* point1,
-                          const struct SUVector2D* vector,
-                          struct SUPoint2D* point2);
+SU_RESULT SUPoint2DOffset(
+    const struct SUPoint2D* point1, const struct SUVector2D* vector, struct SUPoint2D* point2);
 
 /**
 @brief Gets the distance between two point objects.
@@ -73,9 +73,8 @@ SU_RESULT SUPoint2DOffset(const struct SUPoint2D* point1,
 - \ref SU_ERROR_NULL_POINTER_INPUT if point1 or point2 is NULL
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if distance is NULL
  */
-SU_RESULT SUPoint2DDistanceToSUPoint2D(const struct SUPoint2D* point1,
-                                       const struct SUPoint2D* point2,
-                                       double* distance);
+SU_RESULT SUPoint2DDistanceToSUPoint2D(
+    const struct SUPoint2D* point1, const struct SUPoint2D* point2, double* distance);
 
 /**
 @brief Transforms a point by applying a 2D transformation.
@@ -88,8 +87,7 @@ SU_RESULT SUPoint2DDistanceToSUPoint2D(const struct SUPoint2D* point1,
 - \ref SU_ERROR_NULL_POINTER_INPUT if transform is NULL
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if point is NULL
 */
-SU_RESULT SUPoint2DTransform(const struct SUTransformation2D* transform,
-                             struct SUPoint2D* point);
+SU_RESULT SUPoint2DTransform(const struct SUTransformation2D* transform, struct SUPoint2D* point);
 
 #ifdef __cplusplus
 }  // extern "C"

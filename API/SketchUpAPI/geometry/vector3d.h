@@ -1,8 +1,11 @@
 // Copyright 2017 Trimble Inc. All Rights Reserved.
 
+/**
+ * @file
+ * @brief Interfaces for SUVector3D.
+ */
 #ifndef SKETCHUP_GEOMETRY_VECTOR3D_H_
 #define SKETCHUP_GEOMETRY_VECTOR3D_H_
-
 
 #include <SketchUpAPI/common.h>
 #include <SketchUpAPI/geometry.h>
@@ -23,9 +26,8 @@ extern "C" {
 - \ref SU_ERROR_NULL_POINTER_INPUT if from or to is NULL
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if vector is NULL
 */
-SU_RESULT SUVector3DCreate(struct SUVector3D* vector,
-                           const struct SUPoint3D* from,
-                           const struct SUPoint3D* to);
+SU_RESULT SUVector3DCreate(
+    struct SUVector3D* vector, const struct SUPoint3D* from, const struct SUPoint3D* to);
 
 /**
 @brief Determines if a vector is valid. A vector is invalid if its length is
@@ -54,9 +56,8 @@ SU_RESULT SUVector3DIsValid(const struct SUVector3D* vector, bool* valid);
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if parallel is NULL
 - \ref SU_ERROR_INVALID_ARGUMENT if vector1 or vector2 is not a valid vector
 */
-SU_RESULT SUVector3DIsParallelTo(const struct SUVector3D* vector1,
-                                 const struct SUVector3D* vector2,
-                                 bool* parallel);
+SU_RESULT SUVector3DIsParallelTo(
+    const struct SUVector3D* vector1, const struct SUVector3D* vector2, bool* parallel);
 
 /**
 @brief Determines if two vectors are perpendicular.
@@ -71,9 +72,8 @@ SU_RESULT SUVector3DIsParallelTo(const struct SUVector3D* vector1,
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if perpendicular is NULL
 - \ref SU_ERROR_INVALID_ARGUMENT if vector1 or vector2 is not a valid vector
 */
-SU_RESULT SUVector3DIsPerpendicularTo(const struct SUVector3D* vector1,
-                                      const struct SUVector3D* vector2,
-                                      bool* perpendicular);
+SU_RESULT SUVector3DIsPerpendicularTo(
+    const struct SUVector3D* vector1, const struct SUVector3D* vector2, bool* perpendicular);
 
 /**
 @brief Determines if two vectors are parallel and pointing the same direction.
@@ -88,9 +88,8 @@ SU_RESULT SUVector3DIsPerpendicularTo(const struct SUVector3D* vector1,
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if same_direction is NULL
 - \ref SU_ERROR_INVALID_ARGUMENT if vector1 or vector2 is not a valid vector
 */
-SU_RESULT SUVector3DIsSameDirectionAs(const struct SUVector3D* vector1,
-                                      const struct SUVector3D* vector2,
-                                      bool* same_direction);
+SU_RESULT SUVector3DIsSameDirectionAs(
+    const struct SUVector3D* vector1, const struct SUVector3D* vector2, bool* same_direction);
 
 /**
 @brief Determines if two vectors are equal.
@@ -104,9 +103,8 @@ SU_RESULT SUVector3DIsSameDirectionAs(const struct SUVector3D* vector1,
 - \ref SU_ERROR_NULL_POINTER_INPUT if vector1 or vector2 is NULL
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if equal is NULL
 */
-SU_RESULT SUVector3DIsEqual(const struct SUVector3D* vector1,
-                            const struct SUVector3D* vector2,
-                            bool* equal);
+SU_RESULT SUVector3DIsEqual(
+    const struct SUVector3D* vector1, const struct SUVector3D* vector2, bool* equal);
 
 /**
 @brief Determines if vector1 is less than vector2.
@@ -119,9 +117,8 @@ SU_RESULT SUVector3DIsEqual(const struct SUVector3D* vector1,
 - \ref SU_ERROR_NULL_POINTER_INPUT if vector1 or vector2 is NULL
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if less_than is NULL
 */
-SU_RESULT SUVector3DLessThan(const struct SUVector3D* vector1,
-                             const struct SUVector3D* vector2,
-                             bool* less_than);
+SU_RESULT SUVector3DLessThan(
+    const struct SUVector3D* vector1, const struct SUVector3D* vector2, bool* less_than);
 
 /**
 @brief Normalizes a vector.
@@ -158,9 +155,8 @@ SU_RESULT SUVector3DReverse(struct SUVector3D* vector);
 - \ref SU_ERROR_NULL_POINTER_INPUT if vector1 or vector2 is NULL
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if dot is NULL
 */
-SU_RESULT SUVector3DDot(const struct SUVector3D* vector1,
-                        const struct SUVector3D* vector2,
-                        double* dot);
+SU_RESULT SUVector3DDot(
+    const struct SUVector3D* vector1, const struct SUVector3D* vector2, double* dot);
 
 /**
 @brief Computes the cross product of two vectors.
@@ -174,9 +170,8 @@ SU_RESULT SUVector3DDot(const struct SUVector3D* vector1,
 - \ref SU_ERROR_NULL_POINTER_INPUT if vector1 or vector2 is NULL
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if cross is NULL
 */
-SU_RESULT SUVector3DCross(const struct SUVector3D* vector1,
-                          const struct SUVector3D* vector2,
-                          struct SUVector3D* cross);
+SU_RESULT SUVector3DCross(
+    const struct SUVector3D* vector1, const struct SUVector3D* vector2, struct SUVector3D* cross);
 
 /**
 @brief Determines if a vector has a length of one.
@@ -189,8 +184,7 @@ SU_RESULT SUVector3DCross(const struct SUVector3D* vector1,
 - \ref SU_ERROR_NULL_POINTER_INPUT if vector is NULL
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if is_unit_vector is NULL
 */
-SU_RESULT SUVector3DIsUnitVector(const struct SUVector3D* vector,
-                                 bool* is_unit_vector);
+SU_RESULT SUVector3DIsUnitVector(const struct SUVector3D* vector, bool* is_unit_vector);
 
 /**
 @brief Gets the length of a vector.
@@ -230,9 +224,8 @@ SU_RESULT SUVector3DSetLength(struct SUVector3D* vector, double length);
 - \ref SU_ERROR_NULL_POINTER_INPUT if vector1 or vector2 is NULL
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if angle is NULL
 */
-SU_RESULT SUVector3DAngleBetween(const struct SUVector3D* vector1,
-                                 const struct SUVector3D* vector2,
-                                 double* angle);
+SU_RESULT SUVector3DAngleBetween(
+    const struct SUVector3D* vector1, const struct SUVector3D* vector2, double* angle);
 
 /**
 @brief Get arbitrary axes perpendicular to this vector. This method uses the
@@ -247,9 +240,8 @@ SU_RESULT SUVector3DAngleBetween(const struct SUVector3D* vector1,
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if x_axis or y_axis is NULL
 - \ref SU_ERROR_INVALID_ARGUMENT if z_axis is not a valid vector
 */
-SU_RESULT SUVector3DGetArbitraryAxes(const struct SUVector3D* z_axis,
-                                     struct SUVector3D* x_axis,
-                                     struct SUVector3D* y_axis);
+SU_RESULT SUVector3DGetArbitraryAxes(
+    const struct SUVector3D* z_axis, struct SUVector3D* x_axis, struct SUVector3D* y_axis);
 
 /**
 @brief Transforms the provided 3D vector by applying the provided 3D
@@ -263,8 +255,7 @@ SU_RESULT SUVector3DGetArbitraryAxes(const struct SUVector3D* z_axis,
 - \ref SU_ERROR_NULL_POINTER_INPUT if transform is NULL
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if vector is NULL
 */
-SU_RESULT SUVector3DTransform(const struct SUTransformation* transform,
-                              struct SUVector3D* vector);
+SU_RESULT SUVector3DTransform(const struct SUTransformation* transform, struct SUVector3D* vector);
 
 /**
 @brief Creates a new vector as a linear combination of other vectors.
@@ -283,9 +274,9 @@ SU_RESULT SUVector3DTransform(const struct SUTransformation* transform,
 - \ref SU_ERROR_NULL_POINTER_INPUT if vectors or weights is NULL
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if vector is NULL
 */
-SU_RESULT SUVector3DLinearCombination(const struct SUVector3D* vectors,
-                                      const double* weights, const size_t size,
-                                      struct SUVector3D* vector);
+SU_RESULT SUVector3DLinearCombination(
+    const struct SUVector3D* vectors, const double* weights, const size_t size,
+    struct SUVector3D* vector);
 
 #ifdef __cplusplus
 }  // extern "C"

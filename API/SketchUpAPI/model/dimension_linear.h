@@ -1,5 +1,9 @@
-// Copyright 2016 Trimble Navigation Ltd. All Rights Reserved.
+// Copyright 2016 Trimble Inc. All Rights Reserved.
 
+/**
+ * @file
+ * @brief Interfaces for SUDimensionLinearRef.
+ */
 #ifndef SKETCHUP_MODEL_DIMENSION_LINEAR_H_
 #define SKETCHUP_MODEL_DIMENSION_LINEAR_H_
 
@@ -12,6 +16,7 @@ extern "C" {
 
 /**
 @struct SUDimensionLinearRef
+@extends SUDimensionRef
 @brief  A linear dimension entity reference.
 @since SketchUp 2017, API 5.0
 */
@@ -59,8 +64,7 @@ enum SUDimensionLinearAlignmentType {
 - The converted \ref SUDimensionRef if dimension is a valid object
 - If not, the returned reference will be invalid
 */
-SU_EXPORT SUDimensionRef SUDimensionLinearToDimension(
-    SUDimensionLinearRef dimension);
+SU_EXPORT SUDimensionRef SUDimensionLinearToDimension(SUDimensionLinearRef dimension);
 
 /**
 @brief Converts from an \ref SUDimensionRef to an \ref SUDimensionLinearRef.
@@ -73,12 +77,11 @@ SU_EXPORT SUDimensionRef SUDimensionLinearToDimension(
 - The converted \ref SUDimensionLinearRef if the downcast operation succeeds
 - If not, the returned reference will be invalid
 */
-SU_EXPORT SUDimensionLinearRef SUDimensionLinearFromDimension(
-    SUDimensionRef dimension);
+SU_EXPORT SUDimensionLinearRef SUDimensionLinearFromDimension(SUDimensionRef dimension);
 
 /**
 @brief Creates a new linear dimension object with default data. Refer to the
-       documentation for \ref SUDimensionLinearSetStartPoint for more
+       documentation for \ref SUDimensionLinearSetStartPoint() for more
        information about the various supported ways for setting connection
        points.
 @since SketchUp 2017, API 5.0
@@ -103,9 +106,9 @@ SU_EXPORT SUDimensionLinearRef SUDimensionLinearFromDimension(
 - \ref SU_ERROR_GENERIC if {start,end}_point is NULL and {start,end}_path
        doesn't have a vertex or guide point for its leaf
 */
-SU_RESULT SUDimensionLinearCreate(SUDimensionLinearRef* dimension,
-    const struct SUPoint3D* start_point, SUInstancePathRef start_path,
-    const struct SUPoint3D* end_point, SUInstancePathRef end_path,
+SU_RESULT SUDimensionLinearCreate(
+    SUDimensionLinearRef* dimension, const struct SUPoint3D* start_point,
+    SUInstancePathRef start_path, const struct SUPoint3D* end_point, SUInstancePathRef end_path,
     double offset);
 
 /**
@@ -124,7 +127,7 @@ SU_RESULT SUDimensionLinearRelease(SUDimensionLinearRef* dimension);
 @brief Retrieves the start point of a dimension object. The given instance path
        object either must have been constructed using one of the
        SUInstancePathCreate* functions or it will be generated on the fly if it
-       is invalid. It must be released using \ref SUInstancePathRelease when
+       is invalid. It must be released using SUInstancePathRelease() when
        it is no longer needed.
 @since SketchUp 2017, API 5.0
 @param[in]  dimension The dimension object.
@@ -136,8 +139,8 @@ SU_RESULT SUDimensionLinearRelease(SUDimensionLinearRef* dimension);
 - \ref SU_ERROR_INVALID_INPUT if dimension is not a valid object
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if point or path are NULL
 */
-SU_RESULT SUDimensionLinearGetStartPoint(SUDimensionLinearRef dimension,
-    struct SUPoint3D* point, SUInstancePathRef* path);
+SU_RESULT SUDimensionLinearGetStartPoint(
+    SUDimensionLinearRef dimension, struct SUPoint3D* point, SUInstancePathRef* path);
 
 /**
 @brief Sets the start connection point of a dimension object. A dimension's
@@ -154,19 +157,22 @@ SU_RESULT SUDimensionLinearGetStartPoint(SUDimensionLinearRef dimension,
        other point may need to be adjusted as well. Users may want to verify
        the other connection point after setting this one.
 @since SketchUp 2017, API 5.0
-@code
+
+@code{.c}
   // Simple Example: Connect to an arbitrary position in space
   SUPoint3D point{ xposition, yposition, zposition};
   SUDimensionLinearSetStartPoint(dimension, &point, SU_INVALID);
 @endcode
-@code
+
+@code{.c}
   // Vertex Example: Connect to vertex entity
   SUInstancePathRef path = SU_INVALID;
   SUInstancePathCreate(&path);
   SUInstancePathSetLeaf(path, SUVertexToEntity(vertex));
   SUDimensionLinearSetStartPoint(dimension, NULL, path);
 @endcode
-@code
+
+@code{.c}
   // Edge Example: Connect to nearest point on an instance of an edge entity
   SUPoint3D point{ xposition, yposition, zposition};
   SUInstancePathRef path = SU_INVALID;
@@ -175,6 +181,7 @@ SU_RESULT SUDimensionLinearGetStartPoint(SUDimensionLinearRef dimension,
   SUInstancePathSetLeaf(path, SUEdgeToEntity(edge));
   SUDimensionLinearSetStartPoint(dimension, &point, path);
 @endcode
+
 @param[in] dimension The dimension object.
 @param[in] point     The 3d point to be set.
 @param[in] path      The instance path to be set.
@@ -188,15 +195,15 @@ SU_RESULT SUDimensionLinearGetStartPoint(SUDimensionLinearRef dimension,
 - \ref SU_ERROR_GENERIC if point is NULL and path doesn't have a vertex or
        guide point for its leaf
 */
-SU_RESULT SUDimensionLinearSetStartPoint(SUDimensionLinearRef dimension,
-    const struct SUPoint3D* point, SUInstancePathRef path);
+SU_RESULT SUDimensionLinearSetStartPoint(
+    SUDimensionLinearRef dimension, const struct SUPoint3D* point, SUInstancePathRef path);
 
 /**
 @brief Retrieves the end point of a dimension object. The given instance path
        object either must have been constructed using one of the
        SUInstancePathCreate* functions or it will be generated on the fly if it
-       is invalid. It must be released using \ref SUInstancePathRelease when it
-       is no longer needed.
+       is invalid. It must be released using SUInstancePathRelease() when
+       it is no longer needed.
 @since SketchUp 2017, API 5.0
 @param[in]  dimension The dimension object.
 @param[out] point     The 3d point retrieved.
@@ -207,13 +214,13 @@ SU_RESULT SUDimensionLinearSetStartPoint(SUDimensionLinearRef dimension,
 - \ref SU_ERROR_INVALID_INPUT if dimension is not a valid object
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if point or path are NULL
 */
-SU_RESULT SUDimensionLinearGetEndPoint(SUDimensionLinearRef dimension,
-    struct SUPoint3D* point, SUInstancePathRef* path);
+SU_RESULT SUDimensionLinearGetEndPoint(
+    SUDimensionLinearRef dimension, struct SUPoint3D* point, SUInstancePathRef* path);
 
 /**
 @brief Sets the end connection point of a dimension object. Refer to the
-       documentation for \ref SUDimensionLinearSetStartPoint for a detailed
-       description on supported ways of setting a dimension's connection point. 
+       documentation for \ref SUDimensionLinearSetStartPoint() for a detailed
+       description on supported ways of setting a dimension's connection point.
 @since SketchUp 2017, API 5.0
 @param[in] dimension The dimension object.
 @param[in] point     The 3d point to be set.
@@ -228,12 +235,12 @@ SU_RESULT SUDimensionLinearGetEndPoint(SUDimensionLinearRef dimension,
 - \ref SU_ERROR_GENERIC if point is NULL and path doesn't have a vertex or
        guide point for its leaf
 */
-SU_RESULT SUDimensionLinearSetEndPoint(SUDimensionLinearRef dimension,
-    const struct SUPoint3D* point, SUInstancePathRef path);
+SU_RESULT SUDimensionLinearSetEndPoint(
+    SUDimensionLinearRef dimension, const struct SUPoint3D* point, SUInstancePathRef path);
 
 /**
 @brief Retrieves the x-axis of a dimension object. The x-axis is the axis along
-       the length of the dimension.  
+       the length of the dimension.
 @since SketchUp 2017, API 5.0
 @param[in]  dimension The dimension object.
 @param[out] axis      The 3d vector retrieved.
@@ -246,8 +253,7 @@ SU_RESULT SUDimensionLinearSetEndPoint(SUDimensionLinearRef dimension,
 - \ref SU_ERROR_GENERIC if point is NULL and path doesn't have a vertex or
        guide point for its leaf
 */
-SU_RESULT SUDimensionLinearGetXAxis(SUDimensionLinearRef dimension,
-    struct SUVector3D* axis);
+SU_RESULT SUDimensionLinearGetXAxis(SUDimensionLinearRef dimension, struct SUVector3D* axis);
 
 /**
 @brief Sets the x-axis of a dimension object.
@@ -260,14 +266,13 @@ SU_RESULT SUDimensionLinearGetXAxis(SUDimensionLinearRef dimension,
 - \ref SU_ERROR_INVALID_INPUT if dimension is not a valid object
 - \ref SU_ERROR_NULL_POINTER_INPUT if axis is NULL
 */
-SU_RESULT SUDimensionLinearSetXAxis(SUDimensionLinearRef dimension,
-    const struct SUVector3D* axis);
+SU_RESULT SUDimensionLinearSetXAxis(SUDimensionLinearRef dimension, const struct SUVector3D* axis);
 
 /**
 @brief Retrieves the normal vector of a dimension object. The normal vector is
        a unit vector pointing out of the plane of the linear dimension. A
        linear dimension's plane is the plane defined by the x-axis and the
-       leader lines' direction vector.  
+       leader lines' direction vector.
 @since SketchUp 2017, API 5.0
 @param[in]  dimension The dimension object.
 @param[out] normal    The 3d vector retrieved.
@@ -277,8 +282,7 @@ SU_RESULT SUDimensionLinearSetXAxis(SUDimensionLinearRef dimension,
 - \ref SU_ERROR_INVALID_INPUT if dimension is not a valid object
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if normal is NULL
 */
-SU_RESULT SUDimensionLinearGetNormal(SUDimensionLinearRef dimension,
-    struct SUVector3D* normal);
+SU_RESULT SUDimensionLinearGetNormal(SUDimensionLinearRef dimension, struct SUVector3D* normal);
 
 /**
 @brief Sets the normal vector of a dimension object.
@@ -291,8 +295,8 @@ SU_RESULT SUDimensionLinearGetNormal(SUDimensionLinearRef dimension,
 - \ref SU_ERROR_INVALID_INPUT if dimension is not a valid object
 - \ref SU_ERROR_NULL_POINTER_INPUT if normal is NULL
 */
-SU_RESULT SUDimensionLinearSetNormal(SUDimensionLinearRef dimension,
-    const struct SUVector3D* normal);
+SU_RESULT SUDimensionLinearSetNormal(
+    SUDimensionLinearRef dimension, const struct SUVector3D* normal);
 
 /**
 @brief Retrieves the position of a dimension object. The position is a 2D point
@@ -306,8 +310,7 @@ SU_RESULT SUDimensionLinearSetNormal(SUDimensionLinearRef dimension,
 - \ref SU_ERROR_INVALID_INPUT if dimension is not a valid object
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if position is NULL
 */
-SU_RESULT SUDimensionLinearGetPosition(SUDimensionLinearRef dimension,
-    struct SUPoint2D* position);
+SU_RESULT SUDimensionLinearGetPosition(SUDimensionLinearRef dimension, struct SUPoint2D* position);
 
 /**
 @brief Sets the position of a dimension object.
@@ -320,8 +323,8 @@ SU_RESULT SUDimensionLinearGetPosition(SUDimensionLinearRef dimension,
 - \ref SU_ERROR_INVALID_INPUT if dimension is not a valid object
 - \ref SU_ERROR_NULL_POINTER_INPUT if position is NULL
 */
-SU_RESULT SUDimensionLinearSetPosition(SUDimensionLinearRef dimension,
-    const struct SUPoint2D* position);
+SU_RESULT SUDimensionLinearSetPosition(
+    SUDimensionLinearRef dimension, const struct SUPoint2D* position);
 
 /**
 @brief Retrieves an enum value indicating the dimension's vertical alignment
@@ -335,8 +338,8 @@ SU_RESULT SUDimensionLinearSetPosition(SUDimensionLinearRef dimension,
 - \ref SU_ERROR_INVALID_INPUT if dimension is not a valid object
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if alignment is NULL
 */
-SU_RESULT SUDimensionLinearGetVerticalAlignment(SUDimensionLinearRef dimension,
-    enum SUVerticalTextPositionType* alignment);
+SU_RESULT SUDimensionLinearGetVerticalAlignment(
+    SUDimensionLinearRef dimension, enum SUVerticalTextPositionType* alignment);
 
 /**
 @brief Sets the dimension's vertical alignment type.
@@ -348,8 +351,8 @@ SU_RESULT SUDimensionLinearGetVerticalAlignment(SUDimensionLinearRef dimension,
 - \ref SU_ERROR_NONE on success
 - \ref SU_ERROR_INVALID_INPUT if dimension is not a valid object
 */
-SU_RESULT SUDimensionLinearSetVerticalAlignment(SUDimensionLinearRef dimension,
-    enum SUVerticalTextPositionType alignment);
+SU_RESULT SUDimensionLinearSetVerticalAlignment(
+    SUDimensionLinearRef dimension, enum SUVerticalTextPositionType alignment);
 
 /**
 @brief Retrieves an enum value indicating the dimension's horizontal alignment
@@ -364,8 +367,7 @@ SU_RESULT SUDimensionLinearSetVerticalAlignment(SUDimensionLinearRef dimension,
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if alignment is NULL
 */
 SU_RESULT SUDimensionLinearGetHorizontalAlignment(
-    SUDimensionLinearRef dimension,
-    enum SUHorizontalTextPositionType* alignment);
+    SUDimensionLinearRef dimension, enum SUHorizontalTextPositionType* alignment);
 
 /**
 @brief Sets the dimension's horizontal alignment type.
@@ -378,8 +380,7 @@ SU_RESULT SUDimensionLinearGetHorizontalAlignment(
 - \ref SU_ERROR_INVALID_INPUT if dimension is not a valid object
 */
 SU_RESULT SUDimensionLinearSetHorizontalAlignment(
-    SUDimensionLinearRef dimension,
-    enum SUHorizontalTextPositionType alignment);
+    SUDimensionLinearRef dimension, enum SUHorizontalTextPositionType alignment);
 
 /**
 @brief Retrieves an enum value indicating the linear dimension's alignment
@@ -393,8 +394,8 @@ type.
 - \ref SU_ERROR_INVALID_INPUT if dimension is not a valid object
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if alignment is NULL
 */
-SU_RESULT SUDimensionLinearGetAlignment(SUDimensionLinearRef dimension,
-    enum SUDimensionLinearAlignmentType* alignment);
+SU_RESULT SUDimensionLinearGetAlignment(
+    SUDimensionLinearRef dimension, enum SUDimensionLinearAlignmentType* alignment);
 
 /**
 @brief Retrieves the position of the text location attachment point of the
@@ -410,8 +411,8 @@ SU_RESULT SUDimensionLinearGetAlignment(SUDimensionLinearRef dimension,
 - \ref SU_ERROR_INVALID_INPUT if dimension is not a valid object
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if position is NULL
 */
-SU_RESULT SUDimensionLinearGetTextPosition(SUDimensionLinearRef dimension,
-    struct SUPoint3D* position);
+SU_RESULT SUDimensionLinearGetTextPosition(
+    SUDimensionLinearRef dimension, struct SUPoint3D* position);
 
 #ifdef __cplusplus
 }  // extern "C"

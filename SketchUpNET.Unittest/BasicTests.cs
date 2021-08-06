@@ -32,6 +32,19 @@ namespace SketchUpNET.Unittest
         }
 
         /// <summary>
+        /// Test loading surfaces and meshes from testfile
+        /// </summary>
+        [TestMethod]
+        public void TestGetAxis()
+        {
+            SketchUpNET.SketchUp skp = new SketchUp();
+            skp.LoadModel(TestFile, true);
+            Assert.IsNotNull(skp.Axis);
+            Assert.IsNotNull(skp.Axis.Origin);
+            Assert.IsNotNull(skp.Axis.AxisTransform);
+        }
+
+        /// <summary>
         /// Test saving file as
         /// </summary>
         [TestMethod]

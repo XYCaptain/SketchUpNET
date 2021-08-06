@@ -1,5 +1,9 @@
-// Copyright 2014 Trimble Navigation Ltd.  All rights reserved.
+// Copyright 2014 Trimble Inc.  All rights reserved.
 
+/**
+ * @file
+ * @brief Interfaces for SUShadowInfoRef.
+ */
 #ifndef SKETCHUP_MODEL_SHADOW_INFO_H_
 #define SKETCHUP_MODEL_SHADOW_INFO_H_
 
@@ -45,10 +49,8 @@ SU_RESULT SUShadowInfoGetNumKeys(SUShadowInfoRef shadow_info, size_t* count);
 - \ref SU_ERROR_INVALID_OUTPUT if any of the strings in the keys array are
   invalid.
  */
-SU_RESULT SUShadowInfoGetKeys(SUShadowInfoRef shadow_info,
-                              size_t len,
-                              SUStringRef keys[],
-                              size_t* count);
+SU_RESULT SUShadowInfoGetKeys(
+    SUShadowInfoRef shadow_info, size_t len, SUStringRef keys[], size_t* count);
 
 /**
 @brief  Retrieves a value from a shadow info object.
@@ -67,12 +69,14 @@ SU_RESULT SUShadowInfoGetKeys(SUShadowInfoRef shadow_info,
 
 The list of shadow information keys is shown below.
 
-- City (in Model Info > Geo-location > Set Manual Location...) Note that 'City' is called 'Location' in the UI
+- City (in Model Info > Geo-location > Set Manual Location...) Note that 'City' is called 'Location'
+in the UI
 - Country (in Model Info > Geo-location > Set Manual Location...)
 - Dark (in Window > Shadows)
 - DayOfYear
 - DaylightSavings
-- DisplayNorth (in View > Toolbars > Solar North) Note that 'Toolbar' is called 'Tool Palettes' on Mac
+- DisplayNorth (in View > Toolbars > Solar North) Note that 'Toolbar' is called 'Tool Palettes' on
+Mac
 - DisplayOnAllFaces (in Window > Shadows)
 - DisplayOnGroundPlane (in Window > Shadows)
 - DisplayShadows (in Window > Shadows)
@@ -90,9 +94,8 @@ The list of shadow information keys is shown below.
 - SunSet_time_t (SunSet in Epoch time)
 - TZOffset (in Window > Shadows)
 - UseSunForAllShading (in Window > Shadows)*/
-SU_RESULT SUShadowInfoGetValue(SUShadowInfoRef shadow_info,
-                               const char* key,
-                               SUTypedValueRef* value_out);
+SU_RESULT SUShadowInfoGetValue(
+    SUShadowInfoRef shadow_info, const char* key, SUTypedValueRef* value_out);
 
 /**
 @brief  Sets a value on a shadow info object.
@@ -109,12 +112,14 @@ SU_RESULT SUShadowInfoGetValue(SUShadowInfoRef shadow_info,
 
 The list of shadow information keys is shown below.
 
-- City (in Model Info > Geo-location > Set Manual Location...) Note that 'City' is called 'Location' in the UI
+- City (in Model Info > Geo-location > Set Manual Location...) Note that 'City' is called 'Location'
+in the UI
 - Country (in Model Info > Geo-location > Set Manual Location...)
 - Dark (in Window > Shadows)
 - DayOfYear
 - DaylightSavings
-- DisplayNorth (in View > Toolbars > Solar North) Note that 'Toolbar' is called 'Tool Palettes' on Mac
+- DisplayNorth (in View > Toolbars > Solar North) Note that 'Toolbar' is called 'Tool Palettes' on
+Mac
 - DisplayOnAllFaces (in Window > Shadows)
 - DisplayOnGroundPlane (in Window > Shadows)
 - DisplayShadows (in Window > Shadows)
@@ -132,9 +137,8 @@ The list of shadow information keys is shown below.
 - SunSet_time_t (SunSet in Epoch time)
 - TZOffset (in Window > Shadows)
 - UseSunForAllShading (in Window > Shadows)*/
-SU_RESULT SUShadowInfoSetValue(SUShadowInfoRef shadow_info,
-                               const char* key,
-                               SUTypedValueRef value_in);
+SU_RESULT SUShadowInfoSetValue(
+    SUShadowInfoRef shadow_info, const char* key, SUTypedValueRef value_in);
 
 #ifdef __cplusplus
 }

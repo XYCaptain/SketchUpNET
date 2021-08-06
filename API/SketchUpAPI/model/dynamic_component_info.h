@@ -1,5 +1,9 @@
-// Copyright 2015 Trimble Navigation Ltd.  All Rights Reserved
+// Copyright 2015 Trimble Inc.  All Rights Reserved
 
+/**
+ * @file
+ * @brief Interfaces for SUDynamicComponentInfoRef.
+ */
 #ifndef SKETCHUP_MODEL_DYNAMIC_COMPONENT_INFO_H_
 #define SKETCHUP_MODEL_DYNAMIC_COMPONENT_INFO_H_
 
@@ -18,7 +22,7 @@ extern "C" {
 
 /**
 @brief Releases the DC info. DC info objects are created from component instance
-       using \ref SUComponentInstanceCreateDCInfo, and must be released using
+       using SUComponentInstanceCreateDCInfo(), and must be released using
        this function. This function also invalidates the given DC info.
 @since SketchUp 2016, API 4.0
 @param[in,out]  dc_info The dynamic component info object.
@@ -56,11 +60,11 @@ SU_RESULT SUDynamicComponentInfoGetNumDCAttributes(
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if attributes or count is NULL
 */
 SU_RESULT SUDynamicComponentInfoGetDCAttributes(
-    SUDynamicComponentInfoRef dc_info, size_t len,
-    SUDynamicComponentAttributeRef attributes[], size_t* count);
+    SUDynamicComponentInfoRef dc_info, size_t len, SUDynamicComponentAttributeRef attributes[],
+    size_t* count);
 
 #ifdef __cplusplus
 }  //  extern "C" {
 #endif
 
-#endif // SKETCHUP_MODEL_DYNAMIC_COMPONENT_INFO_H_
+#endif  // SKETCHUP_MODEL_DYNAMIC_COMPONENT_INFO_H_

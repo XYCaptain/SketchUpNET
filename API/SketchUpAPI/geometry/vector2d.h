@@ -1,8 +1,11 @@
 // Copyright 2017 Trimble Inc. All Rights Reserved.
 
+/**
+ * @file
+ * @brief Interfaces for SUVector2D.
+ */
 #ifndef SKETCHUP_GEOMETRY_VECTOR2D_H_
 #define SKETCHUP_GEOMETRY_VECTOR2D_H_
-
 
 #include <SketchUpAPI/common.h>
 #include <SketchUpAPI/geometry.h>
@@ -23,9 +26,8 @@ extern "C" {
 - \ref SU_ERROR_NULL_POINTER_INPUT if from or to is NULL
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if vector is NULL
 */
-SU_RESULT SUVector2DCreate(struct SUVector2D* vector,
-                           const struct SUPoint2D* from,
-                           const struct SUPoint2D* to);
+SU_RESULT SUVector2DCreate(
+    struct SUVector2D* vector, const struct SUPoint2D* from, const struct SUPoint2D* to);
 
 /**
 @brief Determines if a vector is valid. A vector is invalid if its length is
@@ -54,9 +56,8 @@ SU_RESULT SUVector2DIsValid(const struct SUVector2D* vector, bool* valid);
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if parallel is NULL
 - \ref SU_ERROR_INVALID_ARGUMENT if vector1 or vector2 is not a valid vector
 */
-SU_RESULT SUVector2DIsParallelTo(const struct SUVector2D* vector1,
-                                 const struct SUVector2D* vector2,
-                                 bool* parallel);
+SU_RESULT SUVector2DIsParallelTo(
+    const struct SUVector2D* vector1, const struct SUVector2D* vector2, bool* parallel);
 
 /**
 @brief Determines if two vectors are perpendicular.
@@ -71,9 +72,8 @@ SU_RESULT SUVector2DIsParallelTo(const struct SUVector2D* vector1,
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if perpendicular is NULL
 - \ref SU_ERROR_INVALID_ARGUMENT if vector1 or vector2 is not a valid vector
 */
-SU_RESULT SUVector2DIsPerpendicularTo(const struct SUVector2D* vector1,
-                                      const struct SUVector2D* vector2,
-                                      bool* perpendicular);
+SU_RESULT SUVector2DIsPerpendicularTo(
+    const struct SUVector2D* vector1, const struct SUVector2D* vector2, bool* perpendicular);
 
 /**
 @brief Determines if two vectors are parallel and pointing the same direction.
@@ -88,9 +88,8 @@ SU_RESULT SUVector2DIsPerpendicularTo(const struct SUVector2D* vector1,
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if same_direction is NULL
 - \ref SU_ERROR_INVALID_ARGUMENT if vector1 or vector2 is not a valid vector
 */
-SU_RESULT SUVector2DIsSameDirectionAs(const struct SUVector2D* vector1,
-                                      const struct SUVector2D* vector2,
-                                      bool* same_direction);
+SU_RESULT SUVector2DIsSameDirectionAs(
+    const struct SUVector2D* vector1, const struct SUVector2D* vector2, bool* same_direction);
 
 /**
 @brief Determines if two vectors are equal.
@@ -104,9 +103,8 @@ SU_RESULT SUVector2DIsSameDirectionAs(const struct SUVector2D* vector1,
 - \ref SU_ERROR_NULL_POINTER_INPUT if vector1 or vector2 is NULL
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if equal is NULL
 */
-SU_RESULT SUVector2DIsEqual(const struct SUVector2D* vector1,
-                            const struct SUVector2D* vector2,
-                            bool* equal);
+SU_RESULT SUVector2DIsEqual(
+    const struct SUVector2D* vector1, const struct SUVector2D* vector2, bool* equal);
 
 /**
 @brief Normalizes a vector.
@@ -143,9 +141,8 @@ SU_RESULT SUVector2DReverse(struct SUVector2D* vector);
 - \ref SU_ERROR_NULL_POINTER_INPUT if vector1 or vector2 is NULL
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if dot is NULL
 */
-SU_RESULT SUVector2DDot(const struct SUVector2D* vector1,
-                        const struct SUVector2D* vector2,
-                        double* dot);
+SU_RESULT SUVector2DDot(
+    const struct SUVector2D* vector1, const struct SUVector2D* vector2, double* dot);
 
 /**
 @brief Computes the cross product of two vectors.
@@ -159,9 +156,8 @@ SU_RESULT SUVector2DDot(const struct SUVector2D* vector1,
 - \ref SU_ERROR_NULL_POINTER_INPUT if vector1 or vector2 is NULL
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if cross is NULL
 */
-SU_RESULT SUVector2DCross(const struct SUVector2D* vector1,
-                          const struct SUVector2D* vector2,
-                          double* cross);
+SU_RESULT SUVector2DCross(
+    const struct SUVector2D* vector1, const struct SUVector2D* vector2, double* cross);
 
 /**
 @brief Determines if a vector has a length of one.
@@ -174,8 +170,7 @@ SU_RESULT SUVector2DCross(const struct SUVector2D* vector1,
 - \ref SU_ERROR_NULL_POINTER_INPUT if vector is NULL
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if is_unit_vector is NULL
 */
-SU_RESULT SUVector2DIsUnitVector(const struct SUVector2D* vector,
-                                 bool* is_unit_vector);
+SU_RESULT SUVector2DIsUnitVector(const struct SUVector2D* vector, bool* is_unit_vector);
 
 /**
 @brief Gets the length of a vector.
@@ -216,9 +211,8 @@ SU_RESULT SUVector2DSetLength(struct SUVector2D* vector, double length);
 - \ref SU_ERROR_NULL_POINTER_INPUT if vector1 or vector2 is NULL
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if angle is NULL
 */
-SU_RESULT SUVector2DAngleBetween(const struct SUVector2D* vector1,
-                                 const struct SUVector2D* vector2,
-                                 double* angle);
+SU_RESULT SUVector2DAngleBetween(
+    const struct SUVector2D* vector1, const struct SUVector2D* vector2, double* angle);
 
 /**
 @brief Transforms a vector by applying a 2D transformation.
@@ -231,8 +225,8 @@ SU_RESULT SUVector2DAngleBetween(const struct SUVector2D* vector1,
 - \ref SU_ERROR_NULL_POINTER_INPUT if transform is NULL
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if vector is NULL
 */
-SU_RESULT SUVector2DTransform(const struct SUTransformation2D* transform,
-                              struct SUVector2D* vector);
+SU_RESULT SUVector2DTransform(
+    const struct SUTransformation2D* transform, struct SUVector2D* vector);
 
 #ifdef __cplusplus
 }  // extern "C"

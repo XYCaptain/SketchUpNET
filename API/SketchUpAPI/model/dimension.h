@@ -1,5 +1,9 @@
-// Copyright 2016 Trimble Navigation Ltd. All Rights Reserved.
+// Copyright 2016 Trimble Inc. All Rights Reserved.
 
+/**
+ * @file
+ * @brief Interfaces for SUDimensionRef.
+ */
 #ifndef SKETCHUP_MODEL_DIMENSION_H_
 #define SKETCHUP_MODEL_DIMENSION_H_
 
@@ -15,6 +19,7 @@ extern "C" {
 
 /**
 @struct SUDimensionRef
+@extends SUDrawingElementRef
 @brief  A dimension entity reference.
 @since SketchUp 2017, API 5.0
 */
@@ -64,8 +69,7 @@ SU_EXPORT SUDimensionRef SUDimensionFromEntity(SUEntityRef entity);
 - The converted \ref SUDrawingElementRef if dimension is a valid object
 - If not, the returned reference will be invalid
 */
-SU_EXPORT SUDrawingElementRef SUDimensionToDrawingElement(
-    SUDimensionRef dimension);
+SU_EXPORT SUDrawingElementRef SUDimensionToDrawingElement(SUDimensionRef dimension);
 
 /**
 @brief Converts from an SUDrawingElementRef to an \ref SUDimensionRef. This is
@@ -78,8 +82,7 @@ SU_EXPORT SUDrawingElementRef SUDimensionToDrawingElement(
 - The converted \ref SUDimensionRef if the downcast operation succeeds
 - If not, the returned reference will be invalid
 */
-SU_EXPORT SUDimensionRef SUDimensionFromDrawingElement(
-    SUDrawingElementRef element);
+SU_EXPORT SUDimensionRef SUDimensionFromDrawingElement(SUDrawingElementRef element);
 
 /**
 @brief Retrieves an enum value indicating the dimension type (linear or radial).
@@ -92,8 +95,7 @@ SU_EXPORT SUDimensionRef SUDimensionFromDrawingElement(
 - \ref SU_ERROR_INVALID_INPUT if dimension is not a valid object
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if type is NULL
 */
-SU_RESULT SUDimensionGetType(SUDimensionRef dimension,
-    enum SUDimensionType* type);
+SU_RESULT SUDimensionGetType(SUDimensionRef dimension, enum SUDimensionType* type);
 
 /**
 @brief Retrieves the text of a dimension object.
@@ -134,8 +136,7 @@ SU_RESULT SUDimensionSetText(SUDimensionRef dimension, const char* text);
 - \ref SU_ERROR_INVALID_INPUT if dimension is not a valid object
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if plane is NULL
 */
-SU_RESULT SUDimensionGetPlane(SUDimensionRef dimension,
-    struct SUPlane3D* plane);
+SU_RESULT SUDimensionGetPlane(SUDimensionRef dimension, struct SUPlane3D* plane);
 
 /**
 @brief Retrieves a boolean indicating if the dimension text is 3D.
@@ -173,8 +174,7 @@ SU_RESULT SUDimensionSetText3D(SUDimensionRef dimension, bool is_text_3d);
 - \ref SU_ERROR_INVALID_INPUT if dimension is not a valid object
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if type is NULL
 */
-SU_RESULT SUDimensionGetArrowType(SUDimensionRef dimension,
-    enum SUArrowType* type);
+SU_RESULT SUDimensionGetArrowType(SUDimensionRef dimension, enum SUArrowType* type);
 
 /**
 @brief Sets the dimension's arrow type.
@@ -187,8 +187,7 @@ SU_RESULT SUDimensionGetArrowType(SUDimensionRef dimension,
 - \ref SU_ERROR_INVALID_INPUT if dimension is not a valid object
 - \ref SU_ERROR_OUT_OF_RANGE if type is not a supported value
 */
-SU_RESULT SUDimensionSetArrowType(SUDimensionRef dimension,
-    enum SUArrowType type);
+SU_RESULT SUDimensionSetArrowType(SUDimensionRef dimension, enum SUArrowType type);
 
 /**
 @brief Get the dimension's font reference.

@@ -1,5 +1,9 @@
-// Copyright 2013 Trimble Navigation Ltd. All Rights Reserved.
+// Copyright 2013 Trimble Inc. All Rights Reserved.
 
+/**
+ * @file
+ * @brief Interfaces for SUVertexRef.
+ */
 #ifndef SKETCHUP_MODEL_VERTEX_H_
 #define SKETCHUP_MODEL_VERTEX_H_
 
@@ -13,6 +17,7 @@ extern "C" {
 
 /**
 @struct SUVertexRef
+@extends SUEntityRef
 @brief  A vertex type that has a position and is associated with other geometry
         like edges, faces, and loops.
 */
@@ -50,8 +55,7 @@ SU_EXPORT SUVertexRef SUVertexFromEntity(SUEntityRef entity);
 - \ref SU_ERROR_INVALID_INPUT if vertex is an invalid object
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if position is NULL
 */
-SU_RESULT SUVertexGetPosition(SUVertexRef vertex,
-                              struct SUPoint3D* position);
+SU_RESULT SUVertexGetPosition(SUVertexRef vertex, struct SUPoint3D* position);
 
 /**
 @brief  Sets the position of a vertex object.
@@ -63,8 +67,7 @@ SU_RESULT SUVertexGetPosition(SUVertexRef vertex,
 - \ref SU_ERROR_INVALID_INPUT if vertex is an invalid object
 - \ref SU_ERROR_NULL_POINTER_INPUT if position is NULL
 */
-SU_RESULT SUVertexSetPosition(SUVertexRef vertex,
-                              const struct SUPoint3D* position);
+SU_RESULT SUVertexSetPosition(SUVertexRef vertex, const struct SUPoint3D* position);
 
 /**
 @brief  Retrieves the number of edges that the vertex is associated with.
@@ -90,8 +93,7 @@ SU_RESULT SUVertexGetNumEdges(SUVertexRef vertex, size_t* count);
 - \ref SU_ERROR_INVALID_INPUT if vertex is an invalid object
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if edges or count is NULL
 */
-SU_RESULT SUVertexGetEdges(SUVertexRef vertex, size_t len,
-                           SUEdgeRef edges[], size_t* count);
+SU_RESULT SUVertexGetEdges(SUVertexRef vertex, size_t len, SUEdgeRef edges[], size_t* count);
 
 /**
 @brief  Retrieves the number of faces that the vertex is associated with.
@@ -117,8 +119,7 @@ SU_RESULT SUVertexGetNumFaces(SUVertexRef vertex, size_t* count);
 - \ref SU_ERROR_INVALID_INPUT if vertex is an invalid object
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if faces or count is NULL
 */
-SU_RESULT SUVertexGetFaces(SUVertexRef vertex, size_t len,
-                           SUFaceRef faces[], size_t* count);
+SU_RESULT SUVertexGetFaces(SUVertexRef vertex, size_t len, SUFaceRef faces[], size_t* count);
 
 /**
 @brief  Retrieves the number of loops that the vertex is associated with.
@@ -144,8 +145,7 @@ SU_RESULT SUVertexGetNumLoops(SUVertexRef vertex, size_t* count);
 - \ref SU_ERROR_INVALID_INPUT if vertex is an invalid object
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if loops or count is NULL
 */
-SU_RESULT SUVertexGetLoops(SUVertexRef vertex, size_t len,
-                           SULoopRef loops[], size_t* count);
+SU_RESULT SUVertexGetLoops(SUVertexRef vertex, size_t len, SULoopRef loops[], size_t* count);
 
 #ifdef __cplusplus
 }  // extern "C"

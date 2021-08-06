@@ -1,5 +1,9 @@
-// Copyright 2014 Trimble Navigation Ltd. All Rights Reserved.
+// Copyright 2014-2020 Trimble Inc. All Rights Reserved.
 
+/**
+ * @file
+ * @brief Interfaces for SUClassificationsRef.
+ */
 #ifndef SKETCHUP_MODEL_CLASSIFICATIONS_H_
 #define SKETCHUP_MODEL_CLASSIFICATIONS_H_
 
@@ -26,8 +30,8 @@ extern "C" {
 - \ref SU_ERROR_INVALID_INPUT if schema_file_name is not a valid path to a schema
        or is NULL
 */
-SU_RESULT SUClassificationsLoadSchema(SUClassificationsRef classifications,
-                                      const char* schema_file_name);
+SU_RESULT SUClassificationsLoadSchema(
+    SUClassificationsRef classifications, const char* schema_file_name);
 
 /**
 @brief Gets a schema from a classification object.
@@ -42,9 +46,8 @@ SU_RESULT SUClassificationsLoadSchema(SUClassificationsRef classifications,
 - \ref SU_ERROR_INVALID_INPUT if schema_name is not a loaded schema
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if schema_ref is NULL
 */
-SU_RESULT SUClassificationsGetSchema(SUClassificationsRef classifications,
-                                     const char* schema_name,
-                                     SUSchemaRef* schema_ref);
+SU_RESULT SUClassificationsGetSchema(
+    SUClassificationsRef classifications, const char* schema_name, SUSchemaRef* schema_ref);
 
 #ifdef __cplusplus
 }

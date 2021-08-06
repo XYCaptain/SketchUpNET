@@ -1,4 +1,9 @@
-// Copyright 2013 Trimble Navigation Ltd. All Rights Reserved.
+// Copyright 2013 Trimble Inc. All Rights Reserved.
+
+/**
+ * @file
+ * @brief Interfaces for SUEdgeUseRef.
+ */
 #ifndef SKETCHUP_MODEL_EDGE_USE_H_
 #define SKETCHUP_MODEL_EDGE_USE_H_
 
@@ -8,6 +13,7 @@
 
 /**
 @struct SUEdgeUseRef
+@extends SUEntityRef
 @brief SUEdgeUseRef objects are used to retrieve the topology of the edges of
        a polygon. The geometry of the polygon being represented by \ref
        SULoopRef that is already associated with a face object. The typical use
@@ -103,8 +109,8 @@ SU_RESULT SUEdgeUseGetNumPartners(SUEdgeUseRef edgeuse, size_t* count);
 - \ref SU_ERROR_INVALID_INPUT if edgeuse is not a valid object
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if partners or count is NULL
 */
-SU_RESULT SUEdgeUseGetPartners(SUEdgeUseRef edgeuse, size_t len,
-                               SUEdgeUseRef partners[], size_t* count);
+SU_RESULT SUEdgeUseGetPartners(
+    SUEdgeUseRef edgeuse, size_t len, SUEdgeUseRef partners[], size_t* count);
 
 /**
 @brief Retrieves a flag indicating whether this EdgeUse is traversed in the
@@ -130,8 +136,7 @@ SU_RESULT SUEdgeUseIsReversed(SUEdgeUseRef edgeuse, bool* reversed);
 - \ref SU_ERROR_INVALID_INPUT if edgeuse is not a valid object
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if prev_edgeuse is NULL.
 */
-SU_RESULT SUEdgeUseGetPrevious(SUEdgeUseRef edgeuse,
-                               SUEdgeUseRef* prev_edgeuse);
+SU_RESULT SUEdgeUseGetPrevious(SUEdgeUseRef edgeuse, SUEdgeUseRef* prev_edgeuse);
 
 /**
 @brief Retrieves the EdgeUse object just following an EdgeUse object in the
@@ -144,8 +149,7 @@ SU_RESULT SUEdgeUseGetPrevious(SUEdgeUseRef edgeuse,
 - \ref SU_ERROR_INVALID_INPUT if edgeuse is not a valid object
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if next_edgeuse is NULL.
 */
-SU_RESULT SUEdgeUseGetNext(SUEdgeUseRef edgeuse,
-                           SUEdgeUseRef* next_edgeuse);
+SU_RESULT SUEdgeUseGetNext(SUEdgeUseRef edgeuse, SUEdgeUseRef* next_edgeuse);
 
 /**
 @brief Retrieves the start vertex of an EdgeUse object. The start vertex of the
@@ -161,8 +165,7 @@ SU_RESULT SUEdgeUseGetNext(SUEdgeUseRef edgeuse,
 - \ref SU_ERROR_INVALID_INPUT if edge is not a valid EdgeUse object
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if vertex is NULL
 */
-SU_RESULT SUEdgeUseGetStartVertex(SUEdgeUseRef edgeuse,
-                                  SUVertexRef* vertex);
+SU_RESULT SUEdgeUseGetStartVertex(SUEdgeUseRef edgeuse, SUVertexRef* vertex);
 
 /**
 @brief Retrieves the end vertex of an EdgeUse object.
@@ -178,8 +181,7 @@ face loop whose direction may be the reverse of the direction of the edge.
 - \ref SU_ERROR_INVALID_INPUT if edge is not a valid EdgeUse object
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if vertex is NULL
 */
-SU_RESULT SUEdgeUseGetEndVertex(SUEdgeUseRef edgeuse,
-                                SUVertexRef* vertex);
+SU_RESULT SUEdgeUseGetEndVertex(SUEdgeUseRef edgeuse, SUVertexRef* vertex);
 
 /**
 @brief Retrieves the normal vector at the start vertex of an EdgeUse object.
@@ -191,8 +193,7 @@ SU_RESULT SUEdgeUseGetEndVertex(SUEdgeUseRef edgeuse,
 - \ref SU_ERROR_INVALID_INPUT if edge is not a valid object
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if normal is NULL
 */
-SU_RESULT SUEdgeUseGetStartVertexNormal(SUEdgeUseRef edgeuse,
-                                        struct SUVector3D* normal);
+SU_RESULT SUEdgeUseGetStartVertexNormal(SUEdgeUseRef edgeuse, struct SUVector3D* normal);
 
 /**
 @brief Retrieves the normal vector at the end vertex of an EdgeUse object.
@@ -204,8 +205,7 @@ SU_RESULT SUEdgeUseGetStartVertexNormal(SUEdgeUseRef edgeuse,
 - \ref SU_ERROR_INVALID_INPUT if edge is not a valid object
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if normal is NULL.
 */
-SU_RESULT SUEdgeUseGetEndVertexNormal(SUEdgeUseRef edgeuse,
-                                      struct SUVector3D* normal);
+SU_RESULT SUEdgeUseGetEndVertexNormal(SUEdgeUseRef edgeuse, struct SUVector3D* normal);
 
 #ifdef __cplusplus
 }  //  extern "C" {

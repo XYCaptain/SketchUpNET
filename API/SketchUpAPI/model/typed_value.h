@@ -1,5 +1,9 @@
-// Copyright 2013 Trimble Navigation Ltd.  All Rights Reserved
+// Copyright 2013 Trimble Inc.  All Rights Reserved
 
+/**
+ * @file
+ * @brief Interfaces for SUTypedValueRef.
+ */
 #ifndef SKETCHUP_MODEL_TYPED_VALUE_H_
 #define SKETCHUP_MODEL_TYPED_VALUE_H_
 
@@ -23,23 +27,23 @@ extern "C" {
 @brief The set of types that a \ref SUTypedValueRef can represent.
 */
 enum SUTypedValueType {
-  SUTypedValueType_Empty = 0,
-  SUTypedValueType_Byte,
-  SUTypedValueType_Short,
-  SUTypedValueType_Int32,
-  SUTypedValueType_Float,
-  SUTypedValueType_Double,
-  SUTypedValueType_Bool,
-  SUTypedValueType_Color,
-  SUTypedValueType_Time,
-  SUTypedValueType_String,
-  SUTypedValueType_Vector3D,
-  SUTypedValueType_Array
+  SUTypedValueType_Empty = 0,  ///< No value set
+  SUTypedValueType_Byte,       ///< Byte value type
+  SUTypedValueType_Short,      ///< Short value type
+  SUTypedValueType_Int32,      ///< Int32 value type
+  SUTypedValueType_Float,      ///< Float value type
+  SUTypedValueType_Double,     ///< Double value type
+  SUTypedValueType_Bool,       ///< Bool value type
+  SUTypedValueType_Color,      ///< Color value type
+  SUTypedValueType_Time,       ///< Time value type
+  SUTypedValueType_String,     ///< String value type
+  SUTypedValueType_Vector3D,   ///< Vector3D value type
+  SUTypedValueType_Array       ///< Array value type
 };
 
 /**
 @brief  Creates a typed value object.  The created object must be released
-        with \ref SUTypedValueRelease.
+        with \ref SUTypedValueRelease().
 @param[out] typed_value The created typed value object.
 @related SUTypedValueRef
 @return
@@ -51,7 +55,7 @@ SU_RESULT SUTypedValueCreate(SUTypedValueRef* typed_value);
 
 /**
 @brief  Releases a typed value object that was previously created with
-        \ref SUTypedValueCreate.
+        \ref SUTypedValueCreate().
 @param[in] typed_value The typed value object.
 @related SUTypedValueRef
 @return
@@ -71,8 +75,7 @@ SU_RESULT SUTypedValueRelease(SUTypedValueRef* typed_value);
 - \ref SU_ERROR_INVALID_INPUT if type_value is not a valid object
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if type is NULL
 */
-SU_RESULT SUTypedValueGetType(SUTypedValueRef typed_value,
-                              enum SUTypedValueType* type);
+SU_RESULT SUTypedValueGetType(SUTypedValueRef typed_value, enum SUTypedValueType* type);
 
 /**
 @brief  Retrieves the byte value of a typed value object.
@@ -109,8 +112,7 @@ SU_RESULT SUTypedValueSetByte(SUTypedValueRef typed_value, char byte_value);
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if int16_value is NULL
 - \ref SU_ERROR_NO_DATA if typed_value is not of the requested type
 */
-SU_RESULT SUTypedValueGetInt16(SUTypedValueRef typed_value,
-                               int16_t* int16_value);
+SU_RESULT SUTypedValueGetInt16(SUTypedValueRef typed_value, int16_t* int16_value);
 
 /**
 @brief  Sets the int16 value of a typed value object.
@@ -121,8 +123,7 @@ SU_RESULT SUTypedValueGetInt16(SUTypedValueRef typed_value,
 - \ref SU_ERROR_NONE on success
 - \ref SU_ERROR_INVALID_INPUT if typed_value is not a valid object
 */
-SU_RESULT SUTypedValueSetInt16(SUTypedValueRef typed_value,
-                               int16_t int16_value);
+SU_RESULT SUTypedValueSetInt16(SUTypedValueRef typed_value, int16_t int16_value);
 
 /**
 @brief  Retrieves the int32 value of a typed value object.
@@ -135,8 +136,7 @@ SU_RESULT SUTypedValueSetInt16(SUTypedValueRef typed_value,
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if int32_value is NULL
 - \ref SU_ERROR_NO_DATA if typed_value is not of the requested type
 */
-SU_RESULT SUTypedValueGetInt32(SUTypedValueRef typed_value,
-                               int32_t* int32_value);
+SU_RESULT SUTypedValueGetInt32(SUTypedValueRef typed_value, int32_t* int32_value);
 
 /**
 @brief  Sets the int32 value of a typed value object.
@@ -147,8 +147,7 @@ SU_RESULT SUTypedValueGetInt32(SUTypedValueRef typed_value,
 - \ref SU_ERROR_NONE on success
 - \ref SU_ERROR_INVALID_INPUT if typed_value is not a valid object
 */
-SU_RESULT SUTypedValueSetInt32(SUTypedValueRef typed_value,
-                               int32_t int32_value);
+SU_RESULT SUTypedValueSetInt32(SUTypedValueRef typed_value, int32_t int32_value);
 
 /**
 @brief Retrieves the float value of a typed value object.
@@ -161,8 +160,7 @@ SU_RESULT SUTypedValueSetInt32(SUTypedValueRef typed_value,
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if float_value is NULL
 - \ref SU_ERROR_NO_DATA if typed_value is not of the requested type
 */
-SU_RESULT SUTypedValueGetFloat(SUTypedValueRef typed_value,
-                               float* float_value);
+SU_RESULT SUTypedValueGetFloat(SUTypedValueRef typed_value, float* float_value);
 
 /**
 @brief  Sets the float value of a typed value object.
@@ -186,8 +184,7 @@ SU_RESULT SUTypedValueSetFloat(SUTypedValueRef typed_value, float float_value);
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if double_value is NULL
 - \ref SU_ERROR_NO_DATA if typed_value is not of the requested type
 */
-SU_RESULT SUTypedValueGetDouble(SUTypedValueRef typed_value,
-                                double* double_value);
+SU_RESULT SUTypedValueGetDouble(SUTypedValueRef typed_value, double* double_value);
 
 /**
 @brief  Sets the double value of a typed value object.
@@ -198,8 +195,7 @@ SU_RESULT SUTypedValueGetDouble(SUTypedValueRef typed_value,
 - \ref SU_ERROR_NONE on success
 - \ref SU_ERROR_INVALID_INPUT if typed_value is not a valid object
 */
-SU_RESULT SUTypedValueSetDouble(SUTypedValueRef typed_value,
-                                double double_value);
+SU_RESULT SUTypedValueSetDouble(SUTypedValueRef typed_value, double double_value);
 
 /**
 @brief  Retrieves the boolean value of a typed value object.
@@ -248,8 +244,7 @@ SU_RESULT SUTypedValueGetColor(SUTypedValueRef typed_value, SUColor* color);
 - \ref SU_ERROR_INVALID_INPUT if typed_value is not a valid object
 - \ref SU_ERROR_NULL_POINTER_INPUT if color is NULL
 */
-SU_RESULT SUTypedValueSetColor(SUTypedValueRef typed_value,
-                               const SUColor* color);
+SU_RESULT SUTypedValueSetColor(SUTypedValueRef typed_value, const SUColor* color);
 
 /**
 @brief  Retrieves the time value of a typed value object.  The time value is in
@@ -263,8 +258,7 @@ SU_RESULT SUTypedValueSetColor(SUTypedValueRef typed_value,
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if time_value is NULL
 - \ref SU_ERROR_NO_DATA if typed_value is not of the requested type
 */
-SU_RESULT SUTypedValueGetTime(SUTypedValueRef typed_value,
-                              int64_t* time_value);
+SU_RESULT SUTypedValueGetTime(SUTypedValueRef typed_value, int64_t* time_value);
 
 /**
 @brief  Sets the time value of a typed value object.  The time value is in
@@ -276,8 +270,7 @@ SU_RESULT SUTypedValueGetTime(SUTypedValueRef typed_value,
 - \ref SU_ERROR_NONE on success
 - \ref SU_ERROR_INVALID_INPUT if typed_value is not a valid object
 */
-SU_RESULT SUTypedValueSetTime(SUTypedValueRef typed_value,
-                              int64_t time_value);
+SU_RESULT SUTypedValueSetTime(SUTypedValueRef typed_value, int64_t time_value);
 
 /**
 @brief  Retrieves the string value of a typed value object.
@@ -292,8 +285,7 @@ SU_RESULT SUTypedValueSetTime(SUTypedValueRef typed_value,
 - \ref SU_ERROR_INVALID_OUTPUT if string_value does not point to a valid \ref
   SUStringRef object
 */
-SU_RESULT SUTypedValueGetString(SUTypedValueRef typed_value,
-                                SUStringRef* string_value);
+SU_RESULT SUTypedValueGetString(SUTypedValueRef typed_value, SUStringRef* string_value);
 
 /**
 @brief  Sets the string value of a typed value object.
@@ -305,8 +297,7 @@ SU_RESULT SUTypedValueGetString(SUTypedValueRef typed_value,
 - \ref SU_ERROR_INVALID_INPUT if typed_value is not a valid object
 - \ref SU_ERROR_NULL_POINTER_INPUT if string_value is NULL
 */
-SU_RESULT SUTypedValueSetString(SUTypedValueRef typed_value,
-                                const char* string_value);
+SU_RESULT SUTypedValueSetString(SUTypedValueRef typed_value, const char* string_value);
 
 /**
 @brief  Retrieves the 3-element vector value of a typed value object
@@ -319,8 +310,7 @@ SU_RESULT SUTypedValueSetString(SUTypedValueRef typed_value,
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if vector3d_value is NULL
 - \ref SU_ERROR_NO_DATA if typed_value is not of the requested type
 */
-SU_RESULT SUTypedValueGetVector3d(SUTypedValueRef typed_value,
-                                  double vector3d_value[3]);
+SU_RESULT SUTypedValueGetVector3d(SUTypedValueRef typed_value, double vector3d_value[3]);
 
 /**
 @brief  Sets the 3-element vector value of a typed value object.
@@ -331,8 +321,7 @@ SU_RESULT SUTypedValueGetVector3d(SUTypedValueRef typed_value,
 - \ref SU_ERROR_NONE on success
 - \ref SU_ERROR_INVALID_INPUT if typed_value is not a valid object
 */
-SU_RESULT SUTypedValueSetVector3d(SUTypedValueRef typed_value,
-                                  const double vector3d_value[3]);
+SU_RESULT SUTypedValueSetVector3d(SUTypedValueRef typed_value, const double vector3d_value[3]);
 
 /**
 @brief  Sets the 3D unit vector value of a typed value object.
@@ -343,8 +332,7 @@ SU_RESULT SUTypedValueSetVector3d(SUTypedValueRef typed_value,
 - \ref SU_ERROR_NONE on success
 - \ref SU_ERROR_INVALID_INPUT if typed_value is not a valid object
 */
-SU_RESULT SUTypedValueSetUnitVector3d(SUTypedValueRef typed_value,
-                                      const double vector3d_value[3]);
+SU_RESULT SUTypedValueSetUnitVector3d(SUTypedValueRef typed_value, const double vector3d_value[3]);
 
 /**
 @brief  Retrieves the array of typed value objects from a typed value of type
@@ -362,8 +350,8 @@ SU_RESULT SUTypedValueSetUnitVector3d(SUTypedValueRef typed_value,
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if values or count is NULL
 - \ref SU_ERROR_NO_DATA if typed_value is not of the requested type
 */
-SU_RESULT SUTypedValueGetArrayItems(SUTypedValueRef typed_value, size_t len,
-                                    SUTypedValueRef values[], size_t* count);
+SU_RESULT SUTypedValueGetArrayItems(
+    SUTypedValueRef typed_value, size_t len, SUTypedValueRef values[], size_t* count);
 
 /**
 @brief  Sets the array of typed value objects of a typed value object.  The
@@ -377,8 +365,8 @@ SU_RESULT SUTypedValueGetArrayItems(SUTypedValueRef typed_value, size_t len,
 - \ref SU_ERROR_INVALID_INPUT if typed_value is not a valid object
 - \ref SU_ERROR_NULL_POINTER_INPUT if values is NULL
 */
-SU_RESULT SUTypedValueSetArrayItems(SUTypedValueRef typed_value, size_t len,
-                                    SUTypedValueRef values[]);
+SU_RESULT SUTypedValueSetArrayItems(
+    SUTypedValueRef typed_value, size_t len, SUTypedValueRef values[]);
 
 /**
 @brief  Retrieves the number of typed value objects from a typed value of type
@@ -393,8 +381,7 @@ SU_RESULT SUTypedValueSetArrayItems(SUTypedValueRef typed_value, size_t len,
 - \ref SU_ERROR_NO_DATA if typed_value is not of type
   \ref SUTypedValueType_Array.
 */
-SU_RESULT SUTypedValueGetNumArrayItems(SUTypedValueRef typed_value,
-                                       size_t* count);
+SU_RESULT SUTypedValueGetNumArrayItems(SUTypedValueRef typed_value, size_t* count);
 
 #ifdef __cplusplus
 }  // extern "C"

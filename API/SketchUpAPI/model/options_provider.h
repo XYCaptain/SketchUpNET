@@ -1,5 +1,9 @@
 // Copyright 2013-2019 Trimble Inc.  All Rights Reserved
 
+/**
+ * @file
+ * @brief Interfaces for SUOptionsProviderRef.
+ */
 #ifndef SKETCHUP_MODEL_OPTIONS_PROVIDER_H_
 #define SKETCHUP_MODEL_OPTIONS_PROVIDER_H_
 
@@ -28,8 +32,7 @@ extern "C" {
 - \ref SU_ERROR_INVALID_INPUT if options_provider is not valid
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if count is NULL
  */
-SU_RESULT SUOptionsProviderGetNumKeys(SUOptionsProviderRef options_provider,
-                                      size_t* count);
+SU_RESULT SUOptionsProviderGetNumKeys(SUOptionsProviderRef options_provider, size_t* count);
 
 /**
 @brief  Retrieves options providers associated with the options manager.
@@ -45,10 +48,8 @@ SU_RESULT SUOptionsProviderGetNumKeys(SUOptionsProviderRef options_provider,
 - \ref SU_ERROR_INVALID_OUTPUT if any of the strings in the keys array are
   invalid.
  */
-SU_RESULT SUOptionsProviderGetKeys(SUOptionsProviderRef options_provider,
-                                   size_t len,
-                                   SUStringRef keys[],
-                                   size_t* count);
+SU_RESULT SUOptionsProviderGetKeys(
+    SUOptionsProviderRef options_provider, size_t len, SUStringRef keys[], size_t* count);
 
 /**
 @brief  Gets the value of the given option.
@@ -68,28 +69,34 @@ in the table below.
 
 Options Provider | Option               | Value Type              | Meaning
 ---------------- | -------------------- | ----------------------- | -------
-NamedOptions     | &nbsp;               | &nbsp;                  | Provides ability to save arbitrary named option values. There are no default options for this provider.
-PageOptions      | &nbsp;               | &nbsp;                  | Options for the Scene
-&nbsp;           | ShowTransition       | SUTypedValueType_Bool   | Show scene transitions
-&nbsp;           | TransitionTime       | SUTypedValueType_Double | Number of seconds between each scene transition
+NamedOptions     | &nbsp;               | &nbsp;                  | Provides ability to save
+arbitrary named option values. There are no default options for this provider. PageOptions      |
+&nbsp;               | &nbsp;                  | Options for the Scene &nbsp;           |
+ShowTransition       | SUTypedValueType_Bool   | Show scene transitions &nbsp;           |
+TransitionTime       | SUTypedValueType_Double | Number of seconds between each scene transition
 SlideshowOptions | &nbsp;               | &nbsp;                  | Options for the slideshow
 &nbsp;           | LoopSlideshow        | SUTypedValueType_Bool   | Causes the slideshow to loop
-&nbsp;           | SlideTime            | SUTypedValueType_Double | Number of seconds that each slide is shown
-UnitsOptions     | &nbsp;               | &nbsp;                  | Options for units display in the model
-&nbsp;           | LengthPrecision      | SUTypedValueType_Int32  | Number of decimal places of precision shown for length
-&nbsp;           | LengthFormat         | SUTypedValueType_Int32  | Default units format for the model
-&nbsp;           | LengthUnit           | SUTypedValueType_Int32  | Units format for the model
-&nbsp;           | LengthSnapEnabled    | SUTypedValueType_Bool   | Indicates whether length snapping is enabled
-&nbsp;           | LengthSnapLength     | SUTypedValueType_Double | Controls the snapping length size increment
-&nbsp;           | AreaPrecision        | SUTypedValueType_Int32  | (SketchUp 2020.0, API Version 8.0) Number of decimal places of precision shown for area units
-&nbsp;           | AreaUnit             | SUTypedValueType_Int32  | (SketchUp 2019.2, API Version 7.1) Area units format for the model
-&nbsp;           | VolumePrecision      | SUTypedValueType_Int32  | (SketchUp 2020.0, API Version 8.0) Number of decimal places of precision shown for volume units
-&nbsp;           | VolumeUnit           | SUTypedValueType_Int32  | (SketchUp 2019.2, API Version 7.1) Volume units format for the model
-&nbsp;           | AnglePrecision       | SUTypedValueType_Int32  | Number of decimal places of precision shown for angles
-&nbsp;           | AngleSnapEnabled     | SUTypedValueType_Bool   | Indicates whether angle snapping is enabled
-&nbsp;           | SnapAngle            | SUTypedValueType_Double | Controls the angle snapping size increment
-&nbsp;           | SuppressUnitsDisplay | SUTypedValueType_Bool   | Display the units format if LengthFormat is Decimal or Fractional
-&nbsp;           | ForceInchDisplay     | SUTypedValueType_Bool   | Force displaying 0" if LengthFormat is Architectural
+&nbsp;           | SlideTime            | SUTypedValueType_Double | Number of seconds that each
+slide is shown UnitsOptions     | &nbsp;               | &nbsp;                  | Options for units
+display in the model &nbsp;           | LengthPrecision      | SUTypedValueType_Int32  | Number of
+decimal places of precision shown for length &nbsp;           | LengthFormat         |
+SUTypedValueType_Int32  | Default units format for the model &nbsp;           | LengthUnit |
+SUTypedValueType_Int32  | Units format for the model &nbsp;           | LengthSnapEnabled    |
+SUTypedValueType_Bool   | Indicates whether length snapping is enabled &nbsp;           |
+LengthSnapLength     | SUTypedValueType_Double | Controls the snapping length size increment &nbsp;
+| AreaPrecision        | SUTypedValueType_Int32  | (SketchUp 2020.0, API Version 8.0) Number of
+decimal places of precision shown for area units &nbsp;           | AreaUnit             |
+SUTypedValueType_Int32  | (SketchUp 2019.2, API Version 7.1) Area units format for the model &nbsp;
+| VolumePrecision      | SUTypedValueType_Int32  | (SketchUp 2020.0, API Version 8.0) Number of
+decimal places of precision shown for volume units &nbsp;           | VolumeUnit           |
+SUTypedValueType_Int32  | (SketchUp 2019.2, API Version 7.1) Volume units format for the model
+&nbsp;           | AnglePrecision       | SUTypedValueType_Int32  | Number of decimal places of
+precision shown for angles &nbsp;           | AngleSnapEnabled     | SUTypedValueType_Bool   |
+Indicates whether angle snapping is enabled &nbsp;           | SnapAngle            |
+SUTypedValueType_Double | Controls the angle snapping size increment &nbsp;           |
+SuppressUnitsDisplay | SUTypedValueType_Bool   | Display the units format if LengthFormat is Decimal
+or Fractional &nbsp;           | ForceInchDisplay     | SUTypedValueType_Bool   | Force displaying
+0" if LengthFormat is Architectural
 
 Some of the options map to enumerated values, as shown in the table below.
 
@@ -124,9 +131,8 @@ Note that LengthUnit will be overridden by LengthFormat if LengthFormat is not
 set to Decimal. Architectural defaults to inches, Engineering defaults to feet,
 and Fractional defaults to inches.
  */
-SU_RESULT SUOptionsProviderGetValue(SUOptionsProviderRef options_provider,
-                                    const char* key,
-                                    SUTypedValueRef* value);
+SU_RESULT SUOptionsProviderGetValue(
+    SUOptionsProviderRef options_provider, const char* key, SUTypedValueRef* value);
 
 /**
 @brief  Sets the value of the given option.
@@ -139,9 +145,8 @@ SU_RESULT SUOptionsProviderGetValue(SUOptionsProviderRef options_provider,
 - \ref SU_ERROR_INVALID_INPUT if options_provider or value is not valid
 - \ref SU_ERROR_NULL_POINTER_INPUT if key is NULL
  */
-SU_RESULT SUOptionsProviderSetValue(SUOptionsProviderRef options_provider,
-                                    const char* key,
-                                    SUTypedValueRef value);
+SU_RESULT SUOptionsProviderSetValue(
+    SUOptionsProviderRef options_provider, const char* key, SUTypedValueRef value);
 
 /**
 @brief Retrieves the name of the options provider.
@@ -156,8 +161,7 @@ SU_RESULT SUOptionsProviderSetValue(SUOptionsProviderRef options_provider,
 - \ref SU_ERROR_INVALID_OUTPUT if name does not point to a valid \ref
 SUStringRef object
 */
-SU_RESULT SUOptionsProviderGetName(SUOptionsProviderRef options_provider,
-                                   SUStringRef*         name);
+SU_RESULT SUOptionsProviderGetName(SUOptionsProviderRef options_provider, SUStringRef* name);
 
 #ifdef __cplusplus
 }  //  extern "C" {

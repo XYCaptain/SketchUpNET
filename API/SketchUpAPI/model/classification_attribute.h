@@ -1,5 +1,9 @@
-// Copyright 2016 Trimble Navigation Ltd. All Rights Reserved
+// Copyright 2016-2020 Trimble Inc. All Rights Reserved
 
+/**
+ * @file
+ * @brief Interfaces for SUClassificationAttributeRef.
+ */
 #ifndef SKETCHUP_MODEL_CLASSIFICATION_ATTRIBUTE_H_
 #define SKETCHUP_MODEL_CLASSIFICATION_ATTRIBUTE_H_
 
@@ -30,8 +34,7 @@ extern "C" {
   SUTypedValueRef object
 */
 SU_RESULT SUClassificationAttributeGetValue(
-    SUClassificationAttributeRef attribute,
-    SUTypedValueRef* value);
+    SUClassificationAttributeRef attribute, SUTypedValueRef* value);
 
 /**
 @brief Retrieves the path to the attribute.
@@ -48,8 +51,7 @@ SU_RESULT SUClassificationAttributeGetValue(
   SUStringRef object
 */
 SU_RESULT SUClassificationAttributeGetPath(
-    SUClassificationAttributeRef attribute,
-    SUStringRef* path);
+    SUClassificationAttributeRef attribute, SUStringRef* path);
 
 /**
 @brief Retrieves the number of children setting of the attribute.
@@ -63,8 +65,7 @@ SU_RESULT SUClassificationAttributeGetPath(
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if count is NULL
 */
 SU_RESULT SUClassificationAttributeGetNumChildren(
-    SUClassificationAttributeRef attribute,
-    size_t* count);
+    SUClassificationAttributeRef attribute, size_t* count);
 
 /**
 @brief Retrieves the child attribute at the given index.
@@ -79,12 +80,10 @@ SU_RESULT SUClassificationAttributeGetNumChildren(
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if child is NULL
 */
 SU_RESULT SUClassificationAttributeGetChild(
-    SUClassificationAttributeRef attribute,
-    size_t index,
-    SUClassificationAttributeRef* child);
+    SUClassificationAttributeRef attribute, size_t index, SUClassificationAttributeRef* child);
 
 #ifdef __cplusplus
 }  //  extern "C" {
 #endif
 
-#endif // SKETCHUP_MODEL_CLASSIFICATION_ATTRIBUTE_H_
+#endif  // SKETCHUP_MODEL_CLASSIFICATION_ATTRIBUTE_H_

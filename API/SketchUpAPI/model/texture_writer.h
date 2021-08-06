@@ -1,5 +1,9 @@
-// Copyright 2013 Trimble Navigation Ltd. All Rights Reserved.
+// Copyright 2013 Trimble Inc. All Rights Reserved.
 
+/**
+ * @file
+ * @brief Interfaces for SUTextureWriterRef.
+ */
 #ifndef SKETCHUP_MODEL_TEXTURE_WRITER_H_
 #define SKETCHUP_MODEL_TEXTURE_WRITER_H_
 
@@ -18,13 +22,13 @@ extern "C" {
         disk.  For face objects texture writer modifies non-affine textures on
         write so that the resulting texture image can be mapped with
         2-dimensional texture coordinates.  The modified UV coordinates are
-        retrieved from a mesh object created with \ref
-        SUMeshHelperCreateWithTextureWriter.
+        retrieved from a mesh object created with
+        SUMeshHelperCreateWithTextureWriter().
 */
 
 /**
 @brief  Creates a new texture writer object. The texture writer must be
-        subsequently deallocated with \ref SUTextureWriterRelease.
+        subsequently deallocated with SUTextureWriterRelease().
 @param[out] writer The created texture writer object.
 @related SUTextureWriterRef
 @return
@@ -60,9 +64,8 @@ SU_RESULT SUTextureWriterRelease(SUTextureWriterRef* writer);
   no texture to write
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if texture_id is NULL
 */
-SU_RESULT SUTextureWriterLoadEntity(SUTextureWriterRef writer,
-                                    SUEntityRef entity,
-                                    long* texture_id);
+SU_RESULT SUTextureWriterLoadEntity(
+    SUTextureWriterRef writer, SUEntityRef entity, long* texture_id);
 
 /**
 @brief  Loads a face object to a texture writer object in order to have its
@@ -81,10 +84,8 @@ SU_RESULT SUTextureWriterLoadEntity(SUTextureWriterRef writer,
   to write, and back_texture_id is NULL
 - \ref SU_ERROR_GENERIC if the face object does not a texture to write
 */
-SU_RESULT SUTextureWriterLoadFace(SUTextureWriterRef writer,
-                                  SUFaceRef face,
-                                  long* front_texture_id,
-                                  long* back_texture_id);
+SU_RESULT SUTextureWriterLoadFace(
+    SUTextureWriterRef writer, SUFaceRef face, long* front_texture_id, long* back_texture_id);
 
 /**
 @brief  Retrieves the total number of textures that are loaded into the texture
@@ -97,8 +98,7 @@ SU_RESULT SUTextureWriterLoadFace(SUTextureWriterRef writer,
 - \ref SU_ERROR_INVALID_INPUT if writer is not a valid object
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if count is NULL
 */
-SU_RESULT SUTextureWriterGetNumTextures(SUTextureWriterRef writer,
-                                        size_t* count);
+SU_RESULT SUTextureWriterGetNumTextures(SUTextureWriterRef writer, size_t* count);
 
 /**
 @brief  Writes a texture to a file on disk.
@@ -119,16 +119,14 @@ SU_RESULT SUTextureWriterGetNumTextures(SUTextureWriterRef writer,
 - \ref SU_ERROR_SERIALIZATION if a file could not be written to the specified
   location, or if an invalid file format was specified
 */
-SU_RESULT SUTextureWriterWriteTexture(SUTextureWriterRef writer,
-                                      long texture_id,
-                                      const char* path,
-                                      bool reduce_size);
+SU_RESULT SUTextureWriterWriteTexture(
+    SUTextureWriterRef writer, long texture_id, const char* path, bool reduce_size);
 
 /**
  @brief  Retrieves an image from the given texture_id. The given image
          representation object must have been constructed using one of the
-         SUImageRepCreate* functions. It must be released using \ref 
-         SUImageRepRelease.
+         SUImageRepCreate* functions. It must be released using
+         SUImageRepRelease().
 @since SketchUp 2017 M2, API 5.2
 @param[in] writer      The texture writer object.
 @param[in] texture_id  The id of the texture.
@@ -141,9 +139,8 @@ SU_RESULT SUTextureWriterWriteTexture(SUTextureWriterRef writer,
 - \ref SU_ERROR_INVALID_OUTPUT if image is not a valid object.
 - \ref SU_ERROR_NO_DATA if there is no texture in the given texture_id.
 */
-SU_RESULT SUTextureWriterGetImageRep(SUTextureWriterRef writer,
-                                     long texture_id,
-                                     SUImageRepRef* image);
+SU_RESULT SUTextureWriterGetImageRep(
+    SUTextureWriterRef writer, long texture_id, SUImageRepRef* image);
 
 /**
 @brief  Writes out all the textures loaded into a texture writer object. The
@@ -160,8 +157,7 @@ SU_RESULT SUTextureWriterGetImageRep(SUTextureWriterRef writer,
 - \ref SU_ERROR_INVALID_INPUT if directory is not a object
 - \ref SU_ERROR_SERIALIZATION if the textures could not be written to disk
 */
-SU_RESULT SUTextureWriterWriteAllTextures(SUTextureWriterRef writer,
-                                          const char* directory);
+SU_RESULT SUTextureWriterWriteAllTextures(SUTextureWriterRef writer, const char* directory);
 
 /**
 @brief  Retrieves a flag indicating whether a texture object loaded into a
@@ -177,9 +173,8 @@ SU_RESULT SUTextureWriterWriteAllTextures(SUTextureWriterRef writer,
 - \ref SU_ERROR_NO_DATA if texture_id is not a handle to a loaded texture object
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if is_affine is NULL
 */
-SU_RESULT SUTextureWriterIsTextureAffine(SUTextureWriterRef writer,
-                                         long texture_id,
-                                         bool* is_affine);
+SU_RESULT SUTextureWriterIsTextureAffine(
+    SUTextureWriterRef writer, long texture_id, bool* is_affine);
 
 /**
 @brief  Retrieves the file path from a texture image written using \ref
@@ -197,9 +192,8 @@ SU_RESULT SUTextureWriterIsTextureAffine(SUTextureWriterRef writer,
 - \ref SU_ERROR_INVALID_OUTPUT if file_path does not point to a valid \ref
   SUStringRef object
 */
-SU_RESULT SUTextureWriterGetTextureFilePath(SUTextureWriterRef writer,
-                                            long texture_id,
-                                            SUStringRef* file_path);
+SU_RESULT SUTextureWriterGetTextureFilePath(
+    SUTextureWriterRef writer, long texture_id, SUStringRef* file_path);
 
 /**
 @brief  Given an array of vertex positions, retrieves the corresponding UV
@@ -217,11 +211,9 @@ SU_RESULT SUTextureWriterGetTextureFilePath(SUTextureWriterRef writer,
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if uv_coords is NULL
 - \ref SU_ERROR_NO_DATA if the face object does not have a front face texture
 */
-SU_RESULT SUTextureWriterGetFrontFaceUVCoords(SUTextureWriterRef writer,
-                                              SUFaceRef face,
-                                              size_t len,
-                                              const struct SUPoint3D points[],
-                                              struct SUPoint2D uv_coords[]);
+SU_RESULT SUTextureWriterGetFrontFaceUVCoords(
+    SUTextureWriterRef writer, SUFaceRef face, size_t len, const struct SUPoint3D points[],
+    struct SUPoint2D uv_coords[]);
 
 /**
 @brief  Given an array of vertex positions, retrieves the corresponding UV
@@ -239,11 +231,9 @@ SU_RESULT SUTextureWriterGetFrontFaceUVCoords(SUTextureWriterRef writer,
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if uv_coords is NULL
 - \ref SU_ERROR_NO_DATA if the face object does not have a back face texture
 */
-SU_RESULT SUTextureWriterGetBackFaceUVCoords(SUTextureWriterRef writer,
-                                             SUFaceRef face,
-                                             size_t len,
-                                             const struct SUPoint3D points[],
-                                             struct SUPoint2D uv_coords[]);
+SU_RESULT SUTextureWriterGetBackFaceUVCoords(
+    SUTextureWriterRef writer, SUFaceRef face, size_t len, const struct SUPoint3D points[],
+    struct SUPoint2D uv_coords[]);
 
 /**
 @brief  Gets the texture id of a previously loaded entity. Acceptable entity
@@ -260,9 +250,8 @@ SU_RESULT SUTextureWriterGetBackFaceUVCoords(SUTextureWriterRef writer,
 - \ref SU_ERROR_GENERIC if the entity is not one of the acceptable types or it
   does not have a previously written texture_id
 */
-SU_RESULT SUTextureWriterGetTextureIdForEntity(SUTextureWriterRef writer,
-                                               SUEntityRef entity,
-                                               long* texture_id);
+SU_RESULT SUTextureWriterGetTextureIdForEntity(
+    SUTextureWriterRef writer, SUEntityRef entity, long* texture_id);
 
 /**
 @brief  Gets the texture id of a previously loaded face.
@@ -281,10 +270,8 @@ SU_RESULT SUTextureWriterGetTextureIdForEntity(SUTextureWriterRef writer,
 - \ref SU_ERROR_GENERIC if the face object does not have a previously written
   texture_id
 */
-SU_RESULT SUTextureWriterGetTextureIdForFace(SUTextureWriterRef writer,
-                                             SUFaceRef face,
-                                             bool front,
-                                             long* texture_id);
+SU_RESULT SUTextureWriterGetTextureIdForFace(
+    SUTextureWriterRef writer, SUFaceRef face, bool front, long* texture_id);
 
 #ifdef __cplusplus
 }  // #ifdef __cplusplus

@@ -1,4 +1,9 @@
-// Copyright 2013 Trimble Navigation Ltd. All Rights Reserved.
+// Copyright 2013 Trimble Inc. All Rights Reserved.
+
+/**
+ * @file
+ * @brief Interfaces for SUDrawingElementRef.
+ */
 #ifndef SKETCHUP_MODEL_DRAWING_ELEMENT_H_
 #define SKETCHUP_MODEL_DRAWING_ELEMENT_H_
 
@@ -11,6 +16,7 @@ extern "C" {
 
 /**
 @struct SUDrawingElementRef
+@extends SUEntityRef
 @brief  References a drawing element, which is an abstract base type for some
         API types.
 */
@@ -58,8 +64,7 @@ SU_EXPORT enum SURefType SUDrawingElementGetType(SUDrawingElementRef elem);
 - \ref SU_ERROR_INVALID_INPUT if elem is not a valid object
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if bbox is NULL
 */
-SU_RESULT SUDrawingElementGetBoundingBox(SUDrawingElementRef elem,
-                                         struct SUBoundingBox3D* bbox);
+SU_RESULT SUDrawingElementGetBoundingBox(SUDrawingElementRef elem, struct SUBoundingBox3D* bbox);
 
 /**
 @brief Retrieves the material object of a drawing element.
@@ -76,8 +81,7 @@ with the drawing element.
 - \ref SU_ERROR_NO_DATA if the drawing element does not have a front face
        material
 */
-SU_RESULT SUDrawingElementGetMaterial(SUDrawingElementRef elem,
-                                      SUMaterialRef* material);
+SU_RESULT SUDrawingElementGetMaterial(SUDrawingElementRef elem, SUMaterialRef* material);
 
 /**
 @brief Sets the material of a drawing element.
@@ -93,8 +97,7 @@ the drawing element.
 - \ref SU_ERROR_INVALID_INPUT if elem is invalid
 - \ref SU_ERROR_INVALID_ARGUMENT is the material is owned by a layer or image
 */
-SU_RESULT SUDrawingElementSetMaterial(SUDrawingElementRef elem,
-                                      SUMaterialRef material);
+SU_RESULT SUDrawingElementSetMaterial(SUDrawingElementRef elem, SUMaterialRef material);
 
 /**
 @brief Retrieves the layer object associated with a drawing element.
@@ -128,8 +131,7 @@ SU_RESULT SUDrawingElementSetLayer(SUDrawingElementRef elem, SULayerRef layer);
 - \ref SU_ERROR_NONE on success
 - \ref SU_ERROR_INVALID_INPUT if elem is not a valid object
 */
-SU_RESULT SUDrawingElementSetHidden(SUDrawingElementRef elem,
-                                    bool hide_flag);
+SU_RESULT SUDrawingElementSetHidden(SUDrawingElementRef elem, bool hide_flag);
 
 /**
 @brief Retrieves the hide flag of a drawing element.
@@ -141,8 +143,7 @@ SU_RESULT SUDrawingElementSetHidden(SUDrawingElementRef elem,
 - \ref SU_ERROR_INVALID_INPUT if elem is not a valid object
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if hide_flag is NULL
 */
-SU_RESULT SUDrawingElementGetHidden(SUDrawingElementRef elem,
-                                    bool* hide_flag);
+SU_RESULT SUDrawingElementGetHidden(SUDrawingElementRef elem, bool* hide_flag);
 
 /**
 @brief Sets the casts shadows flag of a drawing element.
@@ -153,8 +154,7 @@ SU_RESULT SUDrawingElementGetHidden(SUDrawingElementRef elem,
 - \ref SU_ERROR_NONE on success
 - \ref SU_ERROR_INVALID_INPUT if elem is not a valid object
 */
-SU_RESULT SUDrawingElementSetCastsShadows(SUDrawingElementRef elem,
-                                          bool casts_shadows_flag);
+SU_RESULT SUDrawingElementSetCastsShadows(SUDrawingElementRef elem, bool casts_shadows_flag);
 
 /**
 @brief Retrieves the casts shadows flag of a drawing element.
@@ -166,9 +166,7 @@ SU_RESULT SUDrawingElementSetCastsShadows(SUDrawingElementRef elem,
 - \ref SU_ERROR_INVALID_INPUT if elem is not a valid object
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if hide_flag is NULL
 */
-SU_RESULT SUDrawingElementGetCastsShadows(SUDrawingElementRef elem,
-                                          bool* casts_shadows_flag);
-
+SU_RESULT SUDrawingElementGetCastsShadows(SUDrawingElementRef elem, bool* casts_shadows_flag);
 
 /**
 @brief Sets the receives shadows flag of a drawing element.
@@ -179,8 +177,7 @@ SU_RESULT SUDrawingElementGetCastsShadows(SUDrawingElementRef elem,
 - \ref SU_ERROR_NONE on success
 - \ref SU_ERROR_INVALID_INPUT if elem is not a valid object
 */
-SU_RESULT SUDrawingElementSetReceivesShadows(SUDrawingElementRef elem,
-                                             bool receives_shadows_flag);
+SU_RESULT SUDrawingElementSetReceivesShadows(SUDrawingElementRef elem, bool receives_shadows_flag);
 
 /**
 @brief Retrieves the receives shadows flag of a drawing element.
@@ -192,9 +189,7 @@ SU_RESULT SUDrawingElementSetReceivesShadows(SUDrawingElementRef elem,
 - \ref SU_ERROR_INVALID_INPUT if elem is not a valid object
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if hide_flag is NULL
 */
-SU_RESULT SUDrawingElementGetReceivesShadows(SUDrawingElementRef elem,
-                                             bool* receives_shadows_flag);
-
+SU_RESULT SUDrawingElementGetReceivesShadows(SUDrawingElementRef elem, bool* receives_shadows_flag);
 
 #ifdef __cplusplus
 }  // extern "C"

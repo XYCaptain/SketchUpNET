@@ -1,5 +1,9 @@
-// Copyright 2013 Trimble Navigation Ltd. All Rights Reserved.
+// Copyright 2013 Trimble Inc. All Rights Reserved.
 
+/**
+ * @file
+ * @brief Interfaces for SUMeshHelperRef.
+ */
 #ifndef SKETCHUP_MODEL_MESH_HELPER_H_
 #define SKETCHUP_MODEL_MESH_HELPER_H_
 
@@ -48,9 +52,8 @@ SU_RESULT SUMeshHelperCreate(SUMeshHelperRef* mesh_ref, SUFaceRef face_ref);
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if mesh_ref is NULL
 - \ref SU_ERROR_OVERWRITE_VALID if mesh_ref already references a valid object
 */
-SU_RESULT SUMeshHelperCreateWithTextureWriter(SUMeshHelperRef* mesh_ref,
-    SUFaceRef face_ref,
-    SUTextureWriterRef texture_writer_ref);
+SU_RESULT SUMeshHelperCreateWithTextureWriter(
+    SUMeshHelperRef* mesh_ref, SUFaceRef face_ref, SUTextureWriterRef texture_writer_ref);
 
 /**
 @brief  Creates a tessellated polygon mesh object from a face and a UV helper
@@ -65,9 +68,8 @@ SU_RESULT SUMeshHelperCreateWithTextureWriter(SUMeshHelperRef* mesh_ref,
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if mesh_ref is NULL
 - \ref SU_ERROR_OVERWRITE_VALID if mesh_ref already references a valid object
 */
-SU_RESULT SUMeshHelperCreateWithUVHelper(SUMeshHelperRef* mesh_ref,
-                                         SUFaceRef face_ref,
-                                         SUUVHelperRef uv_helper_ref);
+SU_RESULT SUMeshHelperCreateWithUVHelper(
+    SUMeshHelperRef* mesh_ref, SUFaceRef face_ref, SUUVHelperRef uv_helper_ref);
 
 /**
 @brief  Deallocates a polygon mesh object.
@@ -106,8 +108,8 @@ SU_RESULT SUMeshHelperGetNumVertices(SUMeshHelperRef mesh_ref, size_t* count);
 /**
 @brief  Retrieves the array of indices of the vertices of a triangle mesh
         object. The each element indexes into the arrays retrieved with \ref
-        SUMeshHelperGetVertices, \ref SUMeshHelperGetFrontSTQCoords, \ref
-        SUMeshHelperGetBackSTQCoords and \ref SUMeshHelperGetNormals.  The
+        SUMeshHelperGetVertices, \ref SUMeshHelperGetFrontSTQCoords(), \ref
+        SUMeshHelperGetBackSTQCoords and \ref SUMeshHelperGetNormals().  The
         elements are sorted so that every three elements (i.e., stride of three)
         compose the indices to the three vertices of a triangle.
 @param[in]  mesh_ref The mesh object.
@@ -119,8 +121,8 @@ SU_RESULT SUMeshHelperGetNumVertices(SUMeshHelperRef mesh_ref, size_t* count);
 - \ref SU_ERROR_NONE on success
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if indices or count is NULL
 */
-SU_RESULT SUMeshHelperGetVertexIndices(SUMeshHelperRef mesh_ref, size_t len,
-                                       size_t indices[], size_t* count);
+SU_RESULT SUMeshHelperGetVertexIndices(
+    SUMeshHelperRef mesh_ref, size_t len, size_t indices[], size_t* count);
 
 /**
 @brief  Retrieves the vertices of a triangle mesh object.
@@ -133,8 +135,8 @@ SU_RESULT SUMeshHelperGetVertexIndices(SUMeshHelperRef mesh_ref, size_t len,
 - \ref SU_ERROR_NONE on success
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if vertices or count is NULL
 */
-SU_RESULT SUMeshHelperGetVertices(SUMeshHelperRef mesh_ref, size_t len,
-                                  struct SUPoint3D vertices[], size_t* count);
+SU_RESULT SUMeshHelperGetVertices(
+    SUMeshHelperRef mesh_ref, size_t len, struct SUPoint3D vertices[], size_t* count);
 
 /**
 @brief  Retrieves the front stq texture coordinates of a triangle mesh object.
@@ -147,8 +149,8 @@ SU_RESULT SUMeshHelperGetVertices(SUMeshHelperRef mesh_ref, size_t len,
 - \ref SU_ERROR_NONE on success
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if stq or count is NULL
 */
-SU_RESULT SUMeshHelperGetFrontSTQCoords(SUMeshHelperRef mesh_ref, size_t len,
-                                        struct SUPoint3D stq[], size_t* count);
+SU_RESULT SUMeshHelperGetFrontSTQCoords(
+    SUMeshHelperRef mesh_ref, size_t len, struct SUPoint3D stq[], size_t* count);
 
 /**
 @brief  Retrieves the back stq texture coordinates of a triangle mesh object.
@@ -161,8 +163,8 @@ SU_RESULT SUMeshHelperGetFrontSTQCoords(SUMeshHelperRef mesh_ref, size_t len,
 - \ref SU_ERROR_NONE on success
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if stq or count is NULL
 */
-SU_RESULT SUMeshHelperGetBackSTQCoords(SUMeshHelperRef mesh_ref, size_t len,
-                                       struct SUPoint3D stq[], size_t* count);
+SU_RESULT SUMeshHelperGetBackSTQCoords(
+    SUMeshHelperRef mesh_ref, size_t len, struct SUPoint3D stq[], size_t* count);
 
 /**
 @brief  Retrieves the vertex normal vectors of a triangle mesh object.
@@ -175,8 +177,8 @@ SU_RESULT SUMeshHelperGetBackSTQCoords(SUMeshHelperRef mesh_ref, size_t len,
 - \ref SU_ERROR_NONE on success
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if normals or count is NULL
 */
-SU_RESULT SUMeshHelperGetNormals(SUMeshHelperRef mesh_ref, size_t len,
-                                 struct SUVector3D normals[], size_t* count);
+SU_RESULT SUMeshHelperGetNormals(
+    SUMeshHelperRef mesh_ref, size_t len, struct SUVector3D normals[], size_t* count);
 
 #ifdef __cplusplus
 }  // extern "C"

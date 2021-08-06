@@ -1,4 +1,9 @@
-// Copyright 2013 Trimble Navigation Ltd. All Rights Reserved.
+// Copyright 2013 Trimble Inc. All Rights Reserved.
+
+/**
+ * @file
+ * @brief Interfaces for SUOpeningRef.
+ */
 #ifndef SKETCHUP_MODEL_OPENING_H_
 #define SKETCHUP_MODEL_OPENING_H_
 
@@ -45,8 +50,8 @@ SU_RESULT SUOpeningGetNumPoints(SUOpeningRef opening, size_t* count);
 - \ref SU_ERROR_INVALID_INPUT if opening is not a valid object
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if points or count is NULL
 */
-SU_RESULT SUOpeningGetPoints(SUOpeningRef opening, size_t len,
-                             struct SUPoint3D points[], size_t* count);
+SU_RESULT SUOpeningGetPoints(
+    SUOpeningRef opening, size_t len, struct SUPoint3D points[], size_t* count);
 
 /**
 @brief Release an opening object.
@@ -58,7 +63,7 @@ SU_RESULT SUOpeningGetPoints(SUOpeningRef opening, size_t len,
 - \ref SU_ERROR_INVALID_INPUT if opening is not a valid object
 - \ref SU_ERROR_NULL_POINTER_INPUT if points or count is NULL
 */
-SU_RESULT SUOpeningRelease(SUOpeningRef *opening);
+SU_RESULT SUOpeningRelease(SUOpeningRef* opening);
 
 #ifdef __cplusplus
 }  // extern "C" {

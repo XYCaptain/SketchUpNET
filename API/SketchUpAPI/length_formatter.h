@@ -1,4 +1,9 @@
 // Copyright 2017 Trimble Inc. All Rights Reserved.
+
+/**
+ * @file
+ * @brief Interfaces for SULengthFormatterRef.
+ */
 #ifndef SKETCHUP_LENGTH_FORMATTER_H_
 #define SKETCHUP_LENGTH_FORMATTER_H_
 
@@ -124,8 +129,7 @@ SU_RESULT SULengthFormatterRelease(SULengthFormatterRef* formatter);
 - \ref SU_ERROR_INVALID_INPUT if formatter is not a valid object
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if precision is NULL
  */
-SU_RESULT SULengthFormatterGetPrecision(SULengthFormatterRef formatter,
-    size_t* precision);
+SU_RESULT SULengthFormatterGetPrecision(SULengthFormatterRef formatter, size_t* precision);
 
 /**
 @brief Sets the precision of a length formatter.
@@ -137,58 +141,57 @@ SU_RESULT SULengthFormatterGetPrecision(SULengthFormatterRef formatter,
 - \ref SU_ERROR_NONE on success
 - \ref SU_ERROR_INVALID_INPUT if formatter is not a valid object
  */
-SU_RESULT SULengthFormatterSetPrecision(SULengthFormatterRef formatter,
-    size_t precision);
+SU_RESULT SULengthFormatterSetPrecision(SULengthFormatterRef formatter, size_t precision);
 
 /**
 @brief Retrieves the area precision of a length formatter.
 @since Sketchup 2020, API 8.0
 @param[in]  formatter The formatter object.
 @param[out] precision The precision retrieved.
+@related SULengthFormatterRef
 @return
 - \ref SU_ERROR_NONE on success
 - \ref SU_ERROR_INVALID_INPUT if formatter is not a valid object
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if precision is NULL
 */
-SU_RESULT SULengthFormatterGetAreaPrecision(SULengthFormatterRef formatter,
-    size_t* precision);
+SU_RESULT SULengthFormatterGetAreaPrecision(SULengthFormatterRef formatter, size_t* precision);
 
 /**
 @brief Sets the area precision of a length formatter.
 @since Sketchup 2020, API 8.0
 @param[in] formatter The formatter object.
 @param[in] precision The precision to be set.
+@related SULengthFormatterRef
 @return
 - \ref SU_ERROR_NONE on success
 - \ref SU_ERROR_INVALID_INPUT if formatter is not a valid object
 */
-SU_RESULT SULengthFormatterSetAreaPrecision(SULengthFormatterRef formatter,
-    size_t precision);
+SU_RESULT SULengthFormatterSetAreaPrecision(SULengthFormatterRef formatter, size_t precision);
 
 /**
 @brief Retrieves the volume precision of a length formatter.
 @since Sketchup 2020, API 8.0
 @param[in]  formatter The formatter object.
 @param[out] precision The precision retrieved.
+@related SULengthFormatterRef
 @return
 - \ref SU_ERROR_NONE on success
 - \ref SU_ERROR_INVALID_INPUT if formatter is not a valid object
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if precision is NULL
 */
-SU_RESULT SULengthFormatterGetVolumePrecision(SULengthFormatterRef formatter,
-    size_t* precision);
+SU_RESULT SULengthFormatterGetVolumePrecision(SULengthFormatterRef formatter, size_t* precision);
 
 /**
 @brief Sets the volume precision of a length formatter.
 @since Sketchup 2020, API 8.0
 @param[in] formatter The formatter object.
 @param[in] precision The precision to be set.
+@related SULengthFormatterRef
 @return
 - \ref SU_ERROR_NONE on success
 - \ref SU_ERROR_INVALID_INPUT if formatter is not a valid object
 */
-SU_RESULT SULengthFormatterSetVolumePrecision(SULengthFormatterRef formatter,
-    size_t precision);
+SU_RESULT SULengthFormatterSetVolumePrecision(SULengthFormatterRef formatter, size_t precision);
 
 /**
 @brief Retrieves the format of a length formatter.
@@ -201,8 +204,8 @@ SU_RESULT SULengthFormatterSetVolumePrecision(SULengthFormatterRef formatter,
 - \ref SU_ERROR_INVALID_INPUT if formatter is not a valid object
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if format is NULL
  */
-SU_RESULT SULengthFormatterGetFormat(SULengthFormatterRef formatter,
-    enum SULengthFormatType* format);
+SU_RESULT SULengthFormatterGetFormat(
+    SULengthFormatterRef formatter, enum SULengthFormatType* format);
 
 /**
 @brief Sets the format of a length formatter.
@@ -215,8 +218,8 @@ SU_RESULT SULengthFormatterGetFormat(SULengthFormatterRef formatter,
 - \ref SU_ERROR_INVALID_INPUT if formatter is not a valid object
 - \ref SU_ERROR_OUT_OF_RANGE if format is not a supported option
  */
-SU_RESULT SULengthFormatterSetFormat(SULengthFormatterRef formatter,
-    enum SULengthFormatType format);
+SU_RESULT SULengthFormatterSetFormat(
+    SULengthFormatterRef formatter, enum SULengthFormatType format);
 
 /**
 @brief Retrieves the units of a length formatter.
@@ -229,8 +232,7 @@ SU_RESULT SULengthFormatterSetFormat(SULengthFormatterRef formatter,
 - \ref SU_ERROR_INVALID_INPUT if formatter is not a valid object
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if units is NULL
  */
-SU_RESULT SULengthFormatterGetUnits(SULengthFormatterRef formatter,
-    enum SULengthUnitType* units);
+SU_RESULT SULengthFormatterGetUnits(SULengthFormatterRef formatter, enum SULengthUnitType* units);
 
 /**
 @brief Retrieves the area units of a length formatter.
@@ -243,8 +245,7 @@ SU_RESULT SULengthFormatterGetUnits(SULengthFormatterRef formatter,
 - \ref SU_ERROR_INVALID_INPUT if formatter is not a valid object
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if units is NULL
 */
-SU_RESULT SULengthFormatterGetAreaUnits(SULengthFormatterRef formatter,
-    enum SUAreaUnitType* units);
+SU_RESULT SULengthFormatterGetAreaUnits(SULengthFormatterRef formatter, enum SUAreaUnitType* units);
 
 /**
 @brief Retrieves the volume units of a length formatter.
@@ -257,8 +258,8 @@ SU_RESULT SULengthFormatterGetAreaUnits(SULengthFormatterRef formatter,
 - \ref SU_ERROR_INVALID_INPUT if formatter is not a valid object
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if units is NULL
 */
-SU_RESULT SULengthFormatterGetVolumeUnits(SULengthFormatterRef formatter,
-    enum SUVolumeUnitType* units);
+SU_RESULT SULengthFormatterGetVolumeUnits(
+    SULengthFormatterRef formatter, enum SUVolumeUnitType* units);
 
 /**
 @brief Sets the units of a length formatter.
@@ -271,8 +272,7 @@ SU_RESULT SULengthFormatterGetVolumeUnits(SULengthFormatterRef formatter,
 - \ref SU_ERROR_INVALID_INPUT if formatter is not a valid object
 - \ref SU_ERROR_OUT_OF_RANGE if units is not a supported option
  */
-SU_RESULT SULengthFormatterSetUnits(SULengthFormatterRef formatter,
-    enum SULengthUnitType units);
+SU_RESULT SULengthFormatterSetUnits(SULengthFormatterRef formatter, enum SULengthUnitType units);
 
 /**
 @brief Sets the area units of a length formatter.
@@ -285,8 +285,7 @@ SU_RESULT SULengthFormatterSetUnits(SULengthFormatterRef formatter,
 - \ref SU_ERROR_INVALID_INPUT if formatter is not a valid object
 - \ref SU_ERROR_OUT_OF_RANGE if units is not a supported option
 */
-SU_RESULT SULengthFormatterSetAreaUnits(SULengthFormatterRef formatter,
-    enum SUAreaUnitType units);
+SU_RESULT SULengthFormatterSetAreaUnits(SULengthFormatterRef formatter, enum SUAreaUnitType units);
 
 /**
 @brief Sets the volume units of a length formatter.
@@ -299,8 +298,8 @@ SU_RESULT SULengthFormatterSetAreaUnits(SULengthFormatterRef formatter,
 - \ref SU_ERROR_INVALID_INPUT if formatter is not a valid object
 - \ref SU_ERROR_OUT_OF_RANGE if units is not a supported option
 */
-SU_RESULT SULengthFormatterSetVolumeUnits(SULengthFormatterRef formatter,
-    enum SUVolumeUnitType units);
+SU_RESULT SULengthFormatterSetVolumeUnits(
+    SULengthFormatterRef formatter, enum SUVolumeUnitType units);
 
 /**
 @brief Retrieves whether units are suppressed.
@@ -313,8 +312,7 @@ SU_RESULT SULengthFormatterSetVolumeUnits(SULengthFormatterRef formatter,
 - \ref SU_ERROR_INVALID_INPUT if formatter is not a valid object
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if suppress is NULL
 */
-SU_RESULT SULengthFormatterGetSuppressUnits(SULengthFormatterRef formatter,
-    bool* suppress);
+SU_RESULT SULengthFormatterGetSuppressUnits(SULengthFormatterRef formatter, bool* suppress);
 
 /**
 @brief Sets whether units are suppressed.
@@ -326,8 +324,7 @@ SU_RESULT SULengthFormatterGetSuppressUnits(SULengthFormatterRef formatter,
 - \ref SU_ERROR_NONE on success
 - \ref SU_ERROR_INVALID_INPUT if formatter is not a valid object
 */
-SU_RESULT SULengthFormatterSetSuppressUnits(SULengthFormatterRef formatter,
-    bool suppress);
+SU_RESULT SULengthFormatterSetSuppressUnits(SULengthFormatterRef formatter, bool suppress);
 
 /**
 @brief Retrieves a formatted length string from the provided length value.
@@ -344,8 +341,8 @@ SU_RESULT SULengthFormatterSetSuppressUnits(SULengthFormatterRef formatter,
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if suppress is string
 - \ref SU_ERROR_INVALID_OUTPUT if *string is not a valid object
 */
-SU_RESULT SULengthFormatterGetLengthString(SULengthFormatterRef formatter,
-    double length, bool strip, SUStringRef* string);
+SU_RESULT SULengthFormatterGetLengthString(
+    SULengthFormatterRef formatter, double length, bool strip, SUStringRef* string);
 
 /**
 @brief Retrieves a formatted area string from the provided area value.
@@ -360,8 +357,8 @@ SU_RESULT SULengthFormatterGetLengthString(SULengthFormatterRef formatter,
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if suppress is string
 - \ref SU_ERROR_INVALID_OUTPUT if *string is not a valid object
 */
-SU_RESULT SULengthFormatterGetAreaString(SULengthFormatterRef formatter,
-    double area, SUStringRef* string);
+SU_RESULT SULengthFormatterGetAreaString(
+    SULengthFormatterRef formatter, double area, SUStringRef* string);
 
 /**
 @brief Retrieves a formatted volume string from the provided volume value.
@@ -376,8 +373,8 @@ SU_RESULT SULengthFormatterGetAreaString(SULengthFormatterRef formatter,
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if suppress is string
 - \ref SU_ERROR_INVALID_OUTPUT if *string is not a valid object
 */
-SU_RESULT SULengthFormatterGetVolumeString(SULengthFormatterRef formatter,
-    double volume, SUStringRef* string);
+SU_RESULT SULengthFormatterGetVolumeString(
+    SULengthFormatterRef formatter, double volume, SUStringRef* string);
 
 /**
 @brief Parses a formatted length string getting the numeric value.
@@ -392,8 +389,8 @@ SU_RESULT SULengthFormatterGetVolumeString(SULengthFormatterRef formatter,
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if value is NULL
 - \ref SU_ERROR_INVALID_ARGUMENT if the string could not be parsed
 */
-SU_RESULT SULengthFormatterParseString(SULengthFormatterRef formatter,
-    SUStringRef string, double* value);
+SU_RESULT SULengthFormatterParseString(
+    SULengthFormatterRef formatter, SUStringRef string, double* value);
 
 /**
 @brief Force the display of Architectural inches even if the value is zero.
@@ -405,8 +402,7 @@ SU_RESULT SULengthFormatterParseString(SULengthFormatterRef formatter,
 - \ref SU_ERROR_NONE on success
 - \ref SU_ERROR_INVALID_INPUT if formatter is not a valid object
 */
-SU_RESULT SULengthFormatterSetForceInchDisplay(SULengthFormatterRef formatter,
-    bool force_inch);
+SU_RESULT SULengthFormatterSetForceInchDisplay(SULengthFormatterRef formatter, bool force_inch);
 
 /**
 @brief Determine if Architectural inches will display even if the value is zero.
@@ -419,8 +415,7 @@ SU_RESULT SULengthFormatterSetForceInchDisplay(SULengthFormatterRef formatter,
 - \ref SU_ERROR_INVALID_INPUT if formatter is not a valid object
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if value is NULL
 */
-SU_RESULT SULengthFormatterGetForceInchDisplay(SULengthFormatterRef formatter,
-    bool* force_inch);
+SU_RESULT SULengthFormatterGetForceInchDisplay(SULengthFormatterRef formatter, bool* force_inch);
 
 #ifdef __cplusplus
 }  // extern "C"

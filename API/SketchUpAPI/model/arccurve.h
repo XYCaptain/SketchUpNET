@@ -1,5 +1,9 @@
-// Copyright 2015 Trimble Navigation Ltd. All Rights Reserved.
+// Copyright 2015-2020 Trimble Inc. All Rights Reserved.
 
+/**
+ * @file
+ * @brief Interfaces for SUArcCurveRef.
+ */
 #ifndef SKETCHUP_MODEL_ARCCURVE_H_
 #define SKETCHUP_MODEL_ARCCURVE_H_
 
@@ -16,6 +20,7 @@ extern "C" {
 
 /**
 @struct SUArcCurveRef
+@extends SUCurveRef
 @brief  References an arccurve.
 */
 
@@ -69,7 +74,6 @@ SU_EXPORT SUCurveRef SUArcCurveToCurve(SUArcCurveRef arccurve);
 */
 SU_EXPORT SUArcCurveRef SUArcCurveFromCurve(SUCurveRef curve);
 
-
 /**
 @brief Creates an arccurve object. If the start and end points are the same a
        full circle will be generated.
@@ -88,12 +92,9 @@ SU_EXPORT SUArcCurveRef SUArcCurveFromCurve(SUCurveRef curve);
 - \ref SU_ERROR_NULL_POINTER_INPUT if center, start_point, end_point, or normal
                                    are NULL
 */
-SU_RESULT SUArcCurveCreate(SUArcCurveRef* arccurve,
-                           const struct SUPoint3D* center,
-                           const struct SUPoint3D* start_point,
-                           const struct SUPoint3D* end_point,
-                           const struct SUVector3D* normal,
-                           size_t num_edges);
+SU_RESULT SUArcCurveCreate(
+    SUArcCurveRef* arccurve, const struct SUPoint3D* center, const struct SUPoint3D* start_point,
+    const struct SUPoint3D* end_point, const struct SUVector3D* normal, size_t num_edges);
 
 /**
 @brief  Releases an arccurve object and its associated edge objects.
@@ -131,8 +132,7 @@ SU_RESULT SUArcCurveGetRadius(SUArcCurveRef arccurve, double* radius);
 - \ref SU_ERROR_INVALID_INPUT if arccurve is not a valid object
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if point is NULL
 */
-SU_RESULT SUArcCurveGetStartPoint(SUArcCurveRef arccurve, 
-                                  struct SUPoint3D* point);
+SU_RESULT SUArcCurveGetStartPoint(SUArcCurveRef arccurve, struct SUPoint3D* point);
 
 /**
 @brief  Retrieves the ending point.
@@ -145,8 +145,7 @@ SU_RESULT SUArcCurveGetStartPoint(SUArcCurveRef arccurve,
 - \ref SU_ERROR_INVALID_INPUT if arccurve is not a valid object
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if point is NULL
 */
-SU_RESULT SUArcCurveGetEndPoint(SUArcCurveRef arccurve,
-                                struct SUPoint3D* point);
+SU_RESULT SUArcCurveGetEndPoint(SUArcCurveRef arccurve, struct SUPoint3D* point);
 
 /**
 @brief  Retrieves the x-axis.
@@ -159,8 +158,7 @@ SU_RESULT SUArcCurveGetEndPoint(SUArcCurveRef arccurve,
 - \ref SU_ERROR_INVALID_INPUT if arccurve is not a valid object
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if axis is NULL
 */
-SU_RESULT SUArcCurveGetXAxis(SUArcCurveRef arccurve,
-                             struct SUVector3D* axis);
+SU_RESULT SUArcCurveGetXAxis(SUArcCurveRef arccurve, struct SUVector3D* axis);
 
 /**
 @brief  Retrieves the y-axis.
@@ -173,8 +171,7 @@ SU_RESULT SUArcCurveGetXAxis(SUArcCurveRef arccurve,
 - \ref SU_ERROR_INVALID_INPUT if arccurve is not a valid object
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if axis is NULL
 */
-SU_RESULT SUArcCurveGetYAxis(SUArcCurveRef arccurve,
-                             struct SUVector3D* axis);
+SU_RESULT SUArcCurveGetYAxis(SUArcCurveRef arccurve, struct SUVector3D* axis);
 
 /**
 @brief  Retrieves the center point.
@@ -187,8 +184,7 @@ SU_RESULT SUArcCurveGetYAxis(SUArcCurveRef arccurve,
 - \ref SU_ERROR_INVALID_INPUT if arccurve is not a valid object
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if point is NULL
 */
-SU_RESULT SUArcCurveGetCenter(SUArcCurveRef arccurve,
-                              struct SUPoint3D* point);
+SU_RESULT SUArcCurveGetCenter(SUArcCurveRef arccurve, struct SUPoint3D* point);
 
 /**
 @brief  Retrieves the normal.
@@ -201,8 +197,7 @@ SU_RESULT SUArcCurveGetCenter(SUArcCurveRef arccurve,
 - \ref SU_ERROR_INVALID_INPUT if arccurve is not a valid object
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if normal is NULL
 */
-SU_RESULT SUArcCurveGetNormal(SUArcCurveRef arccurve,
-                              struct SUVector3D* normal);
+SU_RESULT SUArcCurveGetNormal(SUArcCurveRef arccurve, struct SUVector3D* normal);
 
 /**
 @brief  Retrieves the start angle.

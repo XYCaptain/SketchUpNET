@@ -1,5 +1,9 @@
-// Copyright 2014 Trimble Navigation Ltd., All rights reserved.
+// Copyright 2014 Trimble Inc., All rights reserved.
 
+/**
+ * @file
+ * @brief Interfaces for SUExtensionLicense.
+ */
 #ifndef SKETCHUP_EXTENSION_LICENSE_H_
 #define SKETCHUP_EXTENSION_LICENSE_H_
 
@@ -14,11 +18,11 @@ extern "C" {
 @brief Indicates the current state of an extension license.
 */
 enum SUExtensionLicenseState {
-  SUExtensionLicenseState_Licensed,     ///< Extension is licensed to run
-  SUExtensionLicenseState_Expired,      ///< License had an expiration date and it expired
-  SUExtensionLicenseState_Trial,        ///< Extension is in trial
-  SUExtensionLicenseState_TrialExpired, ///< Trial period has ended
-  SUExtensionLicenseState_NotLicensed   ///< Extension is not licensed
+  SUExtensionLicenseState_Licensed,      ///< Extension is licensed to run
+  SUExtensionLicenseState_Expired,       ///< License had an expiration date and it expired
+  SUExtensionLicenseState_Trial,         ///< Extension is in trial
+  SUExtensionLicenseState_TrialExpired,  ///< Trial period has ended
+  SUExtensionLicenseState_NotLicensed    ///< Extension is not licensed
 };
 
 /**
@@ -48,12 +52,11 @@ struct SUExtensionLicense {
 - \ref SU_ERROR_NULL_POINTER_INPUT if extension_id is NULL
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if out_license is NULL
 */
-SU_RESULT SUGetExtensionLicense(const char* extension_id,
-    struct SUExtensionLicense* out_license);
+SU_RESULT SUGetExtensionLicense(const char* extension_id, struct SUExtensionLicense* out_license);
 
 #ifdef __cplusplus
-} // extern "C" {
+}  // extern "C" {
 #endif
 #pragma pack(pop)
 
-#endif // SKETCHUP_EXTENSION_LICENSE_H_
+#endif  // SKETCHUP_EXTENSION_LICENSE_H_

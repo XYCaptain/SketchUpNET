@@ -1,5 +1,9 @@
 // Copyright 2017 Trimble Inc., All rights reserved.
 
+/**
+ * @file
+ * @brief Interfaces for SUTransformation2D.
+ */
 #ifndef SKETCHUP_GEOMETRY_TRANSFORMATION2D_H_
 #define SKETCHUP_GEOMETRY_TRANSFORMATION2D_H_
 
@@ -10,7 +14,6 @@
 #ifdef __cplusplus
 extern "C" {
 #endif  // __cplusplus
-
 
 /**
 @brief Creates a translation transformation using the given vector.
@@ -24,8 +27,8 @@ extern "C" {
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if transform is NULL
 - \ref SU_ERROR_NULL_POINTER_INPUT if vector is NULL
 */
-SU_RESULT SUTransformation2DTranslation(struct SUTransformation2D* transform,
-                                        const struct SUVector2D* vector);
+SU_RESULT SUTransformation2DTranslation(
+    struct SUTransformation2D* transform, const struct SUVector2D* vector);
 
 /**
 @brief Creates a scale transformation using the given scale value.
@@ -37,8 +40,7 @@ SU_RESULT SUTransformation2DTranslation(struct SUTransformation2D* transform,
 - \ref SU_ERROR_NONE on success
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if transform is NULL
 */
-SU_RESULT SUTransformation2DScale(struct SUTransformation2D* transform,
-                                  double scale);
+SU_RESULT SUTransformation2DScale(struct SUTransformation2D* transform, double scale);
 
 /**
 @brief Creates a scale transformation using the given scale values.
@@ -52,9 +54,8 @@ SU_RESULT SUTransformation2DScale(struct SUTransformation2D* transform,
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if transform is NULL
 - \ref SU_ERROR_NULL_POINTER_INPUT if x_scale or y_scale are NULL
 */
-SU_RESULT SUTransformation2DNonUniformScale(struct SUTransformation2D* transform,
-                                            double x_scale,
-                                            double y_scale);
+SU_RESULT SUTransformation2DNonUniformScale(
+    struct SUTransformation2D* transform, double x_scale, double y_scale);
 
 /**
 @brief Creates a scale transformation using the given scale value and origin.
@@ -69,9 +70,8 @@ SU_RESULT SUTransformation2DNonUniformScale(struct SUTransformation2D* transform
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if transform is NULL
 - \ref SU_ERROR_NULL_POINTER_INPUT if point or scale are NULL
 */
-SU_RESULT SUTransformation2DScaleAboutPoint(struct SUTransformation2D* transform,
-                                            const struct SUPoint2D* point,
-                                            double scale);
+SU_RESULT SUTransformation2DScaleAboutPoint(
+    struct SUTransformation2D* transform, const struct SUPoint2D* point, double scale);
 
 /**
 @brief Creates a scale transformation using the given scale values and origin.
@@ -88,9 +88,7 @@ SU_RESULT SUTransformation2DScaleAboutPoint(struct SUTransformation2D* transform
 - \ref SU_ERROR_NULL_POINTER_INPUT if point, x_scale, or y_scale are NULL
 */
 SU_RESULT SUTransformation2DNonUniformScaleAboutPoint(
-    struct SUTransformation2D* transform,
-    const struct SUPoint2D* point,
-    double x_scale,
+    struct SUTransformation2D* transform, const struct SUPoint2D* point, double x_scale,
     double y_scale);
 
 /**
@@ -107,9 +105,8 @@ SU_RESULT SUTransformation2DNonUniformScaleAboutPoint(
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if is_identity is NULL
 - \ref SU_ERROR_OUT_OF_RANGE if weight is not between 0.0 and 1.0
 */
-SU_RESULT SUTransformation2DRotation(struct SUTransformation2D* transform,
-                                     const struct SUPoint2D* point,
-                                     double angle);
+SU_RESULT SUTransformation2DRotation(
+    struct SUTransformation2D* transform, const struct SUPoint2D* point, double angle);
 
 /**
 @brief Gets whether the transformation is an identity transformation.
@@ -123,8 +120,7 @@ SU_RESULT SUTransformation2DRotation(struct SUTransformation2D* transform,
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if is_identity is NULL
 */
 SU_RESULT SUTransformation2DIsIdentity(
-    const struct SUTransformation2D* transform,
-    bool* is_identity);
+    const struct SUTransformation2D* transform, bool* is_identity);
 
 /**
 @brief Gets the inverse transformation of the given transformation object.
@@ -139,8 +135,7 @@ SU_RESULT SUTransformation2DIsIdentity(
 - \ref SU_ERROR_INVALID_ARGUMENT if the transform cannot be inverted
 */
 SU_RESULT SUTransformation2DGetInverse(
-    const struct SUTransformation2D* transform,
-    struct SUTransformation2D* inverse);
+    const struct SUTransformation2D* transform, struct SUTransformation2D* inverse);
 
 /**
 @brief Multiplies a transformation by another transformation.
@@ -155,9 +150,9 @@ SU_RESULT SUTransformation2DGetInverse(
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if out_transform is NULL
 - \ref SU_ERROR_NULL_POINTER_INPUT if transform1 or transform2 are NULL
 */
-SU_RESULT SUTransformation2DMultiply(const struct SUTransformation2D* transform1,
-                                     const struct SUTransformation2D* transform2,
-                                     struct SUTransformation2D* out_transform);
+SU_RESULT SUTransformation2DMultiply(
+    const struct SUTransformation2D* transform1, const struct SUTransformation2D* transform2,
+    struct SUTransformation2D* out_transform);
 
 #ifdef __cplusplus
 }  // end extern "C"

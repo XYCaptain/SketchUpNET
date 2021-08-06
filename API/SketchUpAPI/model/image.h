@@ -1,4 +1,9 @@
-// Copyright 2013 Trimble Navigation Ltd.  All Rights Reserved
+// Copyright 2013 Trimble Inc.  All Rights Reserved
+
+/**
+ * @file
+ * @brief Interfaces for SUImageRef.
+ */
 #ifndef SKETCHUP_MODEL_IMAGE_H_
 #define SKETCHUP_MODEL_IMAGE_H_
 
@@ -13,6 +18,7 @@ extern "C" {
 
 /**
 @struct SUImageRef
+@extends SUDrawingElementRef
 @brief References an image object.
 */
 
@@ -60,13 +66,12 @@ SU_EXPORT SUDrawingElementRef SUImageToDrawingElement(SUImageRef image);
 - The converted \ref SUImageRef if the downcast operation succeeds
 - If not, the returned reference will be invalid
 */
-SU_EXPORT SUImageRef SUImageFromDrawingElement(SUDrawingElementRef
-                                               drawing_elem);
+SU_EXPORT SUImageRef SUImageFromDrawingElement(SUDrawingElementRef drawing_elem);
 
 /**
 @brief Creates a new image object from an image file specified by a path.
        The created image must be subsequently added to the Entities of a model,
-       component definition or a group. Use \ref SUModelRemoveComponentDefinitions
+       component definition or a group. Use SUModelRemoveComponentDefinitions()
        to remove the image from a model.
 @param[out] image     The image object created.
 @param[in]  file_path The file path of the source image file.
@@ -84,7 +89,7 @@ SU_RESULT SUImageCreateFromFile(SUImageRef* image, const char* file_path);
 @brief Creates a new SketchUp model image object from an image representation
        object. The created image must be subsequently added to the Entities of
        a model, component definition or a group. Use
-       \ref SUModelRemoveComponentDefinitions to remove the image from a model.
+       SUModelRemoveComponentDefinitions() to remove the image from a model.
 @since SketchUp 2017, API 5.0
 @param[out] image     The image object created.
 @param[in]  image_rep The basic image object retrieved.
@@ -101,8 +106,8 @@ SU_RESULT SUImageCreateFromImageRep(SUImageRef* image, SUImageRepRef image_rep);
 /**
 @brief Retrieves a basic image from a SketchUp model image.  The given image
        representation object must have been constructed using one of the
-       SUImageRepCreate* functions. It must be released using \ref
-       SUImageRepRelease.
+       SUImageRepCreate* functions. It must be released using
+       SUImageRepRelease().
 afterwards.
 @since SketchUp 2017, API 5.0
 @param[in]  image        The texture object.
@@ -123,6 +128,9 @@ SU_RESULT SUImageGetImageRep(SUImageRef image, SUImageRepRef* image_rep);
 @param[in]  image The image object.
 @param[out] name  The name retrieved.
 @related SUImageRef
+@deprecated This function returns a property that should not exist.
+            Use SUImageGetDefinition() and SUComponentDefinitionGetName()
+            instead.
 @return
 - \ref SU_ERROR_NONE on success
 - \ref SU_ERROR_INVALID_INPUT if image is not a valid object
@@ -130,6 +138,7 @@ SU_RESULT SUImageGetImageRep(SUImageRef image, SUImageRepRef* image_rep);
 - \ref SU_ERROR_INVALID_OUTPUT if name does not point to a valid \ref
   SUStringRef object
 */
+SU_DEPRECATED_FUNCTION("9.1")
 SU_RESULT SUImageGetName(SUImageRef image, SUStringRef* name);
 
 /**
@@ -137,11 +146,15 @@ SU_RESULT SUImageGetName(SUImageRef image, SUStringRef* name);
 @param[in] image The image object.
 @param[in] name  The name to set. Assumed to be UTF-8 encoded.
 @related SUImageRef
+@deprecated This function sets a property that should not exist.
+            Use SUImageGetDefinition() and SUComponentDefinitionSetName()
+            instead.
 @return
 - \ref SU_ERROR_NONE on success
 - \ref SU_ERROR_INVALID_INPUT if image is not a valid object
 - \ref SU_ERROR_NULL_POINTER_INPUT if name is NULL
 */
+SU_DEPRECATED_FUNCTION("9.1")
 SU_RESULT SUImageSetName(SUImageRef image, const char* name);
 
 /**
@@ -154,8 +167,7 @@ SU_RESULT SUImageSetName(SUImageRef image, const char* name);
 - \ref SU_ERROR_INVALID_INPUT if image is not a valid object
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if transform is NULL
 */
-SU_RESULT SUImageGetTransform(SUImageRef image,
-                              struct SUTransformation* transform);
+SU_RESULT SUImageGetTransform(SUImageRef image, struct SUTransformation* transform);
 
 /**
 @brief Sets the 3-dimensional homogeneous transform of an image object.
@@ -167,8 +179,7 @@ SU_RESULT SUImageGetTransform(SUImageRef image,
 - \ref SU_ERROR_INVALID_INPUT if image is not a valid object
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if transform is NULL
 */
-SU_RESULT SUImageSetTransform(SUImageRef image,
-                              const struct SUTransformation* transform);
+SU_RESULT SUImageSetTransform(SUImageRef image, const struct SUTransformation* transform);
 
 /**
 @brief Retrieves the image file name of an image object.
@@ -198,6 +209,20 @@ SU_RESULT SUImageGetFileName(SUImageRef image, SUStringRef* file_name);
 SU_RESULT SUImageGetDimensions(SUImageRef image, double* width, double* height);
 
 /**
+@brief Retrieves the component definition of an image object.
+@since SketchUp 2021.1, API 9.1
+@param[in]  image     The image object.
+@param[out] component The component definition retrieved.
+@related SUImageRef
+@return
+- \ref SU_ERROR_NONE on success
+- \ref SU_ERROR_INVALID_INPUT if \p image is not a valid object
+- \ref SU_ERROR_OVERWRITE_VALID if \p component already refers to a valid object.
+- \ref SU_ERROR_NULL_POINTER_OUTPUT if \p component is NULL
+*/
+SU_RESULT SUImageGetDefinition(SUImageRef image, SUComponentDefinitionRef* component);
+
+/**
 @brief Retrieves the width and height dimensions of an image object in pixels.
 @deprecated Will be removed in the next version of the SketchUp API. The
             functionality is replaced by SUImageGetImageRep followed by
@@ -212,13 +237,12 @@ SU_RESULT SUImageGetDimensions(SUImageRef image, double* width, double* height);
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if width or height is NULL
 */
 SU_DEPRECATED_FUNCTION("5.0")
-SU_RESULT SUImageGetPixelDimensions(SUImageRef image, size_t* width,
-                                    size_t* height);
+SU_RESULT SUImageGetPixelDimensions(SUImageRef image, size_t* width, size_t* height);
 
 /**
 @brief  Returns the total size and bits-per-pixel value of an image. This
         function is useful to determine the size of the buffer necessary to be
-        passed into \ref SUImageGetData. The returned data can be used along
+        passed into \ref SUImageGetData(). The returned data can be used along
         with the returned bits-per-pixel value and the image dimensions to
         compute RGBA values at individual pixels of the image.
 @deprecated Will be removed in the next version of the SketchUp API. The
@@ -234,13 +258,12 @@ SU_RESULT SUImageGetPixelDimensions(SUImageRef image, size_t* width,
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if data_size or bits_per_pixel is NULL
 */
 SU_DEPRECATED_FUNCTION("5.0")
-SU_RESULT SUImageGetDataSize(SUImageRef image, size_t* data_size,
-                             size_t* bits_per_pixel);
+SU_RESULT SUImageGetDataSize(SUImageRef image, size_t* data_size, size_t* bits_per_pixel);
 
 /**
 @brief  Returns the pixel data for an image. The given array must be large enough
         to hold the image's data. This size can be obtained by calling
-        \ref SUImageGetDataSize.
+        \ref SUImageGetDataSize().
 @deprecated Will be removed in the next version of the SketchUp API. The
             functionality is replaced by SUImageGetImageRep followed by
             SUImageRepGetData.

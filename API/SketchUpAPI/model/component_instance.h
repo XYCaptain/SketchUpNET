@@ -1,5 +1,9 @@
-// Copyright 2013 Trimble Navigation Ltd. All Rights Reserved.
+// Copyright 2013-2020 Trimble Inc. All Rights Reserved.
 
+/**
+ * @file
+ * @brief Interfaces for SUComponentInstanceRef.
+ */
 #ifndef SKETCHUP_MODEL_COMPONENT_INSTANCE_H_
 #define SKETCHUP_MODEL_COMPONENT_INSTANCE_H_
 
@@ -14,6 +18,7 @@ extern "C" {
 
 /**
 @struct SUComponentInstanceRef
+@extends SUDrawingElementRef
 @brief  References a component instance, i.e. an instance of a component
         definition.
 */
@@ -27,8 +32,7 @@ extern "C" {
 - The converted \ref SUEntityRef if instance is a valid component instance
 - If not, the returned reference will be invalid
 */
-SU_EXPORT SUEntityRef SUComponentInstanceToEntity(
-    SUComponentInstanceRef instance);
+SU_EXPORT SUEntityRef SUComponentInstanceToEntity(SUComponentInstanceRef instance);
 
 /**
 @brief Converts from an \ref SUEntityRef to an \ref SUComponentInstanceRef.
@@ -40,8 +44,7 @@ SU_EXPORT SUEntityRef SUComponentInstanceToEntity(
 - The converted \ref SUComponentInstanceRef if the downcast operation succeeds
 - If not, the returned reference will be invalid
 */
-SU_EXPORT SUComponentInstanceRef SUComponentInstanceFromEntity(
-    SUEntityRef entity);
+SU_EXPORT SUComponentInstanceRef SUComponentInstanceFromEntity(SUEntityRef entity);
 
 /**
 @brief Converts from an \ref SUComponentInstanceRef to an \ref
@@ -52,8 +55,7 @@ SU_EXPORT SUComponentInstanceRef SUComponentInstanceFromEntity(
 - The converted \ref SUEntityRef if instance is a valid component instance
 - If not, the returned reference will be invalid
 */
-SU_EXPORT SUDrawingElementRef SUComponentInstanceToDrawingElement(
-    SUComponentInstanceRef instance);
+SU_EXPORT SUDrawingElementRef SUComponentInstanceToDrawingElement(SUComponentInstanceRef instance);
 
 /**
 @brief Converts from an \ref SUDrawingElementRef to an \ref
@@ -65,8 +67,8 @@ SU_EXPORT SUDrawingElementRef SUComponentInstanceToDrawingElement(
 - The converted \ref SUComponentInstanceRef if the downcast operation succeeds
 - If not, the returned reference will be invalid
 */
-SU_EXPORT SUComponentInstanceRef SUComponentInstanceFromDrawingElement(
-    SUDrawingElementRef drawing_elem);
+SU_EXPORT SUComponentInstanceRef
+SUComponentInstanceFromDrawingElement(SUDrawingElementRef drawing_elem);
 
 /**
 @brief Sets the name of a component instance object.
@@ -79,12 +81,11 @@ SU_EXPORT SUComponentInstanceRef SUComponentInstanceFromDrawingElement(
 - \ref SU_ERROR_INVALID_INPUT if instance is not a valid object
 - \ref SU_ERROR_NULL_POINTER_INPUT if name is NULL
 */
-SU_RESULT SUComponentInstanceSetName(SUComponentInstanceRef instance,
-                                     const char* name);
+SU_RESULT SUComponentInstanceSetName(SUComponentInstanceRef instance, const char* name);
 
 /**
-@brief Deallocates a component instance object created with \ref
-       SUComponentDefinitionCreateInstance.
+@brief Deallocates a component instance object created with
+       SUComponentDefinitionCreateInstance().
 @param[in] instance The component instance object.
 @related SUComponentInstanceRef
 @return
@@ -105,8 +106,7 @@ SU_RESULT SUComponentInstanceRelease(SUComponentInstanceRef* instance);
 - \ref SU_ERROR_INVALID_OUTPUT if name does not point to a valid \ref
   SUStringRef object
 */
-SU_RESULT SUComponentInstanceGetName(SUComponentInstanceRef instance,
-                                     SUStringRef* name);
+SU_RESULT SUComponentInstanceGetName(SUComponentInstanceRef instance, SUStringRef* name);
 
 /**
 @brief Sets the globally unique identifier (guid) string of a instance object.
@@ -119,8 +119,7 @@ SU_RESULT SUComponentInstanceGetName(SUComponentInstanceRef instance,
 - \ref SU_ERROR_INVALID_INPUT if instance is not a valid object
 - \ref SU_ERROR_INVALID_INPUT if guid is NULL or invalid
 */
-SU_RESULT SUComponentInstanceSetGuid(SUComponentInstanceRef instance,
-                                     const char* guid);
+SU_RESULT SUComponentInstanceSetGuid(SUComponentInstanceRef instance, const char* guid);
 
 /**
 @brief Retrieves the globally unique identifier (guid) string of a instance object.
@@ -134,8 +133,7 @@ SU_RESULT SUComponentInstanceSetGuid(SUComponentInstanceRef instance,
 - \ref SU_ERROR_INVALID_OUTPUT if guid does not point to a valid \ref
   SUStringRef object
 */
-SU_RESULT SUComponentInstanceGetGuid(SUComponentInstanceRef instance,
-                                     SUStringRef* guid);
+SU_RESULT SUComponentInstanceGetGuid(SUComponentInstanceRef instance, SUStringRef* guid);
 
 /**
 @brief Sets the transform of a component instance object.
@@ -152,13 +150,12 @@ coordinates.
 - \ref SU_ERROR_NULL_POINTER_INPUT if transform is NULL
 */
 SU_RESULT SUComponentInstanceSetTransform(
-    SUComponentInstanceRef instance,
-    const struct SUTransformation* transform);
+    SUComponentInstanceRef instance, const struct SUTransformation* transform);
 
 /**
 @brief Retrieves the transform of a component instance object.
 
-See description of \ref SUComponentInstanceSetTransform for a discussion of
+See description of \ref SUComponentInstanceSetTransform() for a discussion of
 component instance transforms.
 @param[in]  instance  The component instance object.
 @param[out] transform The transform retrieved.
@@ -168,8 +165,8 @@ component instance transforms.
 - \ref SU_ERROR_INVALID_INPUT if instance is not a valid object
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if transform is NULL
 */
-SU_RESULT SUComponentInstanceGetTransform(SUComponentInstanceRef instance,
-                                          struct SUTransformation* transform);
+SU_RESULT SUComponentInstanceGetTransform(
+    SUComponentInstanceRef instance, struct SUTransformation* transform);
 
 /**
 @brief Retrieves the component definition of a component instance object.
@@ -178,11 +175,11 @@ SU_RESULT SUComponentInstanceGetTransform(SUComponentInstanceRef instance,
 @related SUComponentInstanceRef
 @return
 - \ref SU_ERROR_NONE on success
-- \ref SU_ERROR_INVALID_INPUT if instance is not a valid object
-- \ref SU_ERROR_NULL_POINTER_OUTPUT if component is NULL
+- \ref SU_ERROR_INVALID_INPUT if \p instance is not a valid object
+- \ref SU_ERROR_NULL_POINTER_OUTPUT if \p component is NULL
 */
-SU_RESULT SUComponentInstanceGetDefinition(SUComponentInstanceRef instance,
-    SUComponentDefinitionRef* component);
+SU_RESULT SUComponentInstanceGetDefinition(
+    SUComponentInstanceRef instance, SUComponentDefinitionRef* component);
 
 /**
 @brief Locks the instance if is_locked is true, otherwise unlocks the instance.
@@ -195,8 +192,7 @@ SU_RESULT SUComponentInstanceGetDefinition(SUComponentInstanceRef instance,
 - \ref SU_ERROR_INVALID_INPUT if instance is invalid
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if is_locked is NULL
 */
-SU_RESULT SUComponentInstanceSetLocked(SUComponentInstanceRef instance,
-                                       bool lock);
+SU_RESULT SUComponentInstanceSetLocked(SUComponentInstanceRef instance, bool lock);
 
 /**
 @brief Retrieves a boolean indicating whether tne instance is locked.
@@ -209,8 +205,7 @@ SU_RESULT SUComponentInstanceSetLocked(SUComponentInstanceRef instance,
 - \ref SU_ERROR_INVALID_INPUT if instance is invalid
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if is_locked is NULL
 */
-SU_RESULT SUComponentInstanceIsLocked(SUComponentInstanceRef instance,
-                                      bool* is_locked);
+SU_RESULT SUComponentInstanceIsLocked(SUComponentInstanceRef instance, bool* is_locked);
 
 /**
 @brief  Saves the component instance data to a file.
@@ -224,8 +219,7 @@ SU_RESULT SUComponentInstanceIsLocked(SUComponentInstanceRef instance,
 - \ref SU_ERROR_NULL_POINTER_INPUT if file_path is NULL
 - \ref SU_ERROR_SERIALIZATION if the serialization operation itself fails
 */
-SU_RESULT SUComponentInstanceSaveAs(SUComponentInstanceRef instance,
-                                    const char* file_path);
+SU_RESULT SUComponentInstanceSaveAs(SUComponentInstanceRef instance, const char* file_path);
 
 /**
 @brief Computes the volume of the component instance.
@@ -245,9 +239,7 @@ SU_RESULT SUComponentInstanceSaveAs(SUComponentInstanceRef instance,
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if volume is NULL
 */
 SU_RESULT SUComponentInstanceComputeVolume(
-    SUComponentInstanceRef instance,
-    const struct SUTransformation* transform,
-    double* volume);
+    SUComponentInstanceRef instance, const struct SUTransformation* transform, double* volume);
 
 /**
 @brief Creates a \ref SUDynamicComponentInfoRef object.
@@ -262,8 +254,8 @@ SU_RESULT SUComponentInstanceComputeVolume(
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if dc_info is NULL
 - \ref SU_ERROR_OVERWRITE_VALID if dc_info is a valid object
 */
-SU_RESULT SUComponentInstanceCreateDCInfo(SUComponentInstanceRef instance,
-    SUDynamicComponentInfoRef* dc_info);
+SU_RESULT SUComponentInstanceCreateDCInfo(
+    SUComponentInstanceRef instance, SUDynamicComponentInfoRef* dc_info);
 
 /**
 @brief Creates a \ref SUClassificationInfoRef object.
@@ -278,8 +270,7 @@ SU_RESULT SUComponentInstanceCreateDCInfo(SUComponentInstanceRef instance,
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if classification_info is NULL
 */
 SU_RESULT SUComponentInstanceCreateClassificationInfo(
-    SUComponentInstanceRef instance,
-    SUClassificationInfoRef* classification_info);
+    SUComponentInstanceRef instance, SUClassificationInfoRef* classification_info);
 
 /**
 @brief Retrieves the number of attached component instances.
@@ -308,8 +299,7 @@ SU_RESULT SUComponentInstanceGetNumAttachedInstances(
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if instances or count is NULL
 */
 SU_RESULT SUComponentInstanceGetAttachedInstances(
-    SUComponentInstanceRef instance, size_t len,
-    SUComponentInstanceRef instances[], size_t* count);
+    SUComponentInstanceRef instance, size_t len, SUComponentInstanceRef instances[], size_t* count);
 
 /**
 @brief Retrieves the number of drawing element this instance is attached to.
@@ -341,8 +331,7 @@ SU_RESULT SUComponentInstanceGetNumAttachedToDrawingElements(
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if instances or count is NULL
 */
 SU_RESULT SUComponentInstanceGetAttachedToDrawingElements(
-    SUComponentInstanceRef instance, size_t len,
-    SUDrawingElementRef elements[], size_t* count);
+    SUComponentInstanceRef instance, size_t len, SUDrawingElementRef elements[], size_t* count);
 
 #ifdef __cplusplus
 }  // extern "C"

@@ -1,4 +1,9 @@
 // Copyright 2013-2019 Trimble, Inc. All Rights Reserved.
+
+/**
+ * @file
+ * @brief Interfaces for SULayerRef.
+ */
 #ifndef SKETCHUP_MODEL_LAYER_H_
 #define SKETCHUP_MODEL_LAYER_H_
 
@@ -12,28 +17,30 @@ extern "C" {
 
 /**
 @struct SULayerRef
-@brief References a layer object.
+@extends SUEntityRef
+@brief References a Tag object.
+@note 'Layer' is a legacy term that is being used for consistency within the API.
 */
 
 /**
  @enum SULayerVisibilityDefaultType
  @brief Indicates whether to set the layer visible by default. Used for
- \ref SULayerGetSceneBehavior and \ref SULayerSetSceneBehavior.
+ \ref SULayerGetSceneBehavior() and \ref SULayerSetSceneBehavior().
  */
 enum SULayerVisibilityDefaultType {
   SULayerVisibilityDefaultType_Visible = 0x0000,
-  SULayerVisibilityDefaultType_Hidden  = 0x0001
+  SULayerVisibilityDefaultType_Hidden = 0x0001
 };
-  
+
 /**
  @enum SULayerVisibilityNewSceneType
  @brief Indicates whether to set the layer visible on new scenes. Used for
- \ref SULayerGetSceneBehavior and \ref SULayerSetSceneBehavior.
+ \ref SULayerGetSceneBehavior() and \ref SULayerSetSceneBehavior().
  */
 enum SULayerVisibilityNewSceneType {
-  SULayerVisibilityNewSceneType_LayerDefault   = 0x0000,
-  SULayerVisibilityNewSceneType_Visible        = 0x0010,
-  SULayerVisibilityNewSceneType_Hidden         = 0x0020
+  SULayerVisibilityNewSceneType_LayerDefault = 0x0000,
+  SULayerVisibilityNewSceneType_Visible = 0x0010,
+  SULayerVisibilityNewSceneType_Hidden = 0x0020
 };
 
 /**
@@ -64,7 +71,7 @@ SU_EXPORT SULayerRef SULayerFromEntity(SUEntityRef entity);
 
 Layers associated with a SketchUp model must not be explicitly deallocated.
 Layers that are not associated with a SketchUp model must be deallocated with
-\ref SULayerRelease.
+\ref SULayerRelease().
 @param[out] layer The layer object created.
 @related SULayerRef
 @return
@@ -109,7 +116,7 @@ display name for the default layer changed from "Layer0" to "Untagged".
 For all other layers the name and display name are identical.
 
 @param[in]  layer The layer object.
-@param[out] name  The display name retrieved. 
+@param[out] name  The display name retrieved.
 @related SULayerRef
 @return
 - \ref SU_ERROR_NONE on success
@@ -196,7 +203,7 @@ SU_RESULT SULayerGetLineStyle(SULayerRef layer, SULineStyleRef* line_style);
 SU_RESULT SULayerSetLineStyle(SULayerRef layer, SULineStyleRef line_style);
 
 /**
-@brief Clear the line style of a layer. 
+@brief Clear the line style of a layer.
 @since SketchUp 2019, API 7.0
 @param[in] layer The layer object.
 @related SULayerRef
@@ -218,8 +225,8 @@ SU_RESULT SULayerClearLineStyle(SULayerRef layer);
 - \ref SU_ERROR_INVALID_INPUT if the layer is not a valid object
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if default_type or new_scene_type is NULL
 */
-SU_RESULT SULayerGetSceneBehavior(SULayerRef layer,
-    enum SULayerVisibilityDefaultType* default_type,
+SU_RESULT SULayerGetSceneBehavior(
+    SULayerRef layer, enum SULayerVisibilityDefaultType* default_type,
     enum SULayerVisibilityNewSceneType* new_scene_type);
 
 /**
@@ -232,10 +239,24 @@ SU_RESULT SULayerGetSceneBehavior(SULayerRef layer,
 @return
 - \ref SU_ERROR_NONE on success
 - \ref SU_ERROR_INVALID_INPUT if the layer is not a valid object
-*/ 
-SU_RESULT SULayerSetSceneBehavior(SULayerRef layer,
-    enum SULayerVisibilityDefaultType default_type,
+*/
+SU_RESULT SULayerSetSceneBehavior(
+    SULayerRef layer, enum SULayerVisibilityDefaultType default_type,
     enum SULayerVisibilityNewSceneType new_scene_type);
+
+/**
+ @brief Gets the \ref SULayerFolderRef object that contains the given layer.
+ @since SketchUp 2020.2, API 8.2
+ @param[in]  layer            The layer object.
+ @param[out]  layer_folder    The retrieved layer folder object.
+ @related SULayerRef
+ @return
+ - \ref SU_ERROR_NONE on success
+ - \ref SU_ERROR_INVALID_INPUT if \p layer is not a valid object
+ - \ref SU_ERROR_NULL_POINTER_OUTPUT if \p layer_folder is NULL
+ - \ref SU_ERROR_NO_DATA if \p layer is not contained within a layer folder
+*/
+SU_RESULT SULayerGetParentLayerFolder(SULayerRef layer, SULayerFolderRef* layer_folder);
 
 #ifdef __cplusplus
 }  // extern "C"

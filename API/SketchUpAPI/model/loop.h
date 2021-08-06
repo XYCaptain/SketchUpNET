@@ -1,4 +1,9 @@
-// Copyright 2013 Trimble Navigation Ltd. All Rights Reserved.
+// Copyright 2013 Trimble Inc. All Rights Reserved.
+
+/**
+ * @file
+ * @brief Interfaces for SULoopRef.
+ */
 #ifndef SKETCHUP_MODEL_LOOP_H_
 #define SKETCHUP_MODEL_LOOP_H_
 
@@ -11,6 +16,7 @@ extern "C" {
 
 /**
 @struct SULoopRef
+@extends SUEntityRef
 @brief  References a loop object, which can be either the outer loop or an inner
         loop (hole) of a face.
 */
@@ -19,10 +25,7 @@ extern "C" {
 @enum SULoopWinding
 @brief Indicates loop orientation.
 */
-enum SULoopWinding {
-  SULoopWinding_CCW,
-  SULoopWinding_CW
-};
+enum SULoopWinding { SULoopWinding_CCW, SULoopWinding_CW };
 
 /**
 @brief Converts from an \ref SULoopRef to an \ref SUEntityRef.
@@ -71,9 +74,7 @@ SU_RESULT SULoopGetNumVertices(SULoopRef loop, size_t* count);
 - \ref SU_ERROR_INVALID_INPUT if loop is not a valid object
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if vertices or count is NULL
 */
-SU_RESULT SULoopGetVertices(SULoopRef loop,
-                            size_t len, SUVertexRef vertices[],
-                            size_t* count);
+SU_RESULT SULoopGetVertices(SULoopRef loop, size_t len, SUVertexRef vertices[], size_t* count);
 
 /**
 @brief Retrieves the edges of a loop object.
@@ -87,8 +88,7 @@ SU_RESULT SULoopGetVertices(SULoopRef loop,
 - \ref SU_ERROR_INVALID_INPUT if loop is not a valid object
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if edges or count is NULL
 */
-SU_RESULT SULoopGetEdges(SULoopRef loop,
-                         size_t len, SUEdgeRef edges[], size_t* count);
+SU_RESULT SULoopGetEdges(SULoopRef loop, size_t len, SUEdgeRef edges[], size_t* count);
 
 /**
 @brief Retrieves the  winding of a loop object with respect to a vector.
@@ -102,9 +102,8 @@ SU_RESULT SULoopGetEdges(SULoopRef loop,
 - \ref SU_ERROR_NULL_POINTER_INPUT if vector3d is NULL
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if orientation is NULL
 */
-SU_RESULT SULoopGetWinding(SULoopRef loop,
-                           const struct SUVector3D* vector3d,
-                           enum SULoopWinding* orientation);
+SU_RESULT SULoopGetWinding(
+    SULoopRef loop, const struct SUVector3D* vector3d, enum SULoopWinding* orientation);
 
 /**
 @brief Retrieves a flag indicating the orientation of the given edge relative to
@@ -120,8 +119,7 @@ SU_RESULT SULoopGetWinding(SULoopRef loop,
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if reversed is NULL
 - \ref SU_ERROR_GENERIC if edge is not a part of loop
 */
-SU_RESULT SULoopIsEdgeReversed(SULoopRef loop, SUEdgeRef edge,
-                               bool* reversed);
+SU_RESULT SULoopIsEdgeReversed(SULoopRef loop, SUEdgeRef edge, bool* reversed);
 
 /**
 @brief Retrieves the parent face of a loop object.
@@ -175,8 +173,7 @@ SU_RESULT SULoopIsOuterLoop(SULoopRef loop, bool* outer_loop);
 - \ref SU_ERROR_INVALID_INPUT if loop is not a valid object
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if edge_uses or count is NULL
 */
-SU_RESULT SULoopGetEdgeUses(SULoopRef loop, size_t len,
-                            SUEdgeUseRef edge_uses[], size_t* count);
+SU_RESULT SULoopGetEdgeUses(SULoopRef loop, size_t len, SUEdgeUseRef edge_uses[], size_t* count);
 
 #ifdef __cplusplus
 }  // extern "C" {

@@ -1,5 +1,9 @@
-// Copyright 2013 Trimble Navigation Ltd. All Rights Reserved.
+// Copyright 2013 Trimble Inc. All Rights Reserved.
 
+/**
+ * @file
+ * @brief Interfaces for SULocationRef.
+ */
 #ifndef SKETCHUP_MODEL_LOCATION_H_
 #define SKETCHUP_MODEL_LOCATION_H_
 
@@ -26,8 +30,7 @@ extern "C" {
 - \ref SU_ERROR_INVALID_INPUT if location is not a valid object
 - \ref SU_ERROR_NULL_POINTER_INPUT if latitude or longitude is NULL
 */
-SU_RESULT SULocationGetLatLong(SULocationRef location, double* latitude,
-                               double* longitude);
+SU_RESULT SULocationGetLatLong(SULocationRef location, double* latitude, double* longitude);
 
 /**
 @brief Assigns the latitude and longitude values of a location object.
@@ -41,8 +44,7 @@ SU_RESULT SULocationGetLatLong(SULocationRef location, double* latitude,
   latitude is out of range [-90, 90] or if longitude is out of range
   [-180, 180]
 */
-SU_RESULT SULocationSetLatLong(SULocationRef location, double latitude,
-                               double longitude);
+SU_RESULT SULocationSetLatLong(SULocationRef location, double latitude, double longitude);
 
 /**
 @brief Assigns the north angle values of a location object.

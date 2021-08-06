@@ -1,5 +1,9 @@
-// Copyright 2013 Trimble Navigation Ltd. All Rights Reserved.
+// Copyright 2013 Trimble Inc. All Rights Reserved.
 
+/**
+ * @file
+ * @brief Interfaces for SUGroupRef.
+ */
 #ifndef SKETCHUP_MODEL_GROUP_H_
 #define SKETCHUP_MODEL_GROUP_H_
 
@@ -14,6 +18,7 @@ extern "C" {
 
 /**
 @struct SUGroupRef
+@extends SUComponentInstanceRef
 @brief  References a group object.
 */
 
@@ -61,8 +66,7 @@ SU_EXPORT SUDrawingElementRef SUGroupToDrawingElement(SUGroupRef group);
 - The converted \ref SUGroupRef if the downcast operation succeeds
 - If not, the returned reference will be invalid
 */
-SU_EXPORT SUGroupRef SUGroupFromDrawingElement(SUDrawingElementRef
-    drawing_elem);
+SU_EXPORT SUGroupRef SUGroupFromDrawingElement(SUDrawingElementRef drawing_elem);
 
 /**
 @brief Converts from an \ref SUGroupRef to an \ref SUComponentInstanceRef.
@@ -87,14 +91,13 @@ SU_EXPORT SUComponentInstanceRef SUGroupToComponentInstance(SUGroupRef group);
 - The converted \ref SUGroupRef if the downcast operation succeeds
 - If not, the returned reference will be invalid
 */
-SU_EXPORT SUGroupRef SUGroupFromComponentInstance(SUComponentInstanceRef
-    component_inst);
+SU_EXPORT SUGroupRef SUGroupFromComponentInstance(SUComponentInstanceRef component_inst);
 
 /**
 @brief Creates a new group object.
 
 The created group must be subsequently added to the Entities of a model,
-component definition or a group. Use \ref SUModelRemoveComponentDefinitions to
+component definition or a group. Use SUModelRemoveComponentDefinitions() to
 remove the group from a model.
 @param[out] group The group object created.
 @related SUGroupRef
@@ -173,8 +176,7 @@ coordinates.
 - \ref SU_ERROR_INVALID_INPUT if group is not a valid object.
 - \ref SU_ERROR_NULL_POINTER_INPUT if transform is NULL.
 */
-SU_RESULT SUGroupSetTransform(SUGroupRef group,
-                              const struct SUTransformation* transform);
+SU_RESULT SUGroupSetTransform(SUGroupRef group, const struct SUTransformation* transform);
 
 /**
 @brief Retrieves the transform of a group object.
@@ -188,8 +190,7 @@ See description of SUGroupSetTransform for a discussion of group transforms.
 - \ref SU_ERROR_INVALID_INPUT if group is not a valid object
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if transform is NULL
 */
-SU_RESULT SUGroupGetTransform(SUGroupRef group,
-                              struct SUTransformation* transform);
+SU_RESULT SUGroupGetTransform(SUGroupRef group, struct SUTransformation* transform);
 
 /**
 @brief Retrieves the entities of the group object.
@@ -202,8 +203,7 @@ SU_RESULT SUGroupGetTransform(SUGroupRef group,
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if entities is NULL
 - \ref SU_ERROR_OVERWRITE_VALID if entities reference object is valid
 */
-SU_RESULT SUGroupGetEntities(SUGroupRef group,
-                             SUEntitiesRef* entities);
+SU_RESULT SUGroupGetEntities(SUGroupRef group, SUEntitiesRef* entities);
 
 /* The cond/endcond block will ensure that any code or comment keywords will be
 ignored by the Doxygen parser and will not appear in any documentation */
@@ -215,12 +215,11 @@ ignored by the Doxygen parser and will not appear in any documentation */
 @related SUGroupRef
 @return
 - \ref SU_ERROR_NONE on success
-- \ref SU_ERROR_INVALID_INPUT if group is not a valid object
-- \ref SU_ERROR_NULL_POINTER_OUTPUT if component is NULL
-- \ref SU_ERROR_OVERWRITE_VALID if component reference object is valid
+- \ref SU_ERROR_INVALID_INPUT if \p group is not a valid object
+- \ref SU_ERROR_NULL_POINTER_OUTPUT if \p component is NULL
+- \ref SU_ERROR_OVERWRITE_VALID if \p component already refers to a valid object
 */
-SU_RESULT SUGroupGetDefinition(SUGroupRef group,
-                               SUComponentDefinitionRef* component);
+SU_RESULT SUGroupGetDefinition(SUGroupRef group, SUComponentDefinitionRef* component);
 
 ///**
 //@brief Explodes a group into separate entities.
@@ -232,12 +231,11 @@ SU_RESULT SUGroupGetDefinition(SUGroupRef group,
 //- \ref SU_ERROR_NONE on success
 //- \ref SU_ERROR_INVALID_INPUT if group is invalid
 //- \ref SU_ERROR_NULL_POINTER_OUTPUT if is_locked is NULL
-//SUStringRef object
+// SUStringRef object
 //*/
-//SU_RESULT SUGroupExplode(SUGroupRef group, bool* is_locked);
+// SU_RESULT SUGroupExplode(SUGroupRef group, bool* is_locked);
 
 /** @endcond */
-
 
 #ifdef __cplusplus
 }  // extern "C"

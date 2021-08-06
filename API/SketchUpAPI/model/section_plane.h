@@ -1,5 +1,9 @@
-// Copyright 2015 Trimble Navigation Ltd. All Rights Reserved.
+// Copyright 2015 Trimble Inc. All Rights Reserved.
 
+/**
+ * @file
+ * @brief Interfaces for SUSectionPlaneRef.
+ */
 #ifndef SKETCHUP_MODEL_SECTION_PLANE_H_
 #define SKETCHUP_MODEL_SECTION_PLANE_H_
 
@@ -14,6 +18,7 @@ extern "C" {
 
 /**
 @struct SUSectionPlaneRef
+@extends SUDrawingElementRef
 @brief  A sectionPlane entity reference.
 @since SketchUp 2016, API 4.0
 */
@@ -53,8 +58,7 @@ SU_EXPORT SUSectionPlaneRef SUSectionPlaneFromEntity(SUEntityRef entity);
 - The converted \ref SUEntityRef if sectionPlane is a valid sectionPlane
 - If not, the returned reference will be invalid
 */
-SU_EXPORT SUDrawingElementRef SUSectionPlaneToDrawingElement(
-    SUSectionPlaneRef sectionPlane);
+SU_EXPORT SUDrawingElementRef SUSectionPlaneToDrawingElement(SUSectionPlaneRef sectionPlane);
 
 /**
 @brief Converts from an \ref SUDrawingElementRef to an \ref SUSectionPlaneRef.
@@ -67,15 +71,13 @@ SU_EXPORT SUDrawingElementRef SUSectionPlaneToDrawingElement(
 - The converted \ref SUSectionPlaneRef if the downcast operation succeeds
 - If not, the returned reference will be invalid.
 */
-SU_EXPORT SUSectionPlaneRef SUSectionPlaneFromDrawingElement(
-    SUDrawingElementRef
-    drawing_elem);
+SU_EXPORT SUSectionPlaneRef SUSectionPlaneFromDrawingElement(SUDrawingElementRef drawing_elem);
 
 /**
 @brief Creates an sectionPlane object. The sectionPlane object must be
-       subsequently deallocated with \ref SUSectionPlaneRelease unless it is
+       subsequently deallocated with \ref SUSectionPlaneRelease() unless it is
        associated with a parent object.  The plane is initialized as an xy
-       plane and can be changed with the \ref SUSectionPlaneSetPlane.
+       plane and can be changed with the \ref SUSectionPlaneSetPlane().
 @since SketchUp 2016, API 4.0
 @param[in] sectionPlane The sectionPlane object.
 @related SUSectionPlaneRef
@@ -87,8 +89,8 @@ SU_EXPORT SUSectionPlaneRef SUSectionPlaneFromDrawingElement(
 SU_RESULT SUSectionPlaneCreate(SUSectionPlaneRef* sectionPlane);
 
 /**
-@brief Releases a sectionPlane object. The sectionPlane object must have been 
-       created with \ref SUSectionPlaneCreate and not subsequently associated
+@brief Releases a sectionPlane object. The sectionPlane object must have been
+       created with \ref SUSectionPlaneCreate() and not subsequently associated
        with a parent object (e.g. \ref SUEntitiesRef).
 @since SketchUp 2016, API 4.0
 @param[in] sectionPlane The sectionPlane object.
@@ -110,8 +112,7 @@ SU_RESULT SUSectionPlaneRelease(SUSectionPlaneRef* sectionPlane);
 - \ref SU_ERROR_INVALID_INPUT if sectionPlane is not a valid object
 - \ref SU_ERROR_NULL_POINTER_INPUT if plane is NULL
 */
-SU_RESULT SUSectionPlaneSetPlane(SUSectionPlaneRef sectionPlane,
-                                 const struct SUPlane3D* plane);
+SU_RESULT SUSectionPlaneSetPlane(SUSectionPlaneRef sectionPlane, const struct SUPlane3D* plane);
 
 /**
 @brief Retrieves the plane of the section plane.
@@ -123,25 +124,23 @@ SU_RESULT SUSectionPlaneSetPlane(SUSectionPlaneRef sectionPlane,
 - \ref SU_ERROR_INVALID_INPUT if sectionPlane is not a valid object
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if plane is NULL
 */
-SU_RESULT SUSectionPlaneGetPlane(SUSectionPlaneRef sectionPlane,
-                                 struct SUPlane3D* plane);
+SU_RESULT SUSectionPlaneGetPlane(SUSectionPlaneRef sectionPlane, struct SUPlane3D* plane);
 
 /**
 @brief Retrieves a boolean indicating whether or not the section plane is
        active.
 @param[in]  sectionPlane  The sectionPlane object.
-@param[out] is_active     Returns true if the section plane is active. 
+@param[out] is_active     Returns true if the section plane is active.
 @related SUSectionPlaneRef
 @return
 - \ref SU_ERROR_NONE on success
 - \ref SU_ERROR_INVALID_INPUT if sectionPlane is not a valid object
 - \ref SU_ERROR_NULL_POINTER_OUTPUT if is_active is NULL
 */
-SU_RESULT SUSectionPlaneIsActive(SUSectionPlaneRef sectionPlane,
-                                 bool* is_active);
+SU_RESULT SUSectionPlaneIsActive(SUSectionPlaneRef sectionPlane, bool* is_active);
 
 /**
-@brief Retrieves the name of a section plane object. 
+@brief Retrieves the name of a section plane object.
 @since SketchUp 2018, API 6.0
 @param[in]  sectionPlane  The section plane object.
 @param[out] name          The name retrieved.
@@ -153,8 +152,7 @@ SU_RESULT SUSectionPlaneIsActive(SUSectionPlaneRef sectionPlane,
 - \ref SU_ERROR_INVALID_OUTPUT if name does not point to a valid \ref
 SUStringRef object
 */
-SU_RESULT SUSectionPlaneGetName(SUSectionPlaneRef sectionPlane,
-    SUStringRef* name);
+SU_RESULT SUSectionPlaneGetName(SUSectionPlaneRef sectionPlane, SUStringRef* name);
 
 /**
 @brief Sets the name of a section plane object.
@@ -170,9 +168,7 @@ SU_RESULT SUSectionPlaneGetName(SUSectionPlaneRef sectionPlane,
 - \ref SU_ERROR_INVALID_INPUT if sectionPlane is not a valid object
 - \ref SU_ERROR_NULL_POINTER_INPUT if name is NULL
 */
-SU_RESULT SUSectionPlaneSetName(SUSectionPlaneRef sectionPlane,
-    const char* name);
-
+SU_RESULT SUSectionPlaneSetName(SUSectionPlaneRef sectionPlane, const char* name);
 
 /**
 @brief Retrieves the symbol of a section plane object. The symbol is used in
@@ -191,8 +187,7 @@ SU_RESULT SUSectionPlaneSetName(SUSectionPlaneRef sectionPlane,
 - \ref SU_ERROR_INVALID_OUTPUT if symbol does not point to a valid \ref
 SUStringRef object
 */
-SU_RESULT SUSectionPlaneGetSymbol(SUSectionPlaneRef sectionPlane,
-                                  SUStringRef* symbol);
+SU_RESULT SUSectionPlaneGetSymbol(SUSectionPlaneRef sectionPlane, SUStringRef* symbol);
 
 /**
 @brief Sets the symbol of a section plane object.
@@ -208,8 +203,7 @@ SU_RESULT SUSectionPlaneGetSymbol(SUSectionPlaneRef sectionPlane,
 - \ref SU_ERROR_INVALID_INPUT if symbol is greater than three characters long
 - \ref SU_ERROR_NULL_POINTER_INPUT if symbol is NULL
 */
-SU_RESULT SUSectionPlaneSetSymbol(SUSectionPlaneRef sectionPlane,
-                                  const char* symbol);
+SU_RESULT SUSectionPlaneSetSymbol(SUSectionPlaneRef sectionPlane, const char* symbol);
 
 #ifdef __cplusplus
 }  // extern "C"
