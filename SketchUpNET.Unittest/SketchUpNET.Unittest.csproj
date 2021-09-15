@@ -76,12 +76,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SketchUpNET\SketchUpNET.vcxproj">
-      <Project>{1c4d4501-eb39-45c8-bed0-609a978e823f}</Project>
-      <Name>SketchUpNET</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="..\API\sketchup.lib">
       <Link>sketchup.lib</Link>
     </None>
@@ -99,6 +93,12 @@
       <Link>SketchUpCommonPreferences.dll</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SketchUpNET\SketchUpNET.vcxproj">
+      <Project>{1c4d4501-eb39-45c8-bed0-609a978e823f}</Project>
+      <Name>SketchUpNET</Name>
+    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

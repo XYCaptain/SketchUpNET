@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace SketchUpNET.Unittest
@@ -40,8 +41,29 @@ namespace SketchUpNET.Unittest
             SketchUpNET.SketchUp skp = new SketchUp();
             skp.LoadModel(TestFile, true);
             Assert.IsNotNull(skp.Axis);
+            Assert.IsTrue(Math.Abs(skp.Axis.Origin.X) > 0);
+            Assert.IsTrue(Math.Abs(skp.Axis.Origin.Y) > 0);
+            Assert.IsTrue(Math.Abs(skp.Axis.Origin.Z) == 0);
             Assert.IsNotNull(skp.Axis.Origin);
             Assert.IsNotNull(skp.Axis.AxisTransform);
+        }
+
+        /// <summary>
+        /// Test loading surfaces and meshes from testfile
+        /// </summary>
+        [TestMethod]
+        public void TestHiddenGeo()
+        {
+            SketchUpNET.SketchUp skp = new SketchUp();
+            skp.LoadModel(TestFile, true);
+            var hiddengroups = skp.Groups.Where(x => x.Visable == false).ToList();
+            var showgroups = skp.Groups.Where(x => x.Visable == true).ToList();
+            Assert.AreEqual(1, hiddengroups.Count);
+            Assert.AreEqual(0, showgroups.Count);
+            var hiddeninstances = skp.Instances.Where(x => x.Visable == false).ToList();
+            var showginstances = skp.Instances.Where(x => x.Visable == true).ToList();
+            Assert.AreEqual(0, hiddeninstances.Count);
+            Assert.AreEqual(2, showginstances.Count);
         }
 
         /// <summary>

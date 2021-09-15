@@ -60,10 +60,12 @@ namespace SketchUpNET
 		List<Curve^>^ Curves;
 		List<Instance^>^ Instances;
 		List<Group^>^ Groups;
+		Material^ GroupMaterial;
 		Transform^ Transformation;
 		System::String^ Layer;
+		bool Visable;
 
-		Group(System::String^ name, List<Surface^>^ surfaces, List<Curve^>^ curves, List<Edge^>^ edges, List<Instance^>^ insts, List<Group^>^ group, Transform^ transformation, System::String^ layername)
+		Group(System::String^ name, List<Surface^>^ surfaces, List<Curve^>^ curves, List<Edge^>^ edges, List<Instance^>^ insts, List<Group^>^ group, Transform^ transformation, System::String^ layername, Material^ groupmaterial, bool visable)
 		{
 			this->Name = name;
 			this->Surfaces = surfaces;
@@ -73,12 +75,27 @@ namespace SketchUpNET
 			this->Groups = group;
 			this->Transformation = transformation;
 			this->Layer = layername;
+			this->Visable = visable;
+			this->GroupMaterial = groupmaterial;
 		};
 
-		Group(){};
+		Group() {};
 	internal:
 		static Group^ FromSU(SUGroupRef group, bool includeMeshes, System::Collections::Generic::Dictionary<String^, Material^>^ materials)
 		{
+			SUDrawingElementRef gsue = SUGroupToDrawingElement(group);
+			bool IsVisablet = false;
+			SUDrawingElementGetHidden(gsue, &IsVisablet);
+
+			SUMaterialRef materail = SU_INVALID;
+			SUDrawingElementGetMaterial(gsue, &materail);
+
+			SUStringRef mNameRef = SU_INVALID;
+			SUStringCreate(&mNameRef);
+			SUMaterialGetName(materail, &mNameRef);
+
+
+
 			SUStringRef name = SU_INVALID;
 			SUStringCreate(&name);
 			SUGroupGetName(group, &name);
@@ -92,13 +109,13 @@ namespace SketchUpNET
 
 			SUTransformation transform = SU_INVALID;
 			SUGroupGetTransform(group, &transform);
-			
+
 			List<Surface^>^ surfaces = Surface::GetEntitySurfaces(entities, includeMeshes, materials);
 			List<Edge^>^ edges = Edge::GetEntityEdges(entities);
 			List<Curve^>^ curves = Curve::GetEntityCurves(entities);
 			List<Instance^>^ inst = Instance::GetEntityInstances(entities);
 			List<Group^>^ grps = Group::GetEntityGroups(entities, includeMeshes, materials);
-			
+
 			// Layer
 			SULayerRef layer = SU_INVALID;
 			SUDrawingElementGetLayer(SUGroupToDrawingElement(group), &layer);
@@ -109,7 +126,10 @@ namespace SketchUpNET
 				layername = SketchUpNET::Utilities::GetLayerName(layer);
 			}
 
-			Group^ v = gcnew Group(SketchUpNET::Utilities::GetString(name), surfaces, curves, edges, inst, grps, Transform::FromSU(transform), layername);
+			System::String^ mName = SketchUpNET::Utilities::GetString(mNameRef);
+			Material^ gmaterial = (materials->ContainsKey(mName)) ? materials[mName] : Material::FromSU(materail);
+
+			Group^ v = gcnew Group(SketchUpNET::Utilities::GetString(name), surfaces, curves, edges, inst, grps, Transform::FromSU(transform), layername, gmaterial, !IsVisablet);
 
 			return v;
 		};

@@ -36,6 +36,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SO
 #include <vector>
 #include "transform.h"
 #include "Utilities.h"
+#include <SketchUpAPI/model/group.h>
 
 
 #pragma once
@@ -55,14 +56,16 @@ namespace SketchUpNET
 		System::String^ Guid;
 		System::Object^ Parent;
 		System::String^ Layer;
+		bool Visable;
 
-		Instance(System::String^ name, System::String^ guid, String^ parent, Transform^ transformation, System::String^ layername)
+		Instance(System::String^ name, System::String^ guid, String^ parent, Transform^ transformation, System::String^ layername, bool visable)
 		{
 			this->Name = name;
 			this->Transformation = transformation;
 			this->ParentID = parent;
 			this->Guid = guid;
 			this->Layer = layername;
+			this->Visable = visable;
 		};
 
 
@@ -70,6 +73,10 @@ namespace SketchUpNET
 	internal:
 		static Instance^ FromSU(SUComponentInstanceRef comp)
 		{
+			SUDrawingElementRef gsue = SUComponentInstanceToDrawingElement(comp);
+			bool IsVisablet = false;
+			SUDrawingElementGetHidden(gsue, &IsVisablet);
+
 			SUStringRef name = SU_INVALID;
 			SUStringCreate(&name);
 			SUComponentInstanceGetName(comp, &name);
@@ -103,10 +110,9 @@ namespace SketchUpNET
 
 
 			SUTransformation transform = SU_INVALID;
-			SUComponentInstanceGetTransform(comp, &transform);
-			
+			SUComponentInstanceGetTransform(comp, &transform);			
 
-			Instance^ v = gcnew Instance(SketchUpNET::Utilities::GetString(name), SketchUpNET::Utilities::GetString(instanceguid), parent, Transform::FromSU(transform), layername);
+			Instance^ v = gcnew Instance(SketchUpNET::Utilities::GetString(name), SketchUpNET::Utilities::GetString(instanceguid), parent, Transform::FromSU(transform), layername, !IsVisablet);
 
 			return v;
 		};
