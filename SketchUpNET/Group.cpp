@@ -37,6 +37,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SO
 #include "Edge.h"
 #include "curve.h"
 #include "Instance.h"
+#include "Axis.cpp"
 
 
 #pragma once
@@ -63,9 +64,11 @@ namespace SketchUpNET
 		Material^ GroupMaterial;
 		Transform^ Transformation;
 		System::String^ Layer;
+		Axis^ GroupAxis;
+
 		bool Visable;
 
-		Group(System::String^ name, List<Surface^>^ surfaces, List<Curve^>^ curves, List<Edge^>^ edges, List<Instance^>^ insts, List<Group^>^ group, Transform^ transformation, System::String^ layername, Material^ groupmaterial, bool visable)
+		Group(System::String^ name, List<Surface^>^ surfaces, List<Curve^>^ curves, List<Edge^>^ edges, List<Instance^>^ insts, List<Group^>^ group, Transform^ transformation, System::String^ layername, Material^ groupmaterial, bool visable, Axis^ axis)
 		{
 			this->Name = name;
 			this->Surfaces = surfaces;
@@ -77,6 +80,7 @@ namespace SketchUpNET
 			this->Layer = layername;
 			this->Visable = visable;
 			this->GroupMaterial = groupmaterial;
+			this->GroupAxis = axis;
 		};
 
 		Group() {};
@@ -86,6 +90,10 @@ namespace SketchUpNET
 			SUDrawingElementRef gsue = SUGroupToDrawingElement(group);
 			bool IsVisablet = false;
 			SUDrawingElementGetHidden(gsue, &IsVisablet);
+
+			SUAxesRef axes;
+			SUEntityRef entity = SUGroupToEntity(group);
+			axes = SUAxesFromEntity(entity);
 
 			SUMaterialRef materail = SU_INVALID;
 			SUDrawingElementGetMaterial(gsue, &materail);
@@ -115,6 +123,7 @@ namespace SketchUpNET
 			List<Curve^>^ curves = Curve::GetEntityCurves(entities);
 			List<Instance^>^ inst = Instance::GetEntityInstances(entities);
 			List<Group^>^ grps = Group::GetEntityGroups(entities, includeMeshes, materials);
+			Axis^ axis = Axis::FromSU(axes);
 
 			// Layer
 			SULayerRef layer = SU_INVALID;
@@ -129,7 +138,7 @@ namespace SketchUpNET
 			System::String^ mName = SketchUpNET::Utilities::GetString(mNameRef);
 			Material^ gmaterial = (materials->ContainsKey(mName)) ? materials[mName] : Material::FromSU(materail);
 
-			Group^ v = gcnew Group(SketchUpNET::Utilities::GetString(name), surfaces, curves, edges, inst, grps, Transform::FromSU(transform), layername, gmaterial, !IsVisablet);
+			Group^ v = gcnew Group(SketchUpNET::Utilities::GetString(name), surfaces, curves, edges, inst, grps, Transform::FromSU(transform), layername, gmaterial, !IsVisablet, axis);
 
 			return v;
 		};

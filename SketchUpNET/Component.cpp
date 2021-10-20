@@ -38,6 +38,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SO
 #include "utilities.h"
 #include "Transform.h"
 #include "Instance.h"
+#include <SketchUpAPI/model/axes.h>
+#include "Axis.cpp"
 
 
 #pragma once
@@ -59,8 +61,8 @@ namespace SketchUpNET
 		List<Curve^>^ Curves;
 		List<Edge^>^ Edges;
 		List<Group^>^ Groups;
-
-		Component(System::String^ name, System::String^ guid, List<Surface^>^ surfaces, List<Curve^>^ curves, List<Edge^>^ edges, List<Instance^>^ instances, System::String^ desc, List<Group^>^ groups)
+		Axis^ ComponetAxis;
+		Component(System::String^ name, System::String^ guid, List<Surface^>^ surfaces, List<Curve^>^ curves, List<Edge^>^ edges, List<Instance^>^ instances, System::String^ desc, List<Group^>^ groups, Axis^ axis)
 		{
 			this->Name = name;
 			this->Surfaces = surfaces;
@@ -70,15 +72,21 @@ namespace SketchUpNET
 			this->Description = desc;
 			this->Instances = instances;
 			this->Groups = groups;
+			this->ComponetAxis = axis;
 		};
 
-		Component(){};
+		Component() {};
 	internal:
 		static Component^ FromSU(SUComponentDefinitionRef comp, bool includeMeshes, System::Collections::Generic::Dictionary<String^, Material^>^ materials)
 		{
 			SUStringRef name = SU_INVALID;
 			SUStringCreate(&name);
 			SUComponentDefinitionGetName(comp, &name);
+
+			SUAxesRef axes;
+			SUEntityRef entity = SUComponentDefinitionToEntity(comp);
+			axes = SUAxesFromEntity(entity);
+			
 
 			SUStringRef desc = SU_INVALID;
 			SUStringCreate(&desc);
@@ -90,7 +98,7 @@ namespace SketchUpNET
 			size_t faceCount = 0;
 			SUEntitiesGetNumFaces(entities, &faceCount);
 
-			
+
 			SUStringRef guid = SU_INVALID;
 			SUStringCreate(&guid);
 			SUComponentDefinitionGetGuid(comp, &guid);
@@ -100,10 +108,10 @@ namespace SketchUpNET
 			List<Edge^>^ edges = Edge::GetEntityEdges(entities);
 			List<Instance^>^ instances = Instance::GetEntityInstances(entities);
 			List<Group^>^ grps = Group::GetEntityGroups(entities, includeMeshes, materials);
-			
-			
+			Axis^ axis = Axis::FromSU(axes);
 
-			Component^ v = gcnew Component(Utilities::GetString(name), Utilities::GetString(guid), surfaces, curves, edges,instances, Utilities::GetString(desc), grps);
+
+			Component^ v = gcnew Component(Utilities::GetString(name), Utilities::GetString(guid), surfaces, curves, edges, instances, Utilities::GetString(desc), grps, axis);
 
 			return v;
 		};
