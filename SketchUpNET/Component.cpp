@@ -40,6 +40,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SO
 #include "Instance.h"
 #include <SketchUpAPI/model/axes.h>
 #include "Axis.cpp"
+#include <SketchUpAPI/model/entity.h>
 
 
 #pragma once
@@ -83,9 +84,11 @@ namespace SketchUpNET
 			SUStringCreate(&name);
 			SUComponentDefinitionGetName(comp, &name);
 
+			SUModelRef model = SU_INVALID;
 			SUAxesRef axes;
 			SUEntityRef entity = SUComponentDefinitionToEntity(comp);
-			axes = SUAxesFromEntity(entity);
+			SUEntityGetModel(entity, &model);
+			SUModelGetAxes(model,&axes);
 			
 
 			SUStringRef desc = SU_INVALID;
