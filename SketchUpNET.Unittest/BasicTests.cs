@@ -12,6 +12,7 @@ namespace SketchUpNET.Unittest
         {
             Type t = typeof(UnitTests);
             TestFile = System.IO.Path.GetDirectoryName(t.Assembly.Location) + @"\..\..\..\..\Testfiles\TestModel.skp";
+            TestFile = @"C:\Users\user\Documents\测试属性.skp";
         }
 
         public static string TestFile;

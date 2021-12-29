@@ -87,10 +87,7 @@ namespace SketchUpNET
 			SUStringRef instanceguid = SU_INVALID;
 			SUStringCreate(&instanceguid);
 			SUComponentInstanceGetGuid(comp, &instanceguid);
-
 			
-			
-
 			// Layer
 			SULayerRef layer = SU_INVALID;
 			SUDrawingElementGetLayer(SUComponentInstanceToDrawingElement(comp), &layer);
